@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/passage/certification')]
+#[Route('/passageCertification')]
 class PassageCertificationController extends AbstractController
 {
     #[Route('/', name: 'app_passage_certification_index', methods: ['GET'])]
@@ -21,6 +21,7 @@ class PassageCertificationController extends AbstractController
             'passage_certifications' => $passageCertificationRepository->findAll(),
         ]);
     }
+
 
     #[Route('/new', name: 'app_passage_certification_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -71,7 +72,7 @@ class PassageCertificationController extends AbstractController
     #[Route('/{id}', name: 'app_passage_certification_delete', methods: ['POST'])]
     public function delete(Request $request, PassageCertification $passageCertification, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$passageCertification->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $passageCertification->getId(), $request->request->get('_token'))) {
             $entityManager->remove($passageCertification);
             $entityManager->flush();
         }

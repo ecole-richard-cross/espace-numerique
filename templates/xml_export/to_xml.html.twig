@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<a href={{ file }}>Télécharger le fichier XML contenant les information sélectionées</a>
+{% for res in result %}
+    <p>{{ res }}</p>
+{% endfor %}
+{% endblock %}
