@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stagiaire{% endblock %}
+
+{% block body %}
+    <h1>Stagiaire</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stagiaire.id }}</td>
+            </tr>
+            <tr>
+                <th>NomNaissance</th>
+                <td>{{ stagiaire.nomNaissance }}</td>
+            </tr>
+            <tr>
+                <th>NomUsage</th>
+                <td>{{ stagiaire.nomUsage }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ stagiaire.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom2</th>
+                <td>{{ stagiaire.prenom2 }}</td>
+            </tr>
+            <tr>
+                <th>Prenom3</th>
+                <td>{{ stagiaire.prenom3 }}</td>
+            </tr>
+            <tr>
+                <th>DateNaissance</th>
+                <td>{{ stagiaire.dateNaissance ? stagiaire.dateNaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ stagiaire.sexe }}</td>
+            </tr>
+            <tr>
+                <th>CodePostalNaissance</th>
+                <td>{{ stagiaire.codePostalNaissance }}</td>
+            </tr>
+            <tr>
+                <th>IdDossierCpf</th>
+                <td>{{ stagiaire.idDossierCpf }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ stagiaire.email }}</td>
+            </tr>
+            <tr>
+                <th>SiteWeb</th>
+                <td>{{ stagiaire.siteWeb }}</td>
+            </tr>
+            <tr>
+                <th>Reseaux</th>
+                <td>{{ stagiaire.reseaux ? stagiaire.reseaux|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Localisation</th>
+                <td>{{ stagiaire.localisation ? stagiaire.localisation|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Visio</th>
+                <td>{{ stagiaire.visio ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ stagiaire.statut }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stagiaire_index') }}">back to list</a>
+
+    <a href="{{ path('app_stagiaire_edit', {'id': stagiaire.id}) }}">edit</a>
+
+    {{ include('stagiaire/_delete_form.html.twig') }}
+{% endblock %}

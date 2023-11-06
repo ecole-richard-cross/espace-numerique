@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PassageCertification index{% endblock %}
+
+{% block body %}
+    <h1>PassageCertification index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ObtentionCertification</th>
+                <th>DonneeCertifiee</th>
+                <th>DateDebutValidite</th>
+                <th>DateFinValidite</th>
+                <th>PresenceNiveauLangueEuro</th>
+                <th>PresenceNiveauNumeriqueEuro</th>
+                <th>Scoring</th>
+                <th>MentionValidee</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for passage_certification in passage_certifications %}
+            <tr>
+                <td>{{ passage_certification.id }}</td>
+                <td>{{ passage_certification.obtentionCertification }}</td>
+                <td>{{ passage_certification.donneeCertifiee ? 'Yes' : 'No' }}</td>
+                <td>{{ passage_certification.dateDebutValidite ? passage_certification.dateDebutValidite|date('Y-m-d') : '' }}</td>
+                <td>{{ passage_certification.dateFinValidite ? passage_certification.dateFinValidite|date('Y-m-d') : '' }}</td>
+                <td>{{ passage_certification.presenceNiveauLangueEuro ? 'Yes' : 'No' }}</td>
+                <td>{{ passage_certification.presenceNiveauNumeriqueEuro ? 'Yes' : 'No' }}</td>
+                <td>{{ passage_certification.scoring }}</td>
+                <td>{{ passage_certification.mentionValidee }}</td>
+                <td>
+                    <a href="{{ path('app_passage_certification_show', {'id': passage_certification.id}) }}">show</a>
+                    <a href="{{ path('app_passage_certification_edit', {'id': passage_certification.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_passage_certification_new') }}">Create new</a>
+{% endblock %}

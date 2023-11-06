@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Export XML pour Accrochage{% endblock %}
+
+{% block body %}
+    Sélectionner des passages de certifications à exporter :
+    <select>
+    {% for passage in passagesCertif%}
+        <option>{{passage.getStagiaire().prenom1}}</option>
+    {% endfor %}
+    </select>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PassageCertification{% endblock %}
+
+{% block body %}
+    <h1>Create new PassageCertification</h1>
+
+    {{ include('passage_certification/_form.html.twig') }}
+
+    <a href="{{ path('app_passage_certification_index') }}">back to list</a>
+{% endblock %}
