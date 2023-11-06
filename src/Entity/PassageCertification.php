@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PassageCertificationRepository::class)]
 class PassageCertification
@@ -17,6 +18,7 @@ class PassageCertification
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id;
 
+    #[Assert\Choice(['PAR_ADMISSION', 'PAR_SCORING'])]
     #[ORM\Column(length: 255)]
     private ?string $obtentionCertification = null;
 
