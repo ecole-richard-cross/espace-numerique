@@ -3,8 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\StagiaireRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: StagiaireRepository::class)]
 class Stagiaire
@@ -32,6 +36,7 @@ class Stagiaire
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $dateNaissance = null;
 
+    #[Assert\Choice(['M', 'F'])]
     #[ORM\Column(length: 1)]
     private ?string $sexe = null;
 
@@ -56,8 +61,17 @@ class Stagiaire
     #[ORM\Column(nullable: true)]
     private ?bool $visio = null;
 
+    #[Assert\Choice(['Associé', 'Indépendant'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $statut = null;
+
+    #[ORM\OneToMany(mappedBy: 'stagiaireId', targetEntity: PassageCertification::class)]
+    private Collection $passageCertifications;
+
+    public function __construct()
+    {
+        $this->passageCertifications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -240,6 +254,36 @@ class Stagiaire
     public function setStatut(?string $statut): static
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PassageCertification>
+     */
+    public function getPassageCertifications(): Collection
+    {
+        return $this->passageCertifications;
+    }
+
+    public function addPassageCertification(PassageCertification $passageCertification): static
+    {
+        if (!$this->passageCertifications->contains($passageCertification)) {
+            $this->passageCertifications->add($passageCertification);
+            $passageCertification->setStagiaireId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePassageCertification(PassageCertification $passageCertification): static
+    {
+        if ($this->passageCertifications->removeElement($passageCertification)) {
+            // set the owning side to null (unless already changed)
+            if ($passageCertification->getStagiaireId() === $this) {
+                $passageCertification->setStagiaireId(null);
+            }
+        }
 
         return $this;
     }
