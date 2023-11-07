@@ -4,17 +4,19 @@ namespace App\Controller;
 
 use App\Entity\PassageCertification;
 use App\Repository\PassageCertificationRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\XmlConverter;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Uid\Uuid;
 
 class XMLExportController extends AbstractController
 {
     private $doctrine;
 
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(EntityManagerInterface $doctrine)
     {
         $this->doctrine = $doctrine;
     }
@@ -35,15 +37,22 @@ class XMLExportController extends AbstractController
     {
         $xmlFile = null;
 
-        $passageIds = $request->get('passages');
+        $passageIds = array_map(function ($id) {
+            return Uuid::fromString($id);
+        }, $request->get('passages'));
 
-        $passagesToParse = $this->doctrine
+        $passagesToSer = $this->doctrine
             ->getRepository(PassageCertification::class)
-            ->findBy(['id' => $passageIds]);
+            ->findFromIdList($passageIds);
+
+        $converter = new XmlConverter();
+
+        $xmlData = $converter->convertToXml($passagesToSer);
 
         return $this->render('xml_export/to_xml.html.twig', [
-            'file'=>$xmlFile,
-            'result'=>$passageIds
+            'file' => $xmlFile,
+            'result' => $xmlData,
+            'passages' => $passagesToSer
         ]);
     }
 }

@@ -26,10 +26,10 @@
         {% set stagiaire = passage.getStagiaireId() %}
             <div>
                 <input type="checkbox"
-                       value={{stagiaire.id}}
-                        id={{ passage.id }}
+                       value={{passage.id}}
+                        id="{{ passage.id }}"
                         name="passages[]">
-                <label for={{ passage.id }}>
+                <label for="{{ passage.id }}">
                 {{stagiaire.prenom ~ " " ~ stagiaire.nomNaissance ~ " (#{passage.dateDebutValidite|date('d-m-Y')})"}}
                 </label>
             </div>
