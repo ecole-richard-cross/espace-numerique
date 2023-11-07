@@ -53,7 +53,7 @@ class PassageCertification
 
     public function __toString(): string
     {
-        return $this->getStagiaireId()->getNomNaissance() . ", le " . date_format($this->getDateDebutValidite(), 'd M Y');
+        return $this->getStagiaire()->getNomNaissance() . ", le " . date_format($this->getDateDebutValidite(), 'd M Y');
     }
 
     public function getId(): ?Uuid
@@ -77,7 +77,7 @@ class PassageCertification
     {
         return $this->donneeCertifiee;
     }
-    public function getDonneeCertifiee(): string
+    public function __toStringIsDonneeCertifiee(): string
     {
         return $this->donneeCertifiee ? "true" : "false";
     }
@@ -118,7 +118,7 @@ class PassageCertification
         return $this->presenceNiveauLangueEuro;
     }
 
-    public function getPresenceNiveauLangueEuro(): string
+    public function __toStringIsPresenceNiveauLangueEuro(): string
     {
         return $this->presenceNiveauLangueEuro ? "true" : "false";
     }
@@ -135,7 +135,7 @@ class PassageCertification
         return $this->presenceNiveauNumeriqueEuro;
     }
 
-    public function getPresenceNiveauNumeriqueEuro(): string
+    public function __toStringIsPresenceNiveauNumeriqueEuro(): string
     {
         return $this->presenceNiveauNumeriqueEuro ? "true" : "false";
     }
@@ -176,9 +176,9 @@ class PassageCertification
         return $this->stagiaire;
     }
 
-    public function setStagiaireId(?Stagiaire $stagiaireId): static
+    public function setStagiaire(?Stagiaire $stagiaire): static
     {
-        $this->stagiaire = $stagiaireId;
+        $this->stagiaire = $stagiaire;
 
         return $this;
     }

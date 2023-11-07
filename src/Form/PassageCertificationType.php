@@ -20,9 +20,8 @@ class PassageCertificationType extends AbstractType
             ->add('presenceNiveauNumeriqueEuro')
             ->add('scoring')
             ->add('mentionValidee')
-            ->add('stagiaireId')
-            ->add('certificationId')
-        ;
+            ->add('stagiaire')
+            ->add('certification');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

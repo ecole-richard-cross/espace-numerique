@@ -10,7 +10,7 @@ function CpfFormat(array $data): array
     $passageCertifications = [];
     foreach ($data as $passage) {
 
-        $stagiaire = $passage->getStagiaireId();
+        $stagiaire = $passage->getStagiaire();
         if ($stagiaire->getIdDossierCpf()) {
             $identificationTitulaire = [
                 "cpf:dossierFormation" => [
@@ -42,11 +42,11 @@ function CpfFormat(array $data): array
             "cpf:passageCertification" => [
                 "cpf:idTechnique" => $passage->getId()->toRfc4122(),
                 "cpf:obtentionCertification" => $passage->getObtentionCertification(),
-                "cpf:donneeCertifiee" => $passage->getDonneeCertifiee(),
+                "cpf:donneeCertifiee" => $passage->__toStringIsDonneeCertifiee(),
                 "cpf:dateDebutValidite" => $passage->getDateDebutValidite()->format('Y-m-d'),
                 "cpf:dateFinValidite" => ["@xsi:nil" => "true", "#" => ""],
-                "cpf:presenceNiveauLangueEuro" => $passage->getPresenceNiveauLangueEuro(),
-                "cpf:presenceNiveauNumeriqueEuro" => $passage->getPresenceNiveauNumeriqueEuro(),
+                "cpf:presenceNiveauLangueEuro" => $passage->__toStringIsPresenceNiveauLangueEuro(),
+                "cpf:presenceNiveauNumeriqueEuro" => $passage->__toStringIsPresenceNiveauNumeriqueEuro(),
                 "cpf:scoring" => $passage->getScoring(),
                 "cpf:mentionValidee" => $passage->getMentionValidee() ?? ["@xsi:nil" => "true", "#" => ""],
                 "cpf:modaliteInscription" => [
