@@ -73,6 +73,11 @@ class Stagiaire
         $this->passageCertifications = new ArrayCollection();
     }
 
+    public  function __toString(): string
+    {
+        return $this->prenom . " " . $this->nomNaissance;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
