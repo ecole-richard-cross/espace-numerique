@@ -11,7 +11,7 @@ class LocalisationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('codePostaux', TextType::class, ['required' => false])
+            ->add('codesPostaux', TextType::class, ['required' => false])
             ->add('international', InternationalType::class)
         ;
     }
