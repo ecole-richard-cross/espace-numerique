@@ -157,9 +157,9 @@ class PassageCertification
         return $this->stagiaire;
     }
 
-    public function setStagiaireId(?Stagiaire $stagiaireId): static
+    public function setStagiaire(?Stagiaire $stagiaire): static
     {
-        $this->stagiaire = $stagiaireId;
+        $this->stagiaire = $stagiaire;
 
         return $this;
     }
@@ -169,9 +169,9 @@ class PassageCertification
         return $this->certification;
     }
 
-    public function setCertification(?Certification $certificationId): static
+    public function setCertification(?Certification $certification): static
     {
-        $this->certification = $certificationId;
+        $this->certification = $certification;
 
         return $this;
     }

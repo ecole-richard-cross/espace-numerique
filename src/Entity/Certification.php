@@ -116,7 +116,7 @@ class Certification
     {
         if (!$this->passageCertifications->contains($passageCertification)) {
             $this->passageCertifications->add($passageCertification);
-            $passageCertification->setCertificationId($this);
+            $passageCertification->setCertification($this);
         }
 
         return $this;
@@ -126,8 +126,8 @@ class Certification
     {
         if ($this->passageCertifications->removeElement($passageCertification)) {
             // set the owning side to null (unless already changed)
-            if ($passageCertification->getCertificationId() === $this) {
-                $passageCertification->setCertificationId(null);
+            if ($passageCertification->getCertification() === $this) {
+                $passageCertification->setCertification(null);
             }
         }
 

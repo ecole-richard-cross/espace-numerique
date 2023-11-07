@@ -270,7 +270,7 @@ class Stagiaire
     {
         if (!$this->passageCertifications->contains($passageCertification)) {
             $this->passageCertifications->add($passageCertification);
-            $passageCertification->setStagiaireId($this);
+            $passageCertification->setStagiaire($this);
         }
 
         return $this;
@@ -280,8 +280,8 @@ class Stagiaire
     {
         if ($this->passageCertifications->removeElement($passageCertification)) {
             // set the owning side to null (unless already changed)
-            if ($passageCertification->getStagiaireId() === $this) {
-                $passageCertification->setStagiaireId(null);
+            if ($passageCertification->getStagiaire() === $this) {
+                $passageCertification->setStagiaire(null);
             }
         }
 
