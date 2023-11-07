@@ -3,22 +3,48 @@
 namespace App\Service;
 
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 class XmlConverter
 {
-    private $serializer;
-
-    public function __construct()
+    /**
+     * Converts an object to an XML
+     *
+     * @param array $data
+     * Data to serialize
+     * 
+     * @param string $rootName
+     * Root level tagname
+     * 
+     * @return string
+     * XML string
+     */
+    public function convertToXml(array $data, string $rootName = null, array $rootAttributes = []): string
     {
-        $normalizers = [new ObjectNormalizer()];
-        $encoders = [new XmlEncoder()];
-        $this->serializer = new Serializer($normalizers, $encoders);
-    }
+        $defaultContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (object $object, string $format, array $context): string {
+                return $object->getId();
+            },
+        ];
+        $normalizers = [new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
 
-    public function convertToXml($data): string
-    {
-        return $this->serializer->serialize($data, 'xml');
+        $xmlOptions = [
+            'xml_format_output' => true,
+            'xml_root_node_name' => $rootName,
+            'as_collection' => true
+        ];
+        $rootNode = [
+            ...$rootAttributes,
+            '#' => CpfFormat($data)
+        ];
+
+        $encoders = [new XmlEncoder($xmlOptions)];
+        $serializer = new Serializer($normalizers, $encoders);
+        return $serializer->serialize(
+            $rootNode,
+            'xml'
+        );
     }
 }

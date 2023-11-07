@@ -12,7 +12,6 @@
                <cpf:certification>
                   <cpf:type>RNCP</cpf:type>
                   <cpf:code>RNCP19117</cpf:code>
-                  <cpf:natureDeposant>CERTIFICATEUR</cpf:natureDeposant>
                   <cpf:passageCertifications>
                      <cpf:passageCertification>
                         <cpf:idTechnique>db855769-bcd6-4253-93cf-e666db666c0a</cpf:idTechnique>
@@ -114,7 +113,7 @@
                         </cpf:modalitesInscription>
                         <cpf:identificationTitulaire>
                            <cpf:dossierFormation>
-						      <cpf:idDossier>1234567891011</cpf:idDossier>
+						            <cpf:idDossier>1234567891011</cpf:idDossier>
                               <cpf:nomTitulaire>Dupont</cpf:nomTitulaire>
                               <cpf:prenom1Titulaire>Antoine</cpf:prenom1Titulaire>
                            </cpf:dossierFormation>

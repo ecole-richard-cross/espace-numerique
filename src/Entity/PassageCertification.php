@@ -51,6 +51,11 @@ class PassageCertification
     #[ORM\JoinColumn(nullable: false)]
     private ?Certification $certificationId = null;
 
+    public function __toString(): string
+    {
+        return $this->getStagiaireId()->getNomNaissance() . ", le " . date_format($this->getDateDebutValidite(), 'd M Y');
+    }
+
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -71,6 +76,10 @@ class PassageCertification
     public function isDonneeCertifiee(): ?bool
     {
         return $this->donneeCertifiee;
+    }
+    public function getDonneeCertifiee(): string
+    {
+        return $this->donneeCertifiee ? "true" : "false";
     }
 
     public function setDonneeCertifiee(bool $donneeCertifiee): static
@@ -109,6 +118,11 @@ class PassageCertification
         return $this->presenceNiveauLangueEuro;
     }
 
+    public function getPresenceNiveauLangueEuro(): string
+    {
+        return $this->presenceNiveauLangueEuro ? "true" : "false";
+    }
+
     public function setPresenceNiveauLangueEuro(bool $presenceNiveauLangueEuro): static
     {
         $this->presenceNiveauLangueEuro = $presenceNiveauLangueEuro;
@@ -119,6 +133,11 @@ class PassageCertification
     public function isPresenceNiveauNumeriqueEuro(): ?bool
     {
         return $this->presenceNiveauNumeriqueEuro;
+    }
+
+    public function getPresenceNiveauNumeriqueEuro(): string
+    {
+        return $this->presenceNiveauNumeriqueEuro ? "true" : "false";
     }
 
     public function setPresenceNiveauNumeriqueEuro(bool $presenceNiveauNumeriqueEuro): static

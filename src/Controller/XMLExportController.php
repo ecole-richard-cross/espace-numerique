@@ -47,7 +47,14 @@ class XMLExportController extends AbstractController
 
         $converter = new XmlConverter();
 
-        $xmlData = $converter->convertToXml($passagesToSer);
+        $xmlData = $converter->convertToXml(
+            $passagesToSer,
+            'cpf:flux',
+            [
+                '@xmlns:cpf' => 'urn:cdc:cpf:pc5:schema:1.0.0',
+                '@xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
+            ]
+        );
 
         return $this->render('xml_export/to_xml.html.twig', [
             'file' => $xmlFile,
