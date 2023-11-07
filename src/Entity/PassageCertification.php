@@ -45,11 +45,11 @@ class PassageCertification
 
     #[ORM\ManyToOne(inversedBy: 'passageCertifications')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Stagiaire $stagiaireId = null;
+    private ?Stagiaire $stagiaire = null;
 
     #[ORM\ManyToOne(inversedBy: 'passageCertifications')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Certification $certificationId = null;
+    private ?Certification $certification = null;
 
     public function getId(): ?Uuid
     {
@@ -152,26 +152,26 @@ class PassageCertification
         return $this;
     }
 
-    public function getStagiaireId(): ?Stagiaire
+    public function getStagiaire(): ?Stagiaire
     {
-        return $this->stagiaireId;
+        return $this->stagiaire;
     }
 
     public function setStagiaireId(?Stagiaire $stagiaireId): static
     {
-        $this->stagiaireId = $stagiaireId;
+        $this->stagiaire = $stagiaireId;
 
         return $this;
     }
 
-    public function getCertificationId(): ?Certification
+    public function getCertification(): ?Certification
     {
-        return $this->certificationId;
+        return $this->certification;
     }
 
-    public function setCertificationId(?Certification $certificationId): static
+    public function setCertification(?Certification $certificationId): static
     {
-        $this->certificationId = $certificationId;
+        $this->certification = $certificationId;
 
         return $this;
     }
