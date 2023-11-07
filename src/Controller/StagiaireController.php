@@ -30,6 +30,8 @@ class StagiaireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $stagiaire->setLocalisation(getLocalisation($form));
             $entityManager->persist($stagiaire);
             $entityManager->flush();
 
@@ -78,4 +80,19 @@ class StagiaireController extends AbstractController
 
         return $this->redirectToRoute('app_stagiaire_index', [], Response::HTTP_SEE_OTHER);
     }
+}
+
+
+function getLocalisation($form): ?array {
+    $localisation = $form->get("localisation")->getData();
+    if (strlen($localisation['codePostaux']) < 1) {
+        unset($localisation['codePostaux']);
+    } else {
+        $localisation['codePostaux'] = array_map('trim', explode(",", $localisation['codePostaux']));
+    }
+    if ($localisation['international']['ville'] == null && $localisation['international']['pays'] == null) {
+        unset($localisation['international']);
+    }
+
+    return $localisation;
 }

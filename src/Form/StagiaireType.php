@@ -23,8 +23,8 @@ class StagiaireType extends AbstractType
             ->add('idDossierCpf')
             ->add('email')
             ->add('siteWeb')
-            ->add('reseaux')
-            ->add('localisation')
+            // ->add('reseaux', '', ['mapped'=> false])
+            ->add('localisation', LocalisationType::class, ['mapped'=> false])
             ->add('visio')
             ->add('statut')
         ;
