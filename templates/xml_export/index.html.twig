@@ -6,7 +6,8 @@
     <style>
         label {
             padding: 0.4rem;
-            border-radius: 0.2rem;
+            border-radius: 0.5rem;
+            border: 1px dotted black;
         }
         input {
             display: none;
@@ -18,6 +19,7 @@
             background: darkslateblue;
             color: white;
             font-weight: bold;
+            border: none;
         }
         .cert_list {
             display: flex;
@@ -29,7 +31,7 @@
     <form action="{{ path('app_passage_certification_to_xml')}}" method="post">
         <div class="cert_list">
         {% for passage in passagesCertif %}
-        {% set stagiaire = passage.getStagiaireId() %}
+        {% set stagiaire = passage.getStagiaire() %}
             <div>
                 <input type="checkbox"
                        value={{passage.id}}

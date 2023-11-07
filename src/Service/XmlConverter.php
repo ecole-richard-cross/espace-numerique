@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -26,22 +27,23 @@ class XmlConverter
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (object $object, string $format, array $context): string {
                 return $object->getId();
-            },
+            }
         ];
-        $normalizers = [new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
 
         $xmlOptions = [
             'xml_format_output' => true,
             'xml_root_node_name' => $rootName,
             'as_collection' => true
         ];
+        $encoders = [new XmlEncoder($xmlOptions)];
+
+        $serializer = new Serializer([$normalizer, new ArrayDenormalizer()], $encoders);
+
         $rootNode = [
             ...$rootAttributes,
             '#' => CpfFormat($data)
         ];
-
-        $encoders = [new XmlEncoder($xmlOptions)];
-        $serializer = new Serializer($normalizers, $encoders);
         return $serializer->serialize(
             $rootNode,
             'xml'

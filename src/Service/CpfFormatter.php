@@ -7,8 +7,15 @@ function CpfFormat(array $data): array
     date_default_timezone_set('Europe/Paris');
     $date = new DateTimeImmutable();
 
+    $certificationsList = [];
     $passageCertifications = [];
+
     foreach ($data as $passage) {
+        $certification = $passage->getCertification();
+
+        if (!in_array($certification, $certificationsList)) {
+            $certificationsList[$certification->getId()] = $certification;
+        }
 
         $stagiaire = $passage->getStagiaire();
         if ($stagiaire->getIdDossierCpf()) {
@@ -39,40 +46,52 @@ function CpfFormat(array $data): array
         }
 
         $passageCertification = [
-            "cpf:passageCertification" => [
-                "cpf:idTechnique" => $passage->getId()->toRfc4122(),
-                "cpf:obtentionCertification" => $passage->getObtentionCertification(),
-                "cpf:donneeCertifiee" => $passage->__toStringIsDonneeCertifiee(),
-                "cpf:dateDebutValidite" => $passage->getDateDebutValidite()->format('Y-m-d'),
-                "cpf:dateFinValidite" => ["@xsi:nil" => "true", "#" => ""],
-                "cpf:presenceNiveauLangueEuro" => $passage->__toStringIsPresenceNiveauLangueEuro(),
-                "cpf:presenceNiveauNumeriqueEuro" => $passage->__toStringIsPresenceNiveauNumeriqueEuro(),
-                "cpf:scoring" => $passage->getScoring(),
-                "cpf:mentionValidee" => $passage->getMentionValidee() ?? ["@xsi:nil" => "true", "#" => ""],
-                "cpf:modaliteInscription" => [
-                    "cpf:modaliteAcces" => "FORMATION_INITIALE_HORS_APPRENTISSAGE",
-                ],
-                "cpf:identificationTitulaire" => $identificationTitulaire
+            "cpf:idTechnique" => $passage->getId()->toRfc4122(),
+            "cpf:obtentionCertification" => $passage->getObtentionCertification(),
+            "cpf:donneeCertifiee" => $passage->__toStringIsDonneeCertifiee(),
+            "cpf:dateDebutValidite" => $passage->getDateDebutValidite()->format('Y-m-d'),
+            "cpf:dateFinValidite" => ["@xsi:nil" => "true", "#" => ""],
+            "cpf:presenceNiveauLangueEuro" => $passage->__toStringIsPresenceNiveauLangueEuro(),
+            "cpf:presenceNiveauNumeriqueEuro" => $passage->__toStringIsPresenceNiveauNumeriqueEuro(),
+            "cpf:scoring" => $passage->getScoring(),
+            "cpf:mentionValidee" => $passage->getMentionValidee() ?? ["@xsi:nil" => "true", "#" => ""],
+            "cpf:modaliteInscription" => [
+                "cpf:modaliteAcces" => "FORMATION_INITIALE_HORS_APPRENTISSAGE",
             ],
+            "cpf:identificationTitulaire" => $identificationTitulaire
         ];
 
-        array_push($passageCertifications, $passageCertification);
+        if (!array_key_exists($certification->getId(), $passageCertifications))
+            $passageCertifications[$certification->getId()] = [$passageCertification];
+        else
+            array_push($passageCertifications[$certification->getId()], $passageCertification);
     }
+
+    $cpfCertifications = array_map(function ($certification) use ($passageCertifications) {
+
+        $passages = $passageCertifications[$certification->getId()];
+
+        return
+            [
+                "cpf:certification" => [
+                    "cpf:type" => $certification->getType(),
+                    "cpf:code" => $certification->getCode(),
+                    "cpf:passageCertifications" => [
+                        "cpf:passageCertification" => $passages
+                    ],
+                ]
+            ];
+    }, $certificationsList);
+
     $formattedArray = [
         "cpf:idFlux" => ["#" => Uuid::v7()->toRfc4122()],
         "cpf:horodatage" => ["#" => $date->format('c')],
         "cpf:emetteur" => [
-            "cpf:idClient" => [],
+            "cpf:idClient" => "",
             "cpf:certificateur" => [
-                "cpf:idClient" => [],
-                "cpf:idContrat" => [],
-                "cpf:certifications" => [
-                    "cpf:certification" => [
-                        "cpf:type" => [],
-                        "cpf:code" => [],
-                        "cpf:passageCertifications" => $passageCertifications
-                    ],
-                ],
+                "cpf:idClient" => "",
+                "cpf:idContrat" => "",
+                "cpf:certifications" => $cpfCertifications
             ],
         ]
     ];
