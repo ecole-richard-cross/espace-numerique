@@ -19,8 +19,8 @@ class PassageCertification
     private ?Uuid $id;
 
     #[Assert\Choice(['PAR_ADMISSION', 'PAR_SCORING'])]
-    #[ORM\Column(length: 255)]
-    private ?string $obtentionCertification = null;
+    #[ORM\Column(length: 255, options: ["default" => 'PAR_ADMISSION'])]
+    private ?string $obtentionCertification = 'PAR_ADMISSION';
 
     #[ORM\Column]
     private ?bool $donneeCertifiee = null;
@@ -32,10 +32,10 @@ class PassageCertification
     private ?\DateTimeImmutable $dateFinValidite = null;
 
     #[ORM\Column(options: ["default" => false])]
-    private ?bool $presenceNiveauLangueEuro = null;
+    private ?bool $presenceNiveauLangueEuro = false;
 
     #[ORM\Column(options: ["default" => false])]
-    private ?bool $presenceNiveauNumeriqueEuro = null;
+    private ?bool $presenceNiveauNumeriqueEuro = false;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $scoring = null;
