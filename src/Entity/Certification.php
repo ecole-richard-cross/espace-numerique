@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CertificationRepository::class)]
 class Certification
@@ -19,6 +20,24 @@ class Certification
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
+    #[Assert\When(
+        expression: 'this.getType() == "RNCP" || this.getType() == "RS" ',
+        constraints: [
+            new Assert\NotBlank([], message: 'Code obligatoire pour les certifications RNCP ou RS')
+        ],
+    )]
+    #[Assert\When(
+        expression: 'this.getType() == "RNCP"',
+        constraints: [
+            new Assert\Regex('/^RNCP.*/', message: 'Le code doit être de forme RNCPXXXXX')
+        ],
+    )]
+    #[Assert\When(
+        expression: 'this.getType() == "RS"',
+        constraints: [
+            new Assert\Regex('/^RS.*/', message: 'Le code doit être de forme RSXXXX')
+        ],
+    )]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $code = null;
 
@@ -41,7 +60,7 @@ class Certification
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->name ? $this->name : ($this->code ? $this->code : $this->type);
     }
 
     public function getId(): ?int
