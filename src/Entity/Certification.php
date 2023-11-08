@@ -31,7 +31,7 @@ class Certification
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $endDate = null;
 
-    #[ORM\OneToMany(mappedBy: 'certificationId', targetEntity: PassageCertification::class)]
+    #[ORM\OneToMany(mappedBy: 'certification', targetEntity: PassageCertification::class)]
     private Collection $passageCertifications;
 
     public function __construct()

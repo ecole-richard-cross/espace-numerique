@@ -65,7 +65,7 @@ class Stagiaire
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $statut = null;
 
-    #[ORM\OneToMany(mappedBy: 'stagiaireId', targetEntity: PassageCertification::class)]
+    #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: PassageCertification::class)]
     private Collection $passageCertifications;
 
     public function __construct()
