@@ -28,6 +28,9 @@
         }
     </style>
     <h2>Sélectionner des passages de certifications à exporter :</h2>
+    {% if error %}
+        <p>{{error}}</p>
+    {% endif %}
     <form action="{{ path('app_passage_certification_to_xml')}}" method="post">
         <div class="cert_list">
         {% for passage in passagesCertif %}

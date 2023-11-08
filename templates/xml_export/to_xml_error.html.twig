@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<a href="{{ file }}">Télécharger le fichier XML contenant les information sélectionées</a>
+<h2>Une erreur est survenue</h2>
+<p>{{error}}</p>
     <ul>
         {% for pass in passages %}
         <li>{{ pass }}</li>

@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use DOMDocument;
+use Exception;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -48,5 +50,26 @@ class XmlConverter
             $rootNode,
             'xml'
         );
+    }
+
+    /**
+     * Checks whether the provided $xml is valid against the provided $xsd
+     *
+     * @param string $xml
+     * XML string to validate
+     * @param string $xsd
+     * XSD schema to validate against
+     * @return boolean
+     */
+    public function validateXml(string $xml, string $xsd): bool
+    {
+        $xmlDocument = new DOMDocument();
+        $xmlDocument->loadXML($xml);
+        try {
+            $xmlDocument->schemaValidate($xsd);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }
