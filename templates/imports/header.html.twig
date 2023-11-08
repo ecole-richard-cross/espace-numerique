@@ -1,16 +1,18 @@
 {% block header %}
-<ul class="nav">
-    <li class="nav-item"><a href="/" class="nav-link">Accueil</a></li>
-    <li class="nav-item dropdown">
-        <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" role="button" href="#">Gestion</a>
-        <ul class="dropdown-menu">
-            <li class="dropdown-item"><a class="nav-link" href="{{path('app_stagiaire_index')}}">Stagiaires</a></li>
-            <li class="dropdown-item"><a class="nav-link" href="{{path('app_certification_index')}}">Certifications</a></li>
-            <li class="dropdown-item"><a class="nav-link" href="{{path('app_passage_certification_index')}}">Passages à une certification</a></li>
-        </ul>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{path('app_xml_export')}}">Export XML des certifications</a>
-    </li>
-</ul>
+<nav class="navbar">
+    <ul class="nav">
+        <li class="nav-item"><a href="/" class="nav-link">Accueil</a></li>
+        <li class="nav-item dropdown">
+            <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" role="button" href="#">Gestion</a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-item"><a class="nav-link" href="{{path('app_stagiaire_index')}}">Stagiaires</a></li>
+                <li class="dropdown-item"><a class="nav-link" href="{{path('app_certification_index')}}">Certifications</a></li>
+                <li class="dropdown-item"><a class="nav-link" href="{{path('app_passage_certification_index')}}">Passages à une certification</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{path('app_xml_export')}}">Export XML des certifications</a>
+        </li>
+    </ul>
+</nav>
 {% endblock %}

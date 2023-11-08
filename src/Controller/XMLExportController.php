@@ -28,7 +28,7 @@ class XMLExportController extends AbstractController
         $passagesCertification = $passageCertificationRepository->findAll();
 
         $errorCode = $request->get('error-code') ?? null;
-        $error = $errorCode === "0" ? "Au moins un passage doit être sélectionné." : null;
+        $error = $errorCode === "0" ? "Au moins un passage de certification doit être sélectionné." : null;
 
         return $this->render('xml_export/index.html.twig', [
             'passagesCertif' => $passagesCertification,

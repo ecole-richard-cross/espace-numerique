@@ -4,16 +4,8 @@
 
 {% block body %}
     <style>
-        label {
-            padding: 0.4rem;
-            border-radius: 0.5rem;
-            border: 1px dotted black;
-        }
-        input {
+        input[type="checkbox"] {
             display: none;
-        }
-        button {
-            margin: 0.5rem;
         }
         input:checked~label{
             background: darkslateblue;
@@ -21,31 +13,27 @@
             font-weight: bold;
             border: none;
         }
-        .cert_list {
-            display: flex;
-            flex-flow: column nowrap;
-            gap: 1rem;
-        }
     </style>
     <h2>Sélectionner des passages de certifications à exporter :</h2>
     {% if error %}
-        <p>{{error}}</p>
+        <p class="m-4 p-3 rounded text-light bg-danger fw-bold" style="width: fit-content">{{error}}</p>
     {% endif %}
-    <form action="{{ path('app_passage_certification_to_xml')}}" method="post">
-        <div class="cert_list">
+    <form class="form" action="{{ path('app_passage_certification_to_xml')}}" method="post">
+        <ul class="list-group list-group-flush">
         {% for passage in passagesCertif %}
-        {% set stagiaire = passage.getStagiaire() %}
-            <div>
-                <input type="checkbox"
-                       value={{passage.id}}
-                        id="{{ passage.id }}"
-                        name="passages[]">
-                <label for="{{ passage.id }}">
-                {{stagiaire.prenom ~ " " ~ stagiaire.nomNaissance ~ " (#{passage.dateDebutValidite|date('d-m-Y')})"}}
-                </label>
-            </div>
+            {% set stagiaire = passage.getStagiaire() %}
+            {% set certif = passage.getCertification() %}
+                <li class="list-group-item">
+                    <input type="checkbox"
+                        value={{passage.id}}
+                            id="{{ passage.id }}"
+                            name="passages[]">
+                    <label class="form-control border-0 w-100" for="{{ passage.id }}">
+                    {{"#{stagiaire.prenom} #{stagiaire.nomNaissance}, certification #{certif.getName()} (#{certif.getCode()}) passée le #{passage.dateDebutValidite|date('d-m-Y')}"}}
+                    </label>
+                </li>
         {% endfor %}
-        </div>
-        <button type="submit">Télécharger</button>
+        </ul>
+        <button aria-label="Télécharger" class="m-2 btn btn-primary" type="submit">Télécharger</button>
     </form>
 {% endblock %}
