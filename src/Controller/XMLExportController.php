@@ -65,10 +65,11 @@ class XMLExportController extends AbstractController
         );
         $xsdSchema = 'validation-schema-2.0.0.xsd';
         $validation = $converter->validateXml($xmlData, $xsdSchema);
-        if (!$validation) {
+        if (!$validation['isValid']) {
             $error = "Le fichier n'a pas pu être validé.";
             return $this->render('xml_export/to_xml_error.html.twig', [
                 'error' => $error,
+                'errorMessage' => $validation['exception']->getMessage(),
                 'result' => $xmlData,
                 'passages' => $passagesToSer
             ]);

@@ -61,15 +61,15 @@ class XmlConverter
      * XSD schema to validate against
      * @return boolean
      */
-    public function validateXml(string $xml, string $xsd): bool
+    public function validateXml(string $xml, string $xsd): array
     {
         $xmlDocument = new DOMDocument();
         $xmlDocument->loadXML($xml);
         try {
             $xmlDocument->schemaValidate($xsd);
-            return true;
+            return ["isValid" => true];
         } catch (Exception $e) {
-            return false;
+            return ["isValid" => false, "exception" => $e];
         }
     }
 }
