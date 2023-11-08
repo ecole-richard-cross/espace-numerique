@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello IndexController!{% endblock %}
+{% block title %}Interface de gestion | Ecole Richard Cross{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,8 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'E:/Web dev/Ecole-Richard-Cross/convertisseur-xml/src/Controller/IndexController.php'|file_link(0) }}">src/Controller/IndexController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'E:/Web dev/Ecole-Richard-Cross/convertisseur-xml/templates/index/index.html.twig'|file_link(0) }}">templates/index/index.html.twig</a></code></li>
-    </ul>
+    <h1>Gestion administrative ERC</h1>
+    <p>Permet actuellement d'ajouter, modifier et supprimer les certifications (passées, présentes ou futures),
+        les stagiaires y compris leur coordonnées, et les passages en certifications.</p>
 </div>
 {% endblock %}
