@@ -1,4 +1,49 @@
-{{ form_start(form) }}
-    {{ form_widget(form, {'attr': {'class': 'm-4'}}) }}
+{# {{ form_start(form, {'attr': {'class': 'm-4'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary mb-5">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+
+{{ form_start(form, {'attr': {'class': 'm-4 d-flex flex-column gap-3'}}) }} 
+    <div class="border rounded p-3">
+        {{ form_row(form.nomNaissance) }}
+        <div class="accordion-item">
+            <div class="accordion-header mb-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsedNomUsage" aria-expanded="true" aria-controls="collapsedNomUsage">
+                    +
+                </button>
+            </div>
+            <div class="accordion-collapse collapse" id="collapsedNomUsage">
+                <div class="accordion-body">
+                    {{ form_row(form.nomUsage) }}
+                </div>
+            </div>
+        </div>
+        {{ form_row(form.prenom, {'attr': {'class': ''}}) }}
+        <div class="accordion-item">
+            <div class="accordion-header mb-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsedPrenoms" aria-expanded="true" aria-controls="collapsedPrenoms">
+                    +
+                </button>
+            </div>
+            <div class="accordion-collapse collapse" id="collapsedPrenoms">
+                <div class="accordion-body">
+                    {{ form_row(form.prenom2) }}
+                    {{ form_row(form.prenom3) }}
+                </div>
+            </div>
+        </div>
+        {{ form_row(form.dateNaissance) }}
+        {{ form_row(form.sexe, {'attr': {'class': 'd-flex gap-3'}}) }}
+        {{ form_row(form.codePostalNaissance) }}
+        {{ form_row(form.idDossierCpf) }}
+    </div>
+    <div  class="border rounded p-3">
+        {{ form_row(form.email) }}
+        {{ form_row(form.siteWeb) }}
+        {{ form_row(form.reseaux) }}
+        {{ form_row(form.localisation) }}
+        {{ form_row(form.visio) }}
+        {{ form_row(form.statut, {'attr': {'class': 'd-flex gap-3'}}) }}
+    </div>
     <button class="btn btn-primary mb-5">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
