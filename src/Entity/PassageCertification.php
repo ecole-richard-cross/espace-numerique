@@ -53,7 +53,12 @@ class PassageCertification
 
     public function __toString(): string
     {
-        return $this->getStagiaire()->getNomNaissance() . ", le " . date_format($this->getDateDebutValidite(), 'd M Y');
+        $s = $this->getStagiaire();
+        $c = $this->getCertification();
+        #{stagiaire.prenom} #{stagiaire.nomNaissance}, certification #{certif.getName()} (#{certif.getCode()}) obtenue le #{passage.dateDebutValidite|date('d-m-Y')}"
+        $noms = $s->getPrenom() . " " . $s->getNomNaissance();
+        $cert = $c->getName() . " (" . $c->getCode() . ") obtenue le " . $this->getDateDebutValidite()->format('d M Y');
+        return $noms . ", certification " . $cert;
     }
 
     public function getId(): ?Uuid

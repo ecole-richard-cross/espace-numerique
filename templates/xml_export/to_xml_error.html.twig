@@ -11,7 +11,7 @@
                 {% set stagiaire = passage.getStagiaire() %}
                 {% set certif = passage.getCertification() %}
                 <li class="list-group-item">
-                    {{"#{stagiaire.prenom} #{stagiaire.nomNaissance}, certification #{certif.getName()} (#{certif.getCode()}) passée le #{passage.dateDebutValidite|date('d-m-Y')}"}}
+                    {{passage}}
                 </li>
             {% endfor %}
         </ul>
@@ -25,7 +25,7 @@
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse bg-danger-subtle" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-                <p class="font-monospace">{{ errorMessage }}</p>
+                <p class="font-monospace m-0">{{ errorMessage }}</p>
             </div>
         </div>
     </div>

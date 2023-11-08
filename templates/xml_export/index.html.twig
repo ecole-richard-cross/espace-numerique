@@ -29,7 +29,7 @@
                             id="{{ passage.id }}"
                             name="passages[]">
                     <label class="form-control border-0 w-100" for="{{ passage.id }}">
-                    {{"#{stagiaire.prenom} #{stagiaire.nomNaissance}, certification #{certif.getName()} (#{certif.getCode()}) passée le #{passage.dateDebutValidite|date('d-m-Y')}"}}
+                    {{passage}}
                     </label>
                 </li>
         {% endfor %}
