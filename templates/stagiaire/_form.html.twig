@@ -3,7 +3,7 @@
     <button class="btn btn-primary mb-5">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }} #}
 
-{{ form_start(form, {'attr': {'class': 'm-4 d-flex flex-column gap-3'}}) }}
+{{ form_start(form, {'attr': {'class': 'm-4 d-flex flex-column gap-3', 'style': 'max-width: 500px'}}) }}
 <div class="border rounded p-3">
 	{{ form_row(form.nomNaissance) }}
 	<button class="btn mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsedNomUsage" aria-expanded="true" aria-controls="collapsedNomUsage">
