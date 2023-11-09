@@ -15,7 +15,7 @@ class CertificationType extends AbstractType
     {
         $builder
             ->add('type', ChoiceType::class, 
-            ['choices'  => [ 'RNCP' => 'RNCP','RS' => 'RS', 'Diplôme d\'Etablissement' => 'Diplôme d\'Etablissement']])
+            ['choices'  => [ 'RNCP' => 'RNCP','RS' => 'RS']])
             ->add('code')
             ->add('name')
             ->add('startDate', DateType::class, [

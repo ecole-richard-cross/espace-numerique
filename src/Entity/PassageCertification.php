@@ -22,8 +22,8 @@ class PassageCertification
     #[ORM\Column(length: 255, options: ["default" => 'PAR_SCORING'])]
     private ?string $obtentionCertification = 'PAR_SCORING';
 
-    #[ORM\Column]
-    private ?bool $donneeCertifiee = null;
+    #[ORM\Column(options: ["default" => true])]
+    private ?bool $donneeCertifiee = true;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $dateDebutValidite = null;

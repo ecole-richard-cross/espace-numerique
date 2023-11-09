@@ -18,7 +18,7 @@ class PassageCertificationType extends AbstractType
             // ['choices'  => [ 'par admission' => 'PAR_ADMISSION','par scoring' => 'PAR_SCORING'],
             // 'expanded' => true
             // ])
-            ->add('donneeCertifiee')
+            // ->add('donneeCertifiee')
             ->add('dateDebutValidite', DateType::class, [
                 'widget' => 'choice',
                 'input'  => 'datetime_immutable',
@@ -29,6 +29,7 @@ class PassageCertificationType extends AbstractType
                 'years' => range(2000, Date('Y'))
             ])
             // ->add('dateFinValidite')
+            ->add('scoring')
             ->add('stagiaire')
             ->add('certification');
     }

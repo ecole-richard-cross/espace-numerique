@@ -17,15 +17,10 @@ class Certification
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Choice(['RNCP', 'RS'])]
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[Assert\When(
-        expression: 'this.getType() == "RNCP" || this.getType() == "RS" ',
-        constraints: [
-            new Assert\NotBlank([], message: 'Code obligatoire pour les certifications RNCP ou RS')
-        ],
-    )]
     #[Assert\When(
         expression: 'this.getType() == "RNCP"',
         constraints: [
