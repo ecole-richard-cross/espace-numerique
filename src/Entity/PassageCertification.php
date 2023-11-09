@@ -19,8 +19,8 @@ class PassageCertification
     private ?Uuid $id;
 
     #[Assert\Choice(['PAR_ADMISSION', 'PAR_SCORING'])]
-    #[ORM\Column(length: 255, options: ["default" => 'PAR_ADMISSION'])]
-    private ?string $obtentionCertification = 'PAR_ADMISSION';
+    #[ORM\Column(length: 255, options: ["default" => 'PAR_SCORING'])]
+    private ?string $obtentionCertification = 'PAR_SCORING';
 
     #[ORM\Column]
     private ?bool $donneeCertifiee = null;
