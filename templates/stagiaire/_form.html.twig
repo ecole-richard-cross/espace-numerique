@@ -12,14 +12,7 @@
 	<div class="collapse" id="collapsedNomUsage">
 		{{ form_row(form.nomUsage) }}
 	</div>
-	{{ form_row(form.prenom, {'attr': {'class': ''}}) }}
-	<button class="btn mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsedPrenoms" aria-expanded="true" aria-controls="collapsedPrenoms">
-		+
-	</button>
-	<div class="accordion-collapse collapse" id="collapsedPrenoms">
-		{{ form_row(form.prenom2) }}
-		{{ form_row(form.prenom3) }}
-	</div>
+	{{ form_row(form.prenom) }}
 	{{ form_row(form.dateNaissance) }}
 	{{ form_row(form.sexe, {'attr': {'class': 'd-flex gap-3'}}) }}
 	{{ form_row(form.codePostalNaissance) }}
@@ -27,9 +20,6 @@
 </div>
 <div class="border rounded p-3">
 	{{ form_row(form.email) }}
-	{{ form_row(form.siteWeb) }}
-	{{ form_row(form.reseaux) }}
-	{{ form_row(form.localisation) }}
 	{{ form_row(form.visio) }}
 	{{ form_row(form.statut, {'attr': {'class': 'd-flex gap-3'}}) }}
 </div>

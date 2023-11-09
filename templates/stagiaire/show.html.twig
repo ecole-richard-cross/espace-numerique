@@ -24,13 +24,6 @@
                 <td>{{ stagiaire.prenom }}</td>
             </tr>
             <tr>
-                <th>Prenom2</th>
-                <td>{{ stagiaire.prenom2 }}</td>
-            </tr>
-            <tr>
-                <th>Prenom3</th>
-                <td>{{ stagiaire.prenom3 }}</td>
-            </tr>
             <tr>
                 <th>DateNaissance</th>
                 <td>{{ stagiaire.dateNaissance ? stagiaire.dateNaissance|date('Y-m-d') : '' }}</td>
@@ -52,17 +45,6 @@
                 <td>{{ stagiaire.email }}</td>
             </tr>
             <tr>
-                <th>SiteWeb</th>
-                <td>{{ stagiaire.siteWeb }}</td>
-            </tr>
-            <tr>
-                <th>Reseaux</th>
-                <td>{{ stagiaire.reseaux ? stagiaire.reseaux|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Localisation</th>
-                <td>{{ stagiaire.localisation ? stagiaire.localisation|json_encode : '' }}</td>
-            </tr>
             <tr>
                 <th>Visio</th>
                 <td>{{ stagiaire.visio ? 'Yes' : 'No' }}</td>

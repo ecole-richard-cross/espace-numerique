@@ -2,29 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Localisation;
+use App\Entity\CentreFormation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LocalisationType extends AbstractType
+class CentreFormationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('adresse')
-            ->add('codePostal')
-            ->add('departement')
-            ->add('region')
-            ->add('ville')
-            ->add('pays')
+            ->add('name')
+            ->add('debutActivite')
+            ->add('finActivite')
+            ->add('localisation')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Localisation::class,
+            'data_class' => CentreFormation::class,
         ]);
     }
 }

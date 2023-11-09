@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PresenceWeb index{% endblock %}
+
+{% block body %}
+    <h1>PresenceWeb index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Url</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for presence_web in presence_webs %}
+            <tr>
+                <td>{{ presence_web.id }}</td>
+                <td>{{ presence_web.type }}</td>
+                <td>{{ presence_web.url }}</td>
+                <td>
+                    <a href="{{ path('app_presence_web_show', {'id': presence_web.id}) }}">show</a>
+                    <a href="{{ path('app_presence_web_edit', {'id': presence_web.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_presence_web_new') }}">Create new</a>
+{% endblock %}

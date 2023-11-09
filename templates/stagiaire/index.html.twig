@@ -12,16 +12,11 @@
                 <th>NomNaissance</th>
                 <th>NomUsage</th>
                 <th>Prenom</th>
-                <th>Prenom2</th>
-                <th>Prenom3</th>
                 <th>DateNaissance</th>
                 <th>Sexe</th>
                 <th>CodePostalNaissance</th>
                 <th>IdDossierCpf</th>
                 <th>Email</th>
-                <th>SiteWeb</th>
-                <th>Reseaux</th>
-                <th>Localisation</th>
                 <th>Visio</th>
                 <th>Statut</th>
                 <th>actions</th>
@@ -34,16 +29,11 @@
                 <td>{{ stagiaire.nomNaissance }}</td>
                 <td>{{ stagiaire.nomUsage }}</td>
                 <td>{{ stagiaire.prenom }}</td>
-                <td>{{ stagiaire.prenom2 }}</td>
-                <td>{{ stagiaire.prenom3 }}</td>
                 <td>{{ stagiaire.dateNaissance ? stagiaire.dateNaissance|date('Y-m-d') : '' }}</td>
                 <td>{{ stagiaire.sexe }}</td>
                 <td>{{ stagiaire.codePostalNaissance }}</td>
                 <td>{{ stagiaire.idDossierCpf }}</td>
                 <td>{{ stagiaire.email }}</td>
-                <td>{{ stagiaire.siteWeb }}</td>
-                <td>{{ stagiaire.reseaux ? stagiaire.reseaux|json_encode : '' }}</td>
-                <td>{{ stagiaire.localisation ? stagiaire.localisation|json_encode : '' }}</td>
                 <td>{{ stagiaire.visio ? 'Yes' : 'No' }}</td>
                 <td>{{ stagiaire.statut }}</td>
                 <td>

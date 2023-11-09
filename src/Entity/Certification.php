@@ -48,9 +48,13 @@ class Certification
     #[ORM\OneToMany(mappedBy: 'certification', targetEntity: PassageCertification::class)]
     private Collection $passageCertifications;
 
+    #[ORM\OneToMany(mappedBy: 'certification', targetEntity: Promotion::class)]
+    private Collection $promotions;
+
     public function __construct()
     {
         $this->passageCertifications = new ArrayCollection();
+        $this->promotions = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -147,6 +151,36 @@ class Certification
             // set the owning side to null (unless already changed)
             if ($passageCertification->getCertification() === $this) {
                 $passageCertification->setCertification(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promotion>
+     */
+    public function getPromotions(): Collection
+    {
+        return $this->promotions;
+    }
+
+    public function addPromotion(Promotion $promotion): static
+    {
+        if (!$this->promotions->contains($promotion)) {
+            $this->promotions->add($promotion);
+            $promotion->setCertification($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotion(Promotion $promotion): static
+    {
+        if ($this->promotions->removeElement($promotion)) {
+            // set the owning side to null (unless already changed)
+            if ($promotion->getCertification() === $this) {
+                $promotion->setCertification(null);
             }
         }
 

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PresenceWeb{% endblock %}
+
+{% block body %}
+    <h1>PresenceWeb</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ presence_web.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ presence_web.type }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ presence_web.url }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_presence_web_index') }}">back to list</a>
+
+    <a href="{{ path('app_presence_web_edit', {'id': presence_web.id}) }}">edit</a>
+
+    {{ include('presence_web/_delete_form.html.twig') }}
+{% endblock %}

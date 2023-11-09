@@ -18,8 +18,6 @@ class StagiaireType extends AbstractType
             ->add('nomNaissance')
             ->add('nomUsage')
             ->add('prenom')
-            ->add('prenom2')
-            ->add('prenom3')
             ->add('dateNaissance', BirthdayType::class, [
                 'widget' => 'choice',
                 'input'  => 'datetime_immutable',
@@ -35,9 +33,6 @@ class StagiaireType extends AbstractType
             ->add('codePostalNaissance')
             ->add('idDossierCpf')
             ->add('email')
-            ->add('siteWeb')
-            ->add('reseaux', TextareaType::class, ['mapped'=> false, 'required' => false])
-            ->add('localisation', LocalisationType::class, ['mapped'=> false])
             ->add('visio')
             ->add('statut', ChoiceType::class, 
             ['choices'  => [ 'Associé' => 'Associé','Indépendant' => 'Indépendant'],

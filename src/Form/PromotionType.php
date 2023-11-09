@@ -2,29 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Localisation;
+use App\Entity\Promotion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LocalisationType extends AbstractType
+class PromotionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('adresse')
-            ->add('codePostal')
-            ->add('departement')
-            ->add('region')
-            ->add('ville')
-            ->add('pays')
+            ->add('name')
+            ->add('startDate')
+            ->add('endDate')
+            ->add('centreFormation')
+            ->add('certification')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Localisation::class,
+            'data_class' => Promotion::class,
         ]);
     }
 }
