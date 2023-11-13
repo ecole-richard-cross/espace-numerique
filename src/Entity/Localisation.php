@@ -6,6 +6,7 @@ use App\Repository\LocalisationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PostalCodeTools;
 
 #[ORM\Entity(repositoryClass: LocalisationRepository::class)]
 class Localisation
@@ -19,7 +20,7 @@ class Localisation
     private ?string $adresse = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $codePostal = null;
+    private ?string $codePostal = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $departement = null;
@@ -51,10 +52,10 @@ class Localisation
 
     public function __toString()
     {
-        if (isset($this->adresse) && isset($this->codePostal) && isset($this->ville)){
-            return $this->adresse.' '.$this->codePostal.' '.$this->ville;
+        if (isset($this->adresse) && isset($this->codePostal) && isset($this->ville)) {
+            return $this->adresse . ' ' . $this->codePostal . ' ' . $this->ville;
         } else if (isset($this->ville) && isset($this->pays)) {
-            return  $this->ville.' ('.$this->pays.')';
+            return  $this->ville . ' (' . $this->pays . ')';
         } else {
             return $this->codePostal ? $this->codePostal : ($this->ville ? $this->ville : ($this->pays ? $this->pays : 'Localisation vide'));
         }
@@ -77,14 +78,21 @@ class Localisation
         return $this;
     }
 
-    public function getCodePostal(): ?int
+    public function getCodePostal(): ?string
     {
         return $this->codePostal;
     }
 
-    public function setCodePostal(?int $codePostal): static
+    public function setCodePostal(?string $codePostal): static
     {
         $this->codePostal = $codePostal;
+
+        if (strtolower($this->getPays()) !== "France")
+            return $this;
+
+        $details = PostalCodeTools::fetchDetails($this->getCodePostal());
+        $this->setDepartement($details['department']);
+        $this->setRegion($details['region']);
 
         return $this;
     }
@@ -94,7 +102,7 @@ class Localisation
         return $this->departement;
     }
 
-    public function setDepartement(?string $departement): static
+    private function setDepartement(?string $departement): static
     {
         $this->departement = $departement;
 
@@ -106,7 +114,7 @@ class Localisation
         return $this->region;
     }
 
-    public function setRegion(?string $region): static
+    private function setRegion(?string $region): static
     {
         $this->region = $region;
 

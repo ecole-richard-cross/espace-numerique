@@ -14,11 +14,8 @@ class LocalisationType extends AbstractType
         $builder
             ->add('adresse')
             ->add('codePostal')
-            ->add('departement')
-            ->add('region')
             ->add('ville')
-            ->add('pays')
-        ;
+            ->add('pays');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
