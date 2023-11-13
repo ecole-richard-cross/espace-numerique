@@ -4,6 +4,8 @@ L'ENERC est l'environnement web de l'ERC. Il inclura, à terme, le site web de l
 
 ## Plateforme e-learning
 
+Un site web complémentaire au cursus de formation, permettant aux stagiaires d'étoffer les cours avec des mises en situations, aux formateurs d'être guidés sur la pédagogie par Richard et créer du contenu, et au public extérieur de découvrir la formation.
+
 cf. [le cahier des charges e-learning](/cahier-des-charges-elearning.md)
 
 ## Espace administratif
