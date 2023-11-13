@@ -12,32 +12,39 @@
                 <td>{{ stagiaire.id }}</td>
             </tr>
             <tr>
-                <th>NomNaissance</th>
+                <th>Nom de naissance</th>
                 <td>{{ stagiaire.nomNaissance }}</td>
             </tr>
-            <tr>
-                <th>NomUsage</th>
-                <td>{{ stagiaire.nomUsage }}</td>
-            </tr>
+            {% if stagiaire.nomUsage %}
+                <tr>
+                    <th>Nom d'usage</th>
+                    <td>{{ stagiaire.nomUsage }}</td>
+                </tr>
+            {% endif %}
             <tr>
                 <th>Prenom</th>
                 <td>{{ stagiaire.prenom }}</td>
-            </tr>
-            <tr>
-            <tr>
-                <th>DateNaissance</th>
-                <td>{{ stagiaire.dateNaissance ? stagiaire.dateNaissance|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
                 <th>Sexe</th>
                 <td>{{ stagiaire.sexe }}</td>
             </tr>
             <tr>
-                <th>CodePostalNaissance</th>
+                <th>Date de naissance</th>
+                <td>{{ stagiaire.dateNaissance ? stagiaire.dateNaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Code postal de naissance</th>
                 <td>{{ stagiaire.codePostalNaissance }}</td>
             </tr>
             <tr>
-                <th>IdDossierCpf</th>
+                <th>Localisation</th>
+                <td>{{ stagiaire.adressePostal.adresse }}<br>
+                {{ stagiaire.adressePostal.codePostal ~ ' ' ~ stagiaire.adressePostal.ville }}<br>
+                {{ stagiaire.adressePostal.departement ~ ' ' ~ stagiaire.adressePostal.region }}<br></td>
+            </tr>
+            <tr>
+                <th>Id dossier Cpf</th>
                 <td>{{ stagiaire.idDossierCpf }}</td>
             </tr>
             <tr>
