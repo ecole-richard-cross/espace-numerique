@@ -16,6 +16,12 @@ class PostalCodeTools
             $apiRoot . $postalCode
         );
         $content = $response->toArray();
+        if (!isset($content['features'][0]))
+            return [
+                "postalCode" => $postalCode,
+                "department" => '',
+                "region" => ''
+            ];
         $props = $content['features'][0]['properties'];
 
         $context = array_map(function ($string) {

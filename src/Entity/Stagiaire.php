@@ -35,14 +35,14 @@ class Stagiaire
     private ?string $sexe = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $codePostalNaissance = null;
+    private ?string $codePostalNaissance = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $idDossierCpf = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
-    
+
     #[ORM\Column(length: 24, nullable: true)]
     private ?string $phone = null;
 
@@ -62,10 +62,10 @@ class Stagiaire
     #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: PresenceWeb::class, orphanRemoval: true)]
     private Collection $presenceWebs;
 
-    #[ORM\ManyToOne(inversedBy: 'stagiaires')]
+    #[ORM\ManyToOne(inversedBy: 'stagiairesAdressePostal', cascade: ['persist'])]
     private ?Localisation $adressePostal = null;
 
-    #[ORM\ManyToMany(targetEntity: Localisation::class, inversedBy: 'stagiairesAcitivite')]
+    #[ORM\ManyToMany(targetEntity: Localisation::class, inversedBy: 'stagiairesActivite', cascade: ['persist'])]
     private Collection $lieuxActivite;
 
     public function __construct()
@@ -145,12 +145,12 @@ class Stagiaire
         return $this;
     }
 
-    public function getCodePostalNaissance(): ?int
+    public function getCodePostalNaissance(): ?string
     {
         return $this->codePostalNaissance;
     }
 
-    public function setCodePostalNaissance(?int $codePostalNaissance): static
+    public function setCodePostalNaissance(?string $codePostalNaissance): static
     {
         $this->codePostalNaissance = $codePostalNaissance;
 
@@ -259,7 +259,7 @@ class Stagiaire
         return $this;
     }
 
-    
+
     /**
      * @return Collection<int, PresenceWeb>
      */
@@ -277,7 +277,7 @@ class Stagiaire
 
         return $this;
     }
-    
+
     public function removePresenceWeb(PresenceWeb $presenceWeb): static
     {
         if ($this->presenceWebs->removeElement($presenceWeb)) {
@@ -325,5 +325,4 @@ class Stagiaire
 
         return $this;
     }
-
 }

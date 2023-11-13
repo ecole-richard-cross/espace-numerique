@@ -41,13 +41,13 @@ class Localisation
     private Collection $stagiairesAdressePostal;
 
     #[ORM\ManyToMany(targetEntity: Stagiaire::class, mappedBy: 'lieuxActivite')]
-    private Collection $stagiairesAcitivite;
+    private Collection $stagiairesActivite;
 
     public function __construct()
     {
         $this->centreFormations = new ArrayCollection();
         $this->stagiairesAdressePostal = new ArrayCollection();
-        $this->stagiairesAcitivite = new ArrayCollection();
+        $this->stagiairesActivite = new ArrayCollection();
     }
 
     public function __toString()
@@ -211,25 +211,25 @@ class Localisation
     /**
      * @return Collection<int, Stagiaire>
      */
-    public function getStagiairesAcitivite(): Collection
+    public function getStagiairesActivite(): Collection
     {
-        return $this->stagiairesAcitivite;
+        return $this->stagiairesActivite;
     }
 
-    public function addStagiairesAcitivite(Stagiaire $stagiairesAcitivite): static
+    public function addStagiairesActivite(Stagiaire $stagiairesActivite): static
     {
-        if (!$this->stagiairesAcitivite->contains($stagiairesAcitivite)) {
-            $this->stagiairesAcitivite->add($stagiairesAcitivite);
-            $stagiairesAcitivite->addLieuxActivite($this);
+        if (!$this->stagiairesActivite->contains($stagiairesActivite)) {
+            $this->stagiairesActivite->add($stagiairesActivite);
+            $stagiairesActivite->addLieuxActivite($this);
         }
 
         return $this;
     }
 
-    public function removeStagiairesAcitivite(Stagiaire $stagiairesAcitivite): static
+    public function removeStagiairesActivite(Stagiaire $stagiairesActivite): static
     {
-        if ($this->stagiairesAcitivite->removeElement($stagiairesAcitivite)) {
-            $stagiairesAcitivite->removeLieuxActivite($this);
+        if ($this->stagiairesActivite->removeElement($stagiairesActivite)) {
+            $stagiairesActivite->removeLieuxActivite($this);
         }
 
         return $this;

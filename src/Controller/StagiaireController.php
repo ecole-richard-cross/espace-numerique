@@ -30,6 +30,11 @@ class StagiaireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($stagiaire->getLieuxActivite() as $lieu) {
+                $lieu->fetchFromCodePostal();
+            }
+            $stagiaire->getAdressePostal()->fetchFromCodePostal();
+
             $entityManager->persist($stagiaire);
             $entityManager->flush();
 
@@ -57,6 +62,10 @@ class StagiaireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($stagiaire->getLieuxActivite() as $lieu) {
+                $lieu->fetchFromCodePostal();
+            }
+            $stagiaire->getAdressePostal()->fetchFromCodePostal();
             $entityManager->flush();
 
             return $this->redirectToRoute('app_stagiaire_index', [], Response::HTTP_SEE_OTHER);
@@ -71,7 +80,7 @@ class StagiaireController extends AbstractController
     #[Route('/{id}', name: 'app_stagiaire_delete', methods: ['POST'])]
     public function delete(Request $request, Stagiaire $stagiaire, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$stagiaire->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $stagiaire->getId(), $request->request->get('_token'))) {
             $entityManager->remove($stagiaire);
             $entityManager->flush();
         }
