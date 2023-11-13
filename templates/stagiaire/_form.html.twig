@@ -38,7 +38,7 @@
 	<button type="button" class="btn btn-info add_item_link" data-collection-holder-class="lieuxActivite">Ajouter un lieu</button>
 </div>
 <button class="btn btn-primary mb-5">{{ button_label|default('Save') }}</button>
-
+{{ form_row(form._token)}}
 <script>
 	const addLieuFormDeleteLink = (item) => {
 		const removeFormButton = document.createElement('button');
