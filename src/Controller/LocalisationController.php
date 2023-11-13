@@ -30,6 +30,7 @@ class LocalisationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $localisation->fetchFromCodePostal();
             $entityManager->persist($localisation);
             $entityManager->flush();
 
@@ -57,6 +58,7 @@ class LocalisationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $localisation->fetchFromCodePostal();
             $entityManager->flush();
 
             return $this->redirectToRoute('app_localisation_index', [], Response::HTTP_SEE_OTHER);
@@ -71,7 +73,7 @@ class LocalisationController extends AbstractController
     #[Route('/{id}', name: 'app_localisation_delete', methods: ['POST'])]
     public function delete(Request $request, Localisation $localisation, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$localisation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $localisation->getId(), $request->request->get('_token'))) {
             $entityManager->remove($localisation);
             $entityManager->flush();
         }

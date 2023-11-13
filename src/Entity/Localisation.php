@@ -87,7 +87,11 @@ class Localisation
     {
         $this->codePostal = $codePostal;
 
-        if (strtolower($this->getPays()) !== "France")
+        return $this;
+    }
+    public function fetchFromCodePostal(): static
+    {
+        if (trim(strtolower($this->getPays())) !== "france")
             return $this;
 
         $details = PostalCodeTools::fetchDetails($this->getCodePostal());
@@ -96,7 +100,6 @@ class Localisation
 
         return $this;
     }
-
     public function getDepartement(): ?string
     {
         return $this->departement;

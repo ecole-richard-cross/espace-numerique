@@ -17,7 +17,11 @@ class PostalCodeTools
         );
         $content = $response->toArray();
         $props = $content['features'][0]['properties'];
-        $context = trim(explode(',', $props['context']));
+
+        $context = array_map(function ($string) {
+            return trim($string);
+        }, explode(',', $props['context']));
+
         $dep = "$context[1] ($context[0])";
         $region = $context[2];
         return [
