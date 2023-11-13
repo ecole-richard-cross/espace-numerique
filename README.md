@@ -1,8 +1,18 @@
-# Outil de gestion de la base de données de l'Ecole Richard Cross (ERC)
+# Espace numérique Ecole Richard Cross (ERC)
+
+L'ENERC est l'environnement web de l'ERC. Il inclura, à terme, le site web de l'école, un espace e-learning, un réseau social interne, et un espace de gestion administrative.
+
+## Plateforme e-learning
+
+Un site web complémentaire au cursus de formation, permettant aux stagiaires d'étoffer les cours avec des mises en situations, aux formateurs d'être guidés sur la pédagogie par Richard et créer du contenu, et au public extérieur de découvrir la formation.
+
+cf. [le cahier des charges e-learning](/cahier-des-charges-elearning.md)
+
+## Espace administratif
 
 Outil web destiné à numériser la gestion des stagiaires de l'ERC et leur formation.
 
-## Features
+### Features
 
 - Système d'authentification (username/password)
 - Gestion des stagiaires de l'Ecole
@@ -12,7 +22,7 @@ Outil web destiné à numériser la gestion des stagiaires de l'ERC et leur form
 - Gestion de passages de certification des stagiaires
 - Export des passages de certification au format XML selon les spécifications de la Caisse des Dépôts
 
-### Export des passages de certification au format XML
+#### Export des passages de certification au format XML
 
 Omettre toute donnée facultative.
 
@@ -32,15 +42,16 @@ Omettre toute donnée facultative.
 
 Blocs 8 et 9, identification du certifié (état civil en bloc 8, par # de dossier CPF en bloc 9)
 
-### Interface
+#### Interface
 
 L'interface doit être claire et facilement utilisable sans connaissance technique. 
 
-## ETA
+### ETA
 
 Le système doit être complété le plus tôt possible, en tenant compte des contraintes de sécurité, d'évolutivité et de maintenabilité du code.
 
-## Changelog
+# Changelog
 
-8/11 : évolution du projet vers un système de gestion de base de données complète
-6/11 : version initiale, convertisseur xml
++ 13/11 : évolution vers l'Espace Numérique ERC
++ 8/11 : évolution du projet vers un système de gestion de base de données complète
++ 6/11 : version initiale, convertisseur xml
