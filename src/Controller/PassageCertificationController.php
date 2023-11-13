@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PassageCertification;
+use App\Entity\Stagiaire;
 use App\Form\PassageCertificationType;
 use App\Repository\PassageCertificationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,8 +37,10 @@ class PassageCertificationController extends AbstractController
 
             return $this->redirectToRoute('app_passage_certification_index', [], Response::HTTP_SEE_OTHER);
         }
+        $stagiairesList = $entityManager->getRepository(Stagiaire::class)->findAll();
 
         return $this->render('passage_certification/new.html.twig', [
+            'stagiairesList' => $stagiairesList,
             'passage_certification' => $passageCertification,
             'form' => $form,
         ]);
@@ -52,7 +55,7 @@ class PassageCertificationController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_passage_certification_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, PassageCertification $passageCertification, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, PassageCertification $passageCertification, EntityManagerInterface $entityManager, string $id): Response
     {
         $form = $this->createForm(PassageCertificationType::class, $passageCertification);
         $form->handleRequest($request);
@@ -63,7 +66,15 @@ class PassageCertificationController extends AbstractController
             return $this->redirectToRoute('app_passage_certification_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $stagiairesList = $entityManager->getRepository(Stagiaire::class)->findAll();
+        $selected = $entityManager
+            ->getRepository(PassageCertification::class)
+            ->findOneBy(['id' => $id])
+            ->getStagiaire()
+            ->getId();
         return $this->render('passage_certification/edit.html.twig', [
+            'stagiairesList' => $stagiairesList,
+            'selected' => $selected,
             'passage_certification' => $passageCertification,
             'form' => $form,
         ]);
