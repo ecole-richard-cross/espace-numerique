@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Page-1" id="Tp8htie_owTlGBTcX6JP">
-        <mxGraphModel dx="4916" dy="3195" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="none" math="0" shadow="0">
+        <mxGraphModel dx="4980" dy="2910" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="2339" background="none" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -257,7 +257,7 @@
                 <mxCell id="169" value="string: password" style="text;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rounded=0;labelBackgroundColor=none;shadow=0;swimlaneLine=1;fillOpacity=100;snapToPoint=0;fixDash=0;metaEdit=0;backgroundOutline=0;enumerate=0;comic=0;strokeColor=default;" parent="166" vertex="1">
                     <mxGeometry y="90" width="200" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="170" value="string: role" style="text;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rounded=0;labelBackgroundColor=none;shadow=0;swimlaneLine=1;fillOpacity=100;snapToPoint=0;fixDash=0;metaEdit=0;backgroundOutline=0;enumerate=0;comic=0;strokeColor=default;" parent="166" vertex="1">
+                <mxCell id="170" value="json: roles" style="text;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rounded=0;labelBackgroundColor=none;shadow=0;swimlaneLine=1;fillOpacity=100;snapToPoint=0;fixDash=0;metaEdit=0;backgroundOutline=0;enumerate=0;comic=0;strokeColor=default;" parent="166" vertex="1">
                     <mxGeometry y="120" width="200" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="173" value="string: nomNaissance" style="text;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rounded=0;labelBackgroundColor=none;shadow=0;swimlaneLine=1;fillOpacity=100;snapToPoint=0;fixDash=0;metaEdit=0;backgroundOutline=0;enumerate=0;comic=0;strokeColor=default;" parent="166" vertex="1">
