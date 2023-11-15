@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\PassageCertification;
 use App\Repository\PassageCertificationRepository;
@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\XmlConverter;
 use Doctrine\ORM\EntityManagerInterface;
-use ErrorException;
 use Symfony\Component\Uid\Uuid;
 
 class XMLExportController extends AbstractController

@@ -1,0 +1,32 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+{% block main %}
+    <h1 style="color: var(--purple-500);">Espace administritatif</h1>
+    <h2>Espace Numérique Ecole Richard Cross</h2>
+    <div class="m-4 p-3 rounded rounded-5 bg-light">
+        <h3>Stats</h3>
+        <div class="d-flex flex-row gap-5 justify-content-evenly">
+            <div>
+                <h4>Les certifications</h4>
+                <ul>
+                    {% if certifications|length == 0 %}
+                        <li>Aucune certification enregistrée ! 😨</li>
+                    {% endif %}
+                    {% for s in certifications %}
+                        <li>{{ s }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h4>Liste des stagiaires</h4>
+                <ul>
+                    {% if stagiaires|length == 0 %}
+                        <li>Aucun stagiaire enregistré ! 😨</li>
+                    {% endif %}
+                    {% for s in stagiaires %}
+                        <li>{{ s }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
