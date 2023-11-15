@@ -67,10 +67,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: PresenceWeb::class, orphanRemoval: true)]
     private Collection $PresenceWebs;
 
+    #[ORM\OneToMany(mappedBy: 'uploadedBy', targetEntity: Media::class)]
+    private Collection $media;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: SeminarConsultation::class, orphanRemoval: true)]
+    private Collection $seminarConsultations;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Media $avatar = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Discussion::class)]
+    private Collection $discussions;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    private Collection $comments;
+
     public function __construct()
     {
         $this->lieuxActivite = new ArrayCollection();
         $this->PresenceWebs = new ArrayCollection();
+        $this->media = new ArrayCollection();
+        $this->seminarConsultations = new ArrayCollection();
+        $this->discussions = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
 
@@ -328,6 +347,138 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($presenceWeb->getUser() === $this) {
                 $presenceWeb->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): static
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media->add($medium);
+            $medium->setUploadedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): static
+    {
+        if ($this->media->removeElement($medium)) {
+            // set the owning side to null (unless already changed)
+            if ($medium->getUploadedBy() === $this) {
+                $medium->setUploadedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SeminarConsultation>
+     */
+    public function getSeminarConsultations(): Collection
+    {
+        return $this->seminarConsultations;
+    }
+
+    public function addSeminarConsultation(SeminarConsultation $seminarConsultation): static
+    {
+        if (!$this->seminarConsultations->contains($seminarConsultation)) {
+            $this->seminarConsultations->add($seminarConsultation);
+            $seminarConsultation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeminarConsultation(SeminarConsultation $seminarConsultation): static
+    {
+        if ($this->seminarConsultations->removeElement($seminarConsultation)) {
+            // set the owning side to null (unless already changed)
+            if ($seminarConsultation->getUser() === $this) {
+                $seminarConsultation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?Media
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?Media $avatar): static
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Discussion>
+     */
+    public function getDiscussions(): Collection
+    {
+        return $this->discussions;
+    }
+
+    public function addDiscussion(Discussion $discussion): static
+    {
+        if (!$this->discussions->contains($discussion)) {
+            $this->discussions->add($discussion);
+            $discussion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscussion(Discussion $discussion): static
+    {
+        if ($this->discussions->removeElement($discussion)) {
+            // set the owning side to null (unless already changed)
+            if ($discussion->getUser() === $this) {
+                $discussion->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 
