@@ -12,10 +12,9 @@ class PresenceWebType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            // ->add('stagiaire')
             ->add('type')
-            ->add('url')
-            ->add('stagiaire')
-        ;
+            ->add('url');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

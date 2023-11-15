@@ -38,10 +38,10 @@ class Localisation
     private Collection $centreFormations;
 
     #[ORM\OneToOne(mappedBy: 'adressePostale', cascade: ['persist', 'remove'])]
-    private ?User $AdressePostaleOfUser = null;
+    private ?User $adressePostaleOfUser = null;
 
     #[ORM\ManyToOne(inversedBy: 'lieuxActivite')]
-    private ?User $LieuActiviteOfUser = null;
+    private ?User $lieuxActiviteOfUser = null;
 
     public function __construct()
     {
@@ -178,34 +178,34 @@ class Localisation
 
     public function getAdressePostaleOfUser(): ?User
     {
-        return $this->AdressePostaleOfUser;
+        return $this->adressePostaleOfUser;
     }
 
-    public function setAdressePostaleOfUser(?User $AdressePostaleOfUser): static
+    public function setAdressePostaleOfUser(?User $adressePostaleOfUser): static
     {
         // unset the owning side of the relation if necessary
-        if ($AdressePostaleOfUser === null && $this->AdressePostaleOfUser !== null) {
-            $this->AdressePostaleOfUser->setAdressePostale(null);
+        if ($adressePostaleOfUser === null && $this->adressePostaleOfUser !== null) {
+            $this->adressePostaleOfUser->setAdressePostale(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($AdressePostaleOfUser !== null && $AdressePostaleOfUser->getAdressePostale() !== $this) {
-            $AdressePostaleOfUser->setAdressePostale($this);
+        if ($adressePostaleOfUser !== null && $adressePostaleOfUser->getAdressePostale() !== $this) {
+            $adressePostaleOfUser->setAdressePostale($this);
         }
 
-        $this->AdressePostaleOfUser = $AdressePostaleOfUser;
+        $this->adressePostaleOfUser = $adressePostaleOfUser;
 
         return $this;
     }
 
-    public function getLieuActiviteOfUser(): ?User
+    public function getLieuxActiviteOfUser(): ?User
     {
-        return $this->LieuActiviteOfUser;
+        return $this->lieuxActiviteOfUser;
     }
 
-    public function setLieuActiviteOfUser(?User $LieuActiviteOfUser): static
+    public function setLieuxActiviteOfUser(?User $lieuxActiviteOfUser): static
     {
-        $this->LieuActiviteOfUser = $LieuActiviteOfUser;
+        $this->lieuxActiviteOfUser = $lieuxActiviteOfUser;
 
         return $this;
     }

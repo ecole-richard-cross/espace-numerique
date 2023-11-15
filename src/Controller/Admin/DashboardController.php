@@ -2,11 +2,9 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\CentreFormation;
-use App\Entity\Certification;
-use App\Entity\PassageCertification;
-use App\Entity\Promotion;
+use App\Entity\PresenceWeb;
 use App\Entity\Stagiaire;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -53,10 +51,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToDashboard('Accueil', 'fa fa-home'),
             Menuitem::subMenu('Gestion', 'fa fa-list')->setSubItems([
                 MenuItem::linkToCrud('Stagiaires', 'fas fa-list', Stagiaire::class),
-                MenuItem::linkToCrud('Certifications', 'fas fa-list', Certification::class),
-                MenuItem::linkToCrud('Passages d\'une certification', 'fas fa-list', PassageCertification::class),
-                MenuItem::linkToCrud('Promotions', 'fas fa-list', Promotion::class),
-                MenuItem::linkToCrud('Centres de formation', 'fas fa-list', CentreFormation::class),
+                MenuItem::linkToCrud('User', 'fas fa-list', User::class),
+                MenuItem::linkToCrud('PresenceWeb', 'fas fa-list', PresenceWeb::class)
             ])
         ];
     }

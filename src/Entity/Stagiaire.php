@@ -34,10 +34,6 @@ class Stagiaire
     #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: PassageCertification::class)]
     private Collection $passageCertifications;
 
-    #[ORM\OneToOne(inversedBy: 'stagiaire', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
-
     #[ORM\Column]
     private ?bool $enFormation = null;
 

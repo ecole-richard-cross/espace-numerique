@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -50,13 +51,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $visio = null;
 
+    #[Assert\Choice(['Associé', 'Indépendant'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $statut = null;
 
-    #[ORM\OneToOne(inversedBy: 'adressePostaleFromUser', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'adressePostaleOfUser', cascade: ['persist', 'remove'])]
     private ?Localisation $adressePostale = null;
 
-    #[ORM\OneToMany(mappedBy: 'LieuActiviteOfUser', targetEntity: Localisation::class)]
+    #[ORM\OneToMany(mappedBy: 'lieuxActiviteOfUser', targetEntity: Localisation::class)]
     private Collection $lieuxActivite;
 
     #[ORM\OneToOne(mappedBy: 'User', cascade: ['persist', 'remove'])]
@@ -261,7 +263,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->lieuxActivite->contains($lieuxActivite)) {
             $this->lieuxActivite->add($lieuxActivite);
-            $lieuxActivite->setLieuActiviteOfUser($this);
+            $lieuxActivite->setLieuxActiviteOfUser($this);
         }
 
         return $this;
@@ -271,8 +273,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->lieuxActivite->removeElement($lieuxActivite)) {
             // set the owning side to null (unless already changed)
-            if ($lieuxActivite->getLieuActiviteOfUser() === $this) {
-                $lieuxActivite->setLieuActiviteOfUser(null);
+            if ($lieuxActivite->getLieuxActiviteOfUser() === $this) {
+                $lieuxActivite->setLieuxActiviteOfUser(null);
             }
         }
 
