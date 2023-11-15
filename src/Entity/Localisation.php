@@ -37,17 +37,15 @@ class Localisation
     #[ORM\OneToMany(mappedBy: 'localisation', targetEntity: CentreFormation::class)]
     private Collection $centreFormations;
 
-    #[ORM\OneToMany(mappedBy: 'adressePostal', targetEntity: Stagiaire::class)]
-    private Collection $stagiairesAdressePostal;
+    #[ORM\OneToOne(mappedBy: 'adressePostale', cascade: ['persist', 'remove'])]
+    private ?User $AdressePostaleOfUser = null;
 
-    #[ORM\ManyToMany(targetEntity: Stagiaire::class, mappedBy: 'lieuxActivite')]
-    private Collection $stagiairesActivite;
+    #[ORM\ManyToOne(inversedBy: 'lieuxActivite')]
+    private ?User $LieuActiviteOfUser = null;
 
     public function __construct()
     {
         $this->centreFormations = new ArrayCollection();
-        $this->stagiairesAdressePostal = new ArrayCollection();
-        $this->stagiairesActivite = new ArrayCollection();
     }
 
     public function __toString()
@@ -178,59 +176,36 @@ class Localisation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Stagiaire>
-     */
-    public function getStagiairesAdressePostal(): Collection
+    public function getAdressePostaleOfUser(): ?User
     {
-        return $this->stagiairesAdressePostal;
+        return $this->AdressePostaleOfUser;
     }
 
-    public function addStagiaireAdressePostal(Stagiaire $stagiaire): static
+    public function setAdressePostaleOfUser(?User $AdressePostaleOfUser): static
     {
-        if (!$this->stagiairesAdressePostal->contains($stagiaire)) {
-            $this->stagiairesAdressePostal->add($stagiaire);
-            $stagiaire->setAdressePostal($this);
+        // unset the owning side of the relation if necessary
+        if ($AdressePostaleOfUser === null && $this->AdressePostaleOfUser !== null) {
+            $this->AdressePostaleOfUser->setAdressePostale(null);
         }
+
+        // set the owning side of the relation if necessary
+        if ($AdressePostaleOfUser !== null && $AdressePostaleOfUser->getAdressePostale() !== $this) {
+            $AdressePostaleOfUser->setAdressePostale($this);
+        }
+
+        $this->AdressePostaleOfUser = $AdressePostaleOfUser;
 
         return $this;
     }
 
-    public function removeStagiaireAdressePostal(Stagiaire $stagiaire): static
+    public function getLieuActiviteOfUser(): ?User
     {
-        if ($this->stagiairesAdressePostal->removeElement($stagiaire)) {
-            // set the owning side to null (unless already changed)
-            if ($stagiaire->getAdressePostal() === $this) {
-                $stagiaire->setAdressePostal(null);
-            }
-        }
-
-        return $this;
+        return $this->LieuActiviteOfUser;
     }
 
-    /**
-     * @return Collection<int, Stagiaire>
-     */
-    public function getStagiairesActivite(): Collection
+    public function setLieuActiviteOfUser(?User $LieuActiviteOfUser): static
     {
-        return $this->stagiairesActivite;
-    }
-
-    public function addStagiairesActivite(Stagiaire $stagiairesActivite): static
-    {
-        if (!$this->stagiairesActivite->contains($stagiairesActivite)) {
-            $this->stagiairesActivite->add($stagiairesActivite);
-            $stagiairesActivite->addLieuxActivite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStagiairesActivite(Stagiaire $stagiairesActivite): static
-    {
-        if ($this->stagiairesActivite->removeElement($stagiairesActivite)) {
-            $stagiairesActivite->removeLieuxActivite($this);
-        }
+        $this->LieuActiviteOfUser = $LieuActiviteOfUser;
 
         return $this;
     }

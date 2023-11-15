@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PromotionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,14 @@ class Promotion
 
     #[ORM\ManyToOne(inversedBy: 'promotions')]
     private ?Certification $certification = null;
+
+    #[ORM\ManyToMany(targetEntity: Stagiaire::class, mappedBy: 'Promotion')]
+    private Collection $stagiaires;
+
+    public function __construct()
+    {
+        $this->stagiaires = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -96,6 +106,33 @@ class Promotion
     public function setCertification(?Certification $certification): static
     {
         $this->certification = $certification;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stagiaire>
+     */
+    public function getStagiaires(): Collection
+    {
+        return $this->stagiaires;
+    }
+
+    public function addStagiaire(Stagiaire $stagiaire): static
+    {
+        if (!$this->stagiaires->contains($stagiaire)) {
+            $this->stagiaires->add($stagiaire);
+            $stagiaire->addPromotion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStagiaire(Stagiaire $stagiaire): static
+    {
+        if ($this->stagiaires->removeElement($stagiaire)) {
+            $stagiaire->removePromotion($this);
+        }
 
         return $this;
     }

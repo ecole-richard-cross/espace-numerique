@@ -18,18 +18,6 @@ class Stagiaire
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 60)]
-    private ?string $nomNaissance = null;
-
-    #[ORM\Column(length: 60, nullable: true)]
-    private ?string $nomUsage = null;
-
-    #[ORM\Column(length: 60)]
-    private ?string $prenom = null;
-
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $dateNaissance = null;
-
     #[Assert\Choice(['M', 'F'])]
     #[ORM\Column(length: 1)]
     private ?string $sexe = null;
@@ -40,44 +28,35 @@ class Stagiaire
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $idDossierCpf = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $email = null;
-
-    #[ORM\Column(length: 24, nullable: true)]
-    private ?string $phone = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $identifiantsFinanceurs = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $visio = null;
-
-    #[Assert\Choice(['Associé', 'Indépendant'])]
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $statut = null;
 
     #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: PassageCertification::class)]
     private Collection $passageCertifications;
 
-    #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: PresenceWeb::class, orphanRemoval: true)]
-    private Collection $presenceWebs;
+    #[ORM\OneToOne(inversedBy: 'stagiaire', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'stagiairesAdressePostal', cascade: ['persist'])]
-    private ?Localisation $adressePostal = null;
+    #[ORM\Column]
+    private ?bool $enFormation = null;
 
-    #[ORM\ManyToMany(targetEntity: Localisation::class, inversedBy: 'stagiairesActivite', cascade: ['persist'])]
-    private Collection $lieuxActivite;
+    #[ORM\ManyToMany(targetEntity: Promotion::class, inversedBy: 'stagiaires')]
+    private Collection $Promotion;
+
+    #[ORM\OneToOne(inversedBy: 'stagiaire', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $User = null;
 
     public function __construct()
     {
         $this->passageCertifications = new ArrayCollection();
-        $this->presenceWebs = new ArrayCollection();
-        $this->lieuxActivite = new ArrayCollection();
+        $this->Promotion = new ArrayCollection();
     }
 
     public  function __toString(): string
     {
-        return $this->prenom . " " . $this->nomNaissance;
+        return $this->getPrenom() . " " . $this->getNomNaissance();
     }
 
     public function getId(): ?int
@@ -87,50 +66,21 @@ class Stagiaire
 
     public function getNomNaissance(): ?string
     {
-        return $this->nomNaissance;
-    }
-
-    public function setNomNaissance(string $nomNaissance): static
-    {
-        $this->nomNaissance = $nomNaissance;
-
-        return $this;
+        return $this->getUser()->getNomNaissance();
     }
 
     public function getNomUsage(): ?string
     {
-        return $this->nomUsage;
+        return $this->getUser()->getNomUsage();
     }
-
-    public function setNomUsage(?string $nomUsage): static
-    {
-        $this->nomUsage = $nomUsage;
-
-        return $this;
-    }
-
     public function getPrenom(): ?string
     {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): static
-    {
-        $this->prenom = $prenom;
-
-        return $this;
+        return $this->getUser()->getPrenom();
     }
 
     public function getDateNaissance(): ?\DateTimeImmutable
     {
-        return $this->dateNaissance;
-    }
-
-    public function setDateNaissance(\DateTimeImmutable $dateNaissance): static
-    {
-        $this->dateNaissance = $dateNaissance;
-
-        return $this;
+        return $this->getUser()->getDateNaissance();
     }
 
     public function getSexe(): ?string
@@ -171,26 +121,12 @@ class Stagiaire
 
     public function getEmail(): ?string
     {
-        return $this->email;
+        return $this->getUser()->getEmail();
     }
 
-    public function setEmail(?string $email): static
+    public function getPhoneNumber(): ?string
     {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(?string $phone): static
-    {
-        $this->phone = $phone;
-
-        return $this;
+        return $this->getUser()->getPhoneNumber();
     }
 
     public function getIdentifiantsFinanceurs(): ?string
@@ -207,26 +143,12 @@ class Stagiaire
 
     public function isVisio(): ?bool
     {
-        return $this->visio;
-    }
-
-    public function setVisio(?bool $visio): static
-    {
-        $this->visio = $visio;
-
-        return $this;
+        return $this->getUser()->isVisio();
     }
 
     public function getStatut(): ?string
     {
-        return $this->statut;
-    }
-
-    public function setStatut(?string $statut): static
-    {
-        $this->statut = $statut;
-
-        return $this;
+        return $this->getUser()->getStatut();
     }
 
     /**
@@ -265,41 +187,12 @@ class Stagiaire
      */
     public function getPresenceWebs(): Collection
     {
-        return $this->presenceWebs;
+        return $this->getUser()->getPresenceWebs();
     }
 
-    public function addPresenceWeb(PresenceWeb $presenceWeb): static
+    public function getAdressePostale(): ?Localisation
     {
-        if (!$this->presenceWebs->contains($presenceWeb)) {
-            $this->presenceWebs->add($presenceWeb);
-            $presenceWeb->setStagiaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removePresenceWeb(PresenceWeb $presenceWeb): static
-    {
-        if ($this->presenceWebs->removeElement($presenceWeb)) {
-            // set the owning side to null (unless already changed)
-            if ($presenceWeb->getStagiaire() === $this) {
-                $presenceWeb->setStagiaire(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getAdressePostal(): ?Localisation
-    {
-        return $this->adressePostal;
-    }
-
-    public function setAdressePostal(?Localisation $adressePostal): static
-    {
-        $this->adressePostal = $adressePostal;
-
-        return $this;
+        return $this->getUser()->getAdressePostale();
     }
 
     /**
@@ -307,21 +200,53 @@ class Stagiaire
      */
     public function getLieuxActivite(): Collection
     {
-        return $this->lieuxActivite;
+        return $this->getUser()->getLieuxActivite();
     }
 
-    public function addLieuxActivite(Localisation $lieuxActivite): static
+    public function isEnFormation(): ?bool
     {
-        if (!$this->lieuxActivite->contains($lieuxActivite)) {
-            $this->lieuxActivite->add($lieuxActivite);
+        return $this->enFormation;
+    }
+
+    public function setEnFormation(bool $enFormation): static
+    {
+        $this->enFormation = $enFormation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promotion>
+     */
+    public function getPromotion(): Collection
+    {
+        return $this->Promotion;
+    }
+
+    public function addPromotion(Promotion $promotion): static
+    {
+        if (!$this->Promotion->contains($promotion)) {
+            $this->Promotion->add($promotion);
         }
 
         return $this;
     }
 
-    public function removeLieuxActivite(Localisation $lieuxActivite): static
+    public function removePromotion(Promotion $promotion): static
     {
-        $this->lieuxActivite->removeElement($lieuxActivite);
+        $this->Promotion->removeElement($promotion);
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(User $User): static
+    {
+        $this->User = $User;
 
         return $this;
     }

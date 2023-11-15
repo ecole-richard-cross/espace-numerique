@@ -19,9 +19,9 @@ class PresenceWeb
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
-    #[ORM\ManyToOne(inversedBy: 'presenceWebs')]
+    #[ORM\ManyToOne(inversedBy: 'PresenceWebs')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Stagiaire $stagiaire = null;
+    private ?User $user = null;
 
     public function __toString()
     {
@@ -57,14 +57,14 @@ class PresenceWeb
         return $this;
     }
 
-    public function getStagiaire(): ?Stagiaire
+    public function getUser(): ?User
     {
-        return $this->stagiaire;
+        return $this->user;
     }
 
-    public function setStagiaire(?Stagiaire $stagiaire): static
+    public function setUser(?User $user): static
     {
-        $this->stagiaire = $stagiaire;
+        $this->user = $user;
 
         return $this;
     }
