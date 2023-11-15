@@ -56,7 +56,7 @@ class PassageCertification
         $s = $this->getStagiaire();
         $c = $this->getCertification();
         #{stagiaire.prenom} #{stagiaire.nomNaissance}, certification #{certif.getName()} (#{certif.getCode()}) obtenue le #{passage.dateDebutValidite|date('d-m-Y')}"
-        $noms = $s->getPrenom() . " " . $s->getNomNaissance();
+        $noms = $s->getUser()->getPrenom() . " " . $s->getUser()->getNomNaissance();
         $cert = $c->getName() . " (" . $c->getCode() . ") obtenue le " . $this->getDateDebutValidite()->format('d M Y');
         return $noms . ", certification " . $cert;
     }

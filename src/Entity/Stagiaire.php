@@ -22,7 +22,7 @@ class Stagiaire
     #[ORM\Column(length: 1)]
     private ?string $sexe = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $codePostalNaissance = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -52,7 +52,7 @@ class Stagiaire
 
     public  function __toString(): string
     {
-        return $this->getPrenom() . " " . $this->getNomNaissance();
+        return $this->getUser()->__toString();
     }
 
     public function getId(): ?int
@@ -60,24 +60,6 @@ class Stagiaire
         return $this->id;
     }
 
-    public function getNomNaissance(): ?string
-    {
-        return $this->getUser()->getNomNaissance();
-    }
-
-    public function getNomUsage(): ?string
-    {
-        return $this->getUser()->getNomUsage();
-    }
-    public function getPrenom(): ?string
-    {
-        return $this->getUser()->getPrenom();
-    }
-
-    public function getDateNaissance(): ?\DateTimeImmutable
-    {
-        return $this->getUser()->getDateNaissance();
-    }
 
     public function getSexe(): ?string
     {
@@ -115,16 +97,6 @@ class Stagiaire
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->getUser()->getEmail();
-    }
-
-    public function getPhoneNumber(): ?string
-    {
-        return $this->getUser()->getPhoneNumber();
-    }
-
     public function getIdentifiantsFinanceurs(): ?string
     {
         return $this->identifiantsFinanceurs;
@@ -135,16 +107,6 @@ class Stagiaire
         $this->identifiantsFinanceurs = $identifiantsFinanceurs;
 
         return $this;
-    }
-
-    public function isVisio(): ?bool
-    {
-        return $this->getUser()->isVisio();
-    }
-
-    public function getStatut(): ?string
-    {
-        return $this->getUser()->getStatut();
     }
 
     /**
@@ -175,28 +137,6 @@ class Stagiaire
         }
 
         return $this;
-    }
-
-
-    /**
-     * @return Collection<int, PresenceWeb>
-     */
-    public function getPresenceWebs(): Collection
-    {
-        return $this->getUser()->getPresenceWebs();
-    }
-
-    public function getAdressePostale(): ?Localisation
-    {
-        return $this->getUser()->getAdressePostale();
-    }
-
-    /**
-     * @return Collection<int, Localisation>
-     */
-    public function getLieuxActivite(): Collection
-    {
-        return $this->getUser()->getLieuxActivite();
     }
 
     public function isEnFormation(): ?bool

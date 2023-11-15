@@ -73,6 +73,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->PresenceWebs = new ArrayCollection();
     }
 
+
+    public  function __toString(): string
+    {
+        return $this->getPrenom() . " " . $this->getNomNaissance();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
