@@ -11,8 +11,10 @@ use App\Entity\Section;
 use App\Entity\Seminar;
 use App\Entity\Category;
 use App\Entity\CentreFormation;
+use App\Entity\Media;
 use App\Entity\PassageCertification;
 use App\Entity\Promotion;
+use App\Entity\SeminarConsultation;
 use App\Entity\Stagiaire;
 use App\Entity\Tag;
 use App\Entity\User;
@@ -84,10 +86,12 @@ class DashboardController extends AbstractDashboardController
                     MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
                     MenuItem::linkToCrud('Tags', 'fas fa-hashtag', Tag::class),
                     MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
-                    MenuItem::linkToCrud('Seminar', 'fas fa-book', Seminar::class),
-                    MenuItem::linkToCrud('Chapter', 'fas fa-file-text', Chapter::class),
+                    MenuItem::linkToCrud('Consultation de Séminaire', 'fa fa-check-square-o', SeminarConsultation::class),
+                    MenuItem::linkToCrud('Séminaire', 'fas fa-book', Seminar::class),
+                    MenuItem::linkToCrud('Chapitre', 'fas fa-file-text', Chapter::class),
                     MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
-                    MenuItem::linkToCrud('Block', 'fas fa-cube', Block::class)
+                    MenuItem::linkToCrud('Bloc', 'fas fa-cube', Block::class),
+                    MenuItem::linkToCrud('Média', 'fa  fa-file-picture-o', Media::class)
                 ])
         ];
     }
