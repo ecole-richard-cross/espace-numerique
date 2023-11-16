@@ -31,8 +31,10 @@ class SeminarCrudController extends AbstractCrudController
                 ->setChoices(array_combine($roles, $roles))
                 ->allowMultipleChoices()
                 ->renderExpanded();
-            yield DateTimeField::new('createdAt');
-            yield DateTimeField::new('updatedAt');
+            yield DateTimeField::new('createdAt')
+                ->hideOnForm();
+            yield DateTimeField::new('updatedAt')
+                ->hideOnForm();
             yield CollectionField::new('chapters')
                 ->useEntryCrudForm(ChapterCrudController::class);
     }
