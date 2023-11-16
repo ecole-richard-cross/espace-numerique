@@ -63,9 +63,9 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::linkToDashboard('Accueil', 'fa fa-home'),
             Menuitem::subMenu('Gestion', 'fa fa-list')->setSubItems([
+                MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
                 MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
                 MenuItem::linkToCrud('User', 'fa-regular fa-user', User::class),
-                MenuItem::linkToCrud('PresenceWeb', 'fas fa-link', PresenceWeb::class)
             ])
         ];
     }

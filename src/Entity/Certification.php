@@ -33,10 +33,10 @@ class Certification
             new Assert\Regex('/^RS[\d]{3,4}$/', message: 'Le code doit être de forme RSXXXX')
         ],
     )]
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(length: 100)]
     private ?string $code = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
