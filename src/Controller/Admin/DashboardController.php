@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\IndexController;
 use App\Entity\Certification;
+use App\Entity\PassageCertification;
 use App\Entity\PresenceWeb;
 use App\Entity\Stagiaire;
 use App\Entity\User;
@@ -65,6 +66,7 @@ class DashboardController extends AbstractDashboardController
             Menuitem::subMenu('Gestion', 'fa fa-list')->setSubItems([
                 MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
                 MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
+                MenuItem::linkToCrud("Passage d'une certification", 'fas fa-user-graduate', PassageCertification::class),
                 MenuItem::linkToCrud('User', 'fa-regular fa-user', User::class),
             ])
         ];

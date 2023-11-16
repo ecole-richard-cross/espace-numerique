@@ -25,7 +25,8 @@ class StagiaireCrudController extends AbstractCrudController
             BooleanField::new('enFormation', 'En formation actuellement'),
             ChoiceField::new('sexe')
                 ->setChoices(['M' => 'M', 'F' => 'F'])
-                ->allowMultipleChoices(false),
+                ->allowMultipleChoices(false)
+                ->renderExpanded(),
             'codePostalNaissance',
             'idDossierCpf',
             TextareaField::new('identifiantsFinanceurs', 'Identifiants financeurs, 1 par ligne'),
