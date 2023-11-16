@@ -30,6 +30,11 @@ class Block
     #[ORM\ManyToOne(inversedBy: 'blocks')]
     private ?Media $media = null;
 
+    public function __toString()
+    {
+        return $this->number.': '.($this->content ? $this->content : '').' ['.$this->type.']';
+    }
+
     public function getId(): ?int
     {
         return $this->id;

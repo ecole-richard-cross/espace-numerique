@@ -28,12 +28,17 @@ class Chapter
     #[ORM\JoinColumn(nullable: false)]
     private ?Seminar $seminar = null;
 
-    #[ORM\OneToMany(mappedBy: 'chapter', targetEntity: Section::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'chapter', targetEntity: Section::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $sections;
 
     public function __construct()
     {
         $this->sections = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->number.'. '.$this->title;
     }
 
     public function getId(): ?int

@@ -3,8 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Controller\IndexController;
+use App\Entity\Block;
 use App\Entity\Certification;
+use App\Entity\Chapter;
 use App\Entity\PresenceWeb;
+use App\Entity\Section;
+use App\Entity\Seminar;
 use App\Entity\Stagiaire;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -65,7 +69,11 @@ class DashboardController extends AbstractDashboardController
             Menuitem::subMenu('Gestion', 'fa fa-list')->setSubItems([
                 MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
                 MenuItem::linkToCrud('User', 'fa-regular fa-user', User::class),
-                MenuItem::linkToCrud('PresenceWeb', 'fas fa-link', PresenceWeb::class)
+                MenuItem::linkToCrud('PresenceWeb', 'fas fa-link', PresenceWeb::class),
+                MenuItem::linkToCrud('Seminar', 'fas fa-book', Seminar::class),
+                MenuItem::linkToCrud('Chapter', 'fas fa-file-text', Chapter::class),
+                MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
+                MenuItem::linkToCrud('Block', 'fas fa-cube', Block::class)
             ])
         ];
     }

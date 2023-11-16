@@ -33,7 +33,7 @@ class Seminar
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: Chapter::class)]
+    #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: Chapter::class, cascade: ['persist'])]
     private Collection $chapters;
 
     #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: SeminarConsultation::class, orphanRemoval: true)]
@@ -54,6 +54,11 @@ class Seminar
         $this->seminarConsultations = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->tags = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 
     public function getId(): ?int
