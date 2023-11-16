@@ -25,7 +25,7 @@ Un système de messagerie simple permettra une communication entre apprenants et
 
 ## Objectifs
 
-Pour le portail publique, il est nécessaire de recréer une charte graphique web plus professionnelle en respectant les couleurs clés de l'entreprise.
+Pour le portail public, il est nécessaire de recréer une charte graphique web plus professionnelle en respectant les couleurs clés de l'entreprise.
 Cette charte graphique sera la base d'une refonte de tout l'écosystème web de l'entreprise (site ecole-richard-cross.fr, plateforme e-learning, et futurs projets).
 
 Les outils développés et mis en place devront s'adapter sur tout support web, avoir des performances optimisées et respecter les normes d'accessibilité et de sécurité web.

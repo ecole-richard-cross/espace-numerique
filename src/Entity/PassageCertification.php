@@ -61,6 +61,11 @@ class PassageCertification
         return $noms . ", certification " . $cert;
     }
 
+    public function __construct()
+    {
+        $this->id = Uuid::v7();
+    }
+
     public function getId(): ?Uuid
     {
         return $this->id;

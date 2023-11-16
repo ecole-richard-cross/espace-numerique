@@ -19,7 +19,6 @@ class PresenceWebCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
             ChoiceField::new('type')->setChoices([
                 'Réseau social' => 'Réseau social',
                 'Site web' => 'Site web',

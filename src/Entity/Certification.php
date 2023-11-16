@@ -24,19 +24,19 @@ class Certification
     #[Assert\When(
         expression: 'this.getType() == "RNCP"',
         constraints: [
-            new Assert\Regex('/^RNCP.*/', message: 'Le code doit être de forme RNCPXXXXX')
+            new Assert\Regex('/^RNCP[\d]{3,5}$/', message: 'Le code doit être de forme RNCPXXXXX')
         ],
     )]
     #[Assert\When(
         expression: 'this.getType() == "RS"',
         constraints: [
-            new Assert\Regex('/^RS.*/', message: 'Le code doit être de forme RSXXXX')
+            new Assert\Regex('/^RS[\d]{3,4}$/', message: 'Le code doit être de forme RSXXXX')
         ],
     )]
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(length: 100)]
     private ?string $code = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]

@@ -9,7 +9,12 @@ use App\Entity\Chapter;
 use App\Entity\PresenceWeb;
 use App\Entity\Section;
 use App\Entity\Seminar;
+use App\Entity\Category;
+use App\Entity\CentreFormation;
+use App\Entity\PassageCertification;
+use App\Entity\Promotion;
 use App\Entity\Stagiaire;
+use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -58,7 +63,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Espace Numerique')
+            ->setTitle('<h1 style="color: var(--purple-600); font-size: 1.33rem;">Administration Espace Numérique Ecole Richard Cross</h1>')
             ->setLocales(['fr']);
     }
 
@@ -66,15 +71,24 @@ class DashboardController extends AbstractDashboardController
     {
         return [
             MenuItem::linkToDashboard('Accueil', 'fa fa-home'),
-            Menuitem::subMenu('Gestion', 'fa fa-list')->setSubItems([
-                MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
-                MenuItem::linkToCrud('User', 'fa-regular fa-user', User::class),
-                MenuItem::linkToCrud('PresenceWeb', 'fas fa-link', PresenceWeb::class),
-                MenuItem::linkToCrud('Seminar', 'fas fa-book', Seminar::class),
-                MenuItem::linkToCrud('Chapter', 'fas fa-file-text', Chapter::class),
-                MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
-                MenuItem::linkToCrud('Block', 'fas fa-cube', Block::class)
-            ])
+            Menuitem::subMenu('Gestion', 'fa fa-list')
+                ->setSubItems([
+                    MenuItem::section("Certification"),
+                    MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
+                    MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
+                    MenuItem::linkToCrud("Passage d'une certification", 'fas fa-user-graduate', PassageCertification::class),
+                    MenuItem::section("Ecole"),
+                    MenuItem::linkToCrud('Centres de formation', 'fas fa-school', CentreFormation::class),
+                    MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
+                    MenuItem::section("E-learning"),
+                    MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
+                    MenuItem::linkToCrud('Tags', 'fas fa-hashtag', Tag::class),
+                    MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
+                    MenuItem::linkToCrud('Seminar', 'fas fa-book', Seminar::class),
+                    MenuItem::linkToCrud('Chapter', 'fas fa-file-text', Chapter::class),
+                    MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
+                    MenuItem::linkToCrud('Block', 'fas fa-cube', Block::class)
+                ])
         ];
     }
 }

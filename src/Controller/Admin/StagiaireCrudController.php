@@ -20,12 +20,12 @@ class StagiaireCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
             AssociationField::new('User', 'Utilisateur correspondant'),
             BooleanField::new('enFormation', 'En formation actuellement'),
             ChoiceField::new('sexe')
                 ->setChoices(['M' => 'M', 'F' => 'F'])
-                ->allowMultipleChoices(false),
+                ->allowMultipleChoices(false)
+                ->renderExpanded(),
             'codePostalNaissance',
             'idDossierCpf',
             TextareaField::new('identifiantsFinanceurs', 'Identifiants financeurs, 1 par ligne'),
