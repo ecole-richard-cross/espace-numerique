@@ -3,12 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Controller\IndexController;
+use App\Entity\Category;
 use App\Entity\CentreFormation;
 use App\Entity\Certification;
 use App\Entity\PassageCertification;
 use App\Entity\PresenceWeb;
 use App\Entity\Promotion;
 use App\Entity\Stagiaire;
+use App\Entity\Tag;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -74,7 +76,9 @@ class DashboardController extends AbstractDashboardController
                     MenuItem::section("Ecole"),
                     MenuItem::linkToCrud('Centres de formation', 'fas fa-school', CentreFormation::class),
                     MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
-                    MenuItem::section("Web"),
+                    MenuItem::section("E-learning"),
+                    MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
+                    MenuItem::linkToCrud('Tags', 'fas fa-hashtag', Tag::class),
                     MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
                 ])
         ];
