@@ -18,7 +18,6 @@ class LocalisationCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
             TextField::new('adresse', 'Numéro et libellé de voie'),
             'codePostal',
             'ville',

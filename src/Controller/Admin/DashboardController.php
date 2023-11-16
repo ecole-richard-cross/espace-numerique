@@ -3,9 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Controller\IndexController;
+use App\Entity\CentreFormation;
 use App\Entity\Certification;
 use App\Entity\PassageCertification;
 use App\Entity\PresenceWeb;
+use App\Entity\Promotion;
 use App\Entity\Stagiaire;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -63,12 +65,18 @@ class DashboardController extends AbstractDashboardController
     {
         return [
             MenuItem::linkToDashboard('Accueil', 'fa fa-home'),
-            Menuitem::subMenu('Gestion', 'fa fa-list')->setSubItems([
-                MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
-                MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
-                MenuItem::linkToCrud("Passage d'une certification", 'fas fa-user-graduate', PassageCertification::class),
-                MenuItem::linkToCrud('User', 'fa-regular fa-user', User::class),
-            ])
+            Menuitem::subMenu('Gestion', 'fa fa-list')
+                ->setSubItems([
+                    MenuItem::section("Certification"),
+                    MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
+                    MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
+                    MenuItem::linkToCrud("Passage d'une certification", 'fas fa-user-graduate', PassageCertification::class),
+                    MenuItem::section("Ecole"),
+                    MenuItem::linkToCrud('Centres de formation', 'fas fa-school', CentreFormation::class),
+                    MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
+                    MenuItem::section("Web"),
+                    MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
+                ])
         ];
     }
 }
