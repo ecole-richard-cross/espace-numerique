@@ -25,6 +25,7 @@ class SeminarCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        dump($_REQUEST['crudControllerFqcn']);
         yield IdField::new('id')
             ->hideOnForm();
         yield TextField::new('title');

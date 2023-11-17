@@ -28,7 +28,8 @@ class SectionCrudController extends AbstractCrudController
             ->hideOnForm();
         yield TextField::new('title');
         yield IntegerField::new('number');
-        yield AssociationField::new('chapter');
+        $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\SectionCrudController' && 
+            yield AssociationField::new('chapter');
         yield CollectionField::new('blocks')
             ->useEntryCrudForm(BlockCrudController::class);
     }
