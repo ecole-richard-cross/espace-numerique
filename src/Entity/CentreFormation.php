@@ -25,7 +25,7 @@ class CentreFormation
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $finActivite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'centreFormations')]
+    #[ORM\OneToOne(inversedBy: 'centreFormation', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Localisation $localisation = null;
 
