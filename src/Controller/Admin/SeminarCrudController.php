@@ -25,32 +25,39 @@ class SeminarCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        dump($_REQUEST['crudControllerFqcn']);
-        yield IdField::new('id')
-            ->hideOnForm();
-        yield TextField::new('title');
+        yield TextField::new('title', 'Titre');
         yield TextField::new('description');
-        yield AssociationField::new('categories', 'Catégories');
-        yield AssociationField::new('tags', 'Hashtags');
-        yield BooleanField::new('isPublished');
+        yield AssociationField::new('categories', 'Catégories')
+            ->setTemplatePath('admin/collectionList.html.twig');
+        yield AssociationField::new('tags', 'Hashtags')
+            ->setTemplatePath('admin/hashtagsList.html.twig');
+        yield BooleanField::new('isPublished', 'Publié');
         $roles = ['ROLE_ADMIN', 'ROLE_USER'];
-        yield ChoiceField::new('roles')
+        yield ChoiceField::new('roles', 'Assigné à')
             ->setChoices(array_combine($roles, $roles))
             ->allowMultipleChoices()
-            ->renderExpanded();
-        yield DateTimeField::new('createdAt')
+            ->renderExpanded()
+            ->hideOnIndex();
+        yield DateTimeField::new('createdAt', 'Créé le')
             ->hideOnForm();
-        yield DateTimeField::new('updatedAt')
+        yield DateTimeField::new('updatedAt', 'Mis à jour le')
             ->hideOnForm();
-        yield CollectionField::new('chapters')
+        yield CollectionField::new('chapters', 'Chapitres')
             ->addCssFiles('ea-nested-styling-fix.css')
             ->useEntryCrudForm(ChapterCrudController::class);
     }
 
 
-    function configureActions(Actions $actions): Actions
+    public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->showEntityActionsInlined()
+            ->setEntityLabelInSingular("Séminaire")
+            ->setEntityLabelInPlural("Séminaires");
     }
 }
