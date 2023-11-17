@@ -8,8 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class CertificationCrudController extends AbstractCrudController
@@ -23,20 +22,25 @@ class CertificationCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
+            TextField::new('name', 'Nom'),
             ChoiceField::new('type')
                 ->setChoices(['RNCP' => 'RNCP', 'RS' => 'RS'])
-                ->renderExpanded(),
+                ->renderExpanded()
+                ->hideOnIndex(),
             TextField::new('code')->setMaxLength(9),
-            'name',
-            'startDate',
-            'endDate'
+            DateField::new('startDate', 'Début de validité'),
+            DateField::new('endDate', 'Fin de validité')
         ];
     }
 
-    function configureActions(Actions $actions): Actions
+    public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->showEntityActionsInlined();
     }
 }

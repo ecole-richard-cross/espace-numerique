@@ -1,0 +1,5 @@
+{% for instance in field.value %}
+    <span class="">{{instance}}</span> {% if not loop.last %}, {% endif %}
+{% else %}
+    <span class="badge badge-outline">Aucun(e)</span>
+{% endfor %}

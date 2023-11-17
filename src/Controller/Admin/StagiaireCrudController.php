@@ -10,8 +10,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class StagiaireCrudController extends AbstractCrudController
 {
@@ -24,21 +24,28 @@ class StagiaireCrudController extends AbstractCrudController
     {
         return [
             AssociationField::new('User', 'Utilisateur correspondant'),
+            AssociationField::new('Promotion')->setTemplatePath('admin/collectionList.html.twig'),
             BooleanField::new('enFormation', 'En formation actuellement'),
             ChoiceField::new('sexe')
                 ->setChoices(['M' => 'M', 'F' => 'F'])
                 ->allowMultipleChoices(false)
-                ->renderExpanded(),
-            'codePostalNaissance',
-            'idDossierCpf',
-            TextareaField::new('identifiantsFinanceurs', 'Identifiants financeurs, 1 par ligne'),
-            AssociationField::new('Promotion')
+                ->renderExpanded()
+                ->hideOnIndex(),
+            TextField::new('codePostalNaissance', 'Code postal de naissance')
+                ->hideOnIndex(),
+            TextField::new('idDossierCpf', 'Identifiant CPF'),
+            TextareaField::new('identifiantsFinanceurs', 'Identifiants financeurs, 1 par ligne')->hideOnIndex()
         ];
     }
 
-    function configureActions(Actions $actions): Actions
+    public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->showEntityActionsInlined();
     }
 }

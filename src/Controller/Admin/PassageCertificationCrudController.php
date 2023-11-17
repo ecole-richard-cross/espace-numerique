@@ -23,36 +23,48 @@ class PassageCertificationCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            AssociationField::new('stagiaire'),
+            AssociationField::new('certification'),
+            TextField::new('scoring'),
+            DateField::new('dateDebutValidite', 'Remise de la certification')
+                ->setRequired(true),
+            TextField::new('mentionValidee', 'Mention')
+                ->hideOnForm()
+                ->hideOnIndex()
+                ->hideOnDetail(),
             ChoiceField::new('obtentionCertification')
                 ->setChoices([
                     'PAR_SCORING' => 'PAR_SCORING',
                     'PAR_ADMISSION' => 'PAR_ADMISSION'
                 ])
-                ->setValue('PAR_SCORING')
-                ->hideOnForm(),
+                ->hideOnForm()
+                ->hideOnIndex()
+                ->hideOnDetail(),
             BooleanField::new('donneeCertifiee')
-                ->setValue(true)
-                ->hideOnForm(),
+                ->hideOnForm()
+                ->hideOnIndex()
+                ->hideOnDetail(),
             BooleanField::new('presenceNiveauLangueEuro')
-                ->setValue(false)
-                ->hideOnForm(),
+                ->hideOnForm()
+                ->hideOnIndex()
+                ->hideOnDetail(),
             BooleanField::new('presenceNiveauNumeriqueEuro')
-                ->setValue(false)
-                ->hideOnForm(),
-            AssociationField::new('certification'),
-            AssociationField::new('stagiaire'),
-            TextField::new('scoring')
-                ->setRequired(true),
-            TextField::new('mentioValidee')
-                ->hideOnForm(),
-            DateField::new('dateDebutValidite')
-                ->setRequired(true),
+                ->hideOnForm()
+                ->hideOnIndex()
+                ->hideOnDetail(),
         ];
     }
 
-    function configureActions(Actions $actions): Actions
+    public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->showEntityActionsInlined()
+            ->setEntityLabelInSingular('Passage de certification')
+            ->setEntityLabelInPlural('Passages de certification');
     }
 }

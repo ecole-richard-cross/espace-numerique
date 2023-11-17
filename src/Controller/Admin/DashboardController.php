@@ -78,7 +78,7 @@ class DashboardController extends AbstractDashboardController
                     MenuItem::section("Certification"),
                     MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
                     MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
-                    MenuItem::linkToCrud("Passage d'une certification", 'fas fa-user-graduate', PassageCertification::class),
+                    MenuItem::linkToCrud("Passage de certification", 'fas fa-user-graduate', PassageCertification::class),
                     MenuItem::section("Ecole"),
                     MenuItem::linkToCrud('Centres de formation', 'fas fa-school', CentreFormation::class),
                     MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
