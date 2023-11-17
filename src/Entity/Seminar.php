@@ -34,7 +34,7 @@ class Seminar
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: Chapter::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: Chapter::class, cascade: ['persist', 'remove'])]
     private Collection $chapters;
 
     #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: SeminarConsultation::class, orphanRemoval: true)]
