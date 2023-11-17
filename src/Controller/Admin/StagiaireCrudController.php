@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Stagiaire;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -31,5 +34,11 @@ class StagiaireCrudController extends AbstractCrudController
             TextareaField::new('identifiantsFinanceurs', 'Identifiants financeurs, 1 par ligne'),
             AssociationField::new('Promotion')
         ];
+    }
+
+    function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 }

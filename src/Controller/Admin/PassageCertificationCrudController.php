@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\PassageCertification;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -45,5 +48,11 @@ class PassageCertificationCrudController extends AbstractCrudController
             DateField::new('dateDebutValidite')
                 ->setRequired(true),
         ];
+    }
+
+    function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 }
