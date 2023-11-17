@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\LocalisationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use PostalCodeTools;
 
@@ -34,19 +32,14 @@ class Localisation
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $pays = null;
 
-    #[ORM\OneToMany(mappedBy: 'localisation', targetEntity: CentreFormation::class)]
-    private Collection $centreFormations;
+    #[ORM\OneToOne(mappedBy: 'localisation', targetEntity: CentreFormation::class)]
+    private CentreFormation $centreFormation;
 
     #[ORM\OneToOne(mappedBy: 'adressePostale', cascade: ['persist', 'remove'])]
     private ?User $adressePostaleOfUser = null;
 
     #[ORM\ManyToOne(inversedBy: 'lieuxActivite')]
     private ?User $lieuxActiviteOfUser = null;
-
-    public function __construct()
-    {
-        $this->centreFormations = new ArrayCollection();
-    }
 
     public function __toString()
     {
@@ -146,33 +139,14 @@ class Localisation
         return $this;
     }
 
-    /**
-     * @return Collection<int, CentreFormation>
-     */
-    public function getCentreFormations(): Collection
+    public function getCentreFormation(): CentreFormation
     {
-        return $this->centreFormations;
+        return $this->centreFormation;
     }
 
-    public function addCentreFormation(CentreFormation $centreFormation): static
+    public function setCentreFormation(CentreFormation $centreFormation): static
     {
-        if (!$this->centreFormations->contains($centreFormation)) {
-            $this->centreFormations->add($centreFormation);
-            $centreFormation->setLocalisation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCentreFormation(CentreFormation $centreFormation): static
-    {
-        if ($this->centreFormations->removeElement($centreFormation)) {
-            // set the owning side to null (unless already changed)
-            if ($centreFormation->getLocalisation() === $this) {
-                $centreFormation->setLocalisation(null);
-            }
-        }
-
+        $this->centreFormation = $centreFormation;
         return $this;
     }
 
