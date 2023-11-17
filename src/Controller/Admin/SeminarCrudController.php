@@ -42,7 +42,7 @@ class SeminarCrudController extends AbstractCrudController
         yield DateTimeField::new('updatedAt')
             ->hideOnForm();
         yield CollectionField::new('chapters')
-            ->addCssFiles('collection-styling-fix.css')
+            ->addCssFiles('ea-nested-styling-fix.css')
             ->useEntryCrudForm(ChapterCrudController::class);
     }
 
