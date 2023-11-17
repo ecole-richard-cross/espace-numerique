@@ -58,28 +58,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(inversedBy: 'adressePostaleOfUser', cascade: ['persist', 'remove'])]
     private ?Localisation $adressePostale = null;
 
-    #[ORM\OneToMany(mappedBy: 'lieuxActiviteOfUser', targetEntity: Localisation::class)]
+    #[ORM\OneToMany(mappedBy: 'lieuxActiviteOfUser', targetEntity: Localisation::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $lieuxActivite;
 
     #[ORM\OneToOne(mappedBy: 'User', cascade: ['persist', 'remove'])]
     private ?Stagiaire $stagiaire = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PresenceWeb::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PresenceWeb::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $PresenceWebs;
 
     #[ORM\OneToMany(mappedBy: 'uploadedBy', targetEntity: Media::class)]
     private Collection $media;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: SeminarConsultation::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: SeminarConsultation::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $seminarConsultations;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Media $avatar = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Discussion::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Discussion::class, orphanRemoval: false)]
     private Collection $discussions;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: false)]
     private Collection $comments;
 
     public function __construct()
