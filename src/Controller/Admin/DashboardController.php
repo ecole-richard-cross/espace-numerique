@@ -84,7 +84,7 @@ class DashboardController extends AbstractDashboardController
                     MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
                     MenuItem::section("E-learning"),
                     MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
-                    MenuItem::linkToCrud('Tags', 'fas fa-hashtag', Tag::class),
+                    MenuItem::linkToCrud('Hashtags', 'fas fa-hashtag', Tag::class),
                     MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
                     MenuItem::linkToCrud('Consultation de Séminaire', 'fa fa-check-square-o', SeminarConsultation::class),
                     MenuItem::linkToCrud('Séminaire', 'fas fa-book', Seminar::class),

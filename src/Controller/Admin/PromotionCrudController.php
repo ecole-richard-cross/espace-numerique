@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class PromotionCrudController extends AbstractCrudController
 {
@@ -22,16 +23,27 @@ class PromotionCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Titre de la promo')->setRequired(true),
+            AssociationField::new('centreFormation', 'Centre de formation'),
+            AssociationField::new('certification', 'Certification passée'),
             DateField::new('startDate', 'Débute le'),
             DateField::new('endDate', 'Finit le'),
-            AssociationField::new('centreFormation', 'Centre de formation'),
-            AssociationField::new('certification', 'Certification passée')
+            AssociationField::new('stagiaires', 'Nombre de stagiaires')
+                ->hideOnform(),
+            CollectionField::new('stagiaires', 'Liste des stagiaires')
+                ->hideOnForm()
+                ->hideOnIndex()
+                ->setTemplatePath('admin/collectionList.html.twig')
         ];
     }
 
-    function configureActions(Actions $actions): Actions
+    public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->showEntityActionsInlined();
     }
 }

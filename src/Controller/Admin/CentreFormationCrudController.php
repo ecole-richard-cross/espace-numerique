@@ -23,16 +23,23 @@ class CentreFormationCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Nom du centre'),
-            DateField::new('debutActivite', "Début d'activité"),
-            DateField::new('finActivite', "Fin d'activité"),
             AssociationField::new('localisation', 'Localisation')
-                ->renderAsEmbeddedForm(LocalisationCrudController::class)
+                ->renderAsEmbeddedForm(LocalisationCrudController::class),
+            DateField::new('debutActivite', "Début d'activité"),
+            DateField::new('finActivite', "Fin d'activité")
         ];
     }
 
-    function configureActions(Actions $actions): Actions
+    public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->showEntityActionsInlined()
+            ->setEntityLabelInSingular('Centre de formation')
+            ->setEntityLabelInPlural('Centres de formation');
     }
 }

@@ -27,15 +27,19 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            EmailField::new('email'),
-            TextField::new('password'),
-            TextField::new('nomNaissance'),
-            TextField::new('nomUsage'),
             TextField::new('prenom'),
+            TextField::new('nomNaissance'),
+            TextField::new('nomUsage')
+                ->hideOnIndex(),
             TextField::new('nomStructure'),
-            DateField::new('dateNaissance'),
-            TelephoneField::new('phoneNumber'),
-            BooleanField::new('visio'),
+            EmailField::new('email'),
+            TextField::new('password'), // Remove before prod
+            DateField::new('dateNaissance')
+                ->hideOnIndex(),
+            TelephoneField::new('phoneNumber')
+                ->hideOnIndex(),
+            BooleanField::new('visio')
+                ->hideOnIndex(),
             ChoiceField::new('statut')
                 ->setChoices([
                     'Associé' => 'Associé',
@@ -43,18 +47,26 @@ class UserCrudController extends AbstractCrudController
                 ])
                 ->renderExpanded(),
             CollectionField::new('PresenceWebs')
-                ->useEntryCrudForm(),
+                ->useEntryCrudForm()
+                ->hideOnIndex(),
             AssociationField::new('adressePostale')
-                ->renderAsEmbeddedForm(),
+                ->renderAsEmbeddedForm()
+                ->hideOnIndex(),
             CollectionField::new('lieuxActivite')
                 ->useEntryCrudForm()
-
+                ->hideOnIndex()
         ];
     }
 
-    function configureActions(Actions $actions): Actions
+    public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->showEntityActionsInlined();
     }
 }
