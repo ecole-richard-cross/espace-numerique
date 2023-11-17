@@ -30,6 +30,11 @@ class Tag
         $this->discussions = new ArrayCollection();
     }
 
+    function __toString(): string
+    {
+        return $this->name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
