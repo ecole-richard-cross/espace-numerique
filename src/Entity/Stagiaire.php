@@ -31,7 +31,7 @@ class Stagiaire
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $identifiantsFinanceurs = null;
 
-    #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: PassageCertification::class)]
+    #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: PassageCertification::class, cascade: ['persist', 'remove'])]
     private Collection $passageCertifications;
 
     #[ORM\Column]
