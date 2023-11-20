@@ -25,9 +25,20 @@ class BlockCrudController extends AbstractCrudController
     {
         yield IdField::new('id')
             ->hideOnForm();
-        $types = ['text', 'image', 'audio', 'video', 'question', 'danger', 'info', 'glossary'];
+        $types = [
+            "Texte" => 'text',
+            "Image" => 'image',
+            "Audio" => 'audio',
+            "Video" => 'video',
+            "Fichier" => 'file',
+            "Question" => 'question',
+            "Attention" => 'danger',
+            "Information" => 'info',
+            "Glossaire" => 'glossary'
+        ];
         yield ChoiceField::new('type')
-            ->setChoices(array_combine($types, $types));
+            ->setChoices($types);
+        yield AssociationField::new('media');
         yield TextEditorField::new('content');
         yield IntegerField::new('number');
         $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\BlockCrudController' &&

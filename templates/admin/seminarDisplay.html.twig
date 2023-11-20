@@ -1,10 +1,38 @@
 {% set chapters = field.value %}
 {% for chapter in chapters %}
-    <h2>{{chapter.number ~ " - " ~ chapter.title}}</h2>
-    {% for section in chapter.sections %}
-        <h3>{{chapter.number ~"."~section.number ~ " - " ~ section.title}}</h3>
-        {% for block in section.blocks %}
-            {{ include("seminar/block_type_"~block.type|lower~".html.twig", {block: block}) }}
-        {% endfor %}
-    {% endfor %}
+    <div class="accordion" id="accordion-chap-{{chapter.id}}">
+        <div class="accordion-item">
+
+            <h2 class="accordion-header" id="heading-{{chapter.id}}">
+                <button data-bs-toggle="collapse" data-bs-target="#collapse-chapter{{chapter.id}}" class="accordion-button">
+                    {{chapter.number ~ " - " ~ chapter.title}}
+                </button>
+            </h2>
+
+            <div id="collapse-chapter{{chapter.id}}" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    
+                    {% for section in chapter.sections %}
+                        <div class="accordion" id="accordion-section-{{section.id}}">
+
+                            <div class="accordion-item">
+                                <h3 class="accordion-header" id="heading-{{section.id}}">
+                                    <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapse-section{{section.id}}">
+                                        {{chapter.number ~"."~section.number ~ " - " ~ section.title}}
+                                    </button>
+                                </h3>
+                                <div id="collapse-section{{section.id}}" class="accordion-collapse collapse show">
+                                    <div class="accordion-body">
+                                        {% for block in section.blocks %}
+                                            {{ include("seminar/block_type_"~block.type|lower~".html.twig", {block: block}) }}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endfor %}
