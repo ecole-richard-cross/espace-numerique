@@ -15,27 +15,13 @@ const loadTextEditorJs = () => {
    }
 }
 
-
-const addButtonsListener = () => {
-   let addButtons = document.querySelectorAll('.field-collection-add-button');
-   addButtons.forEach((addButton) => {
-      addButton.addEventListener("click", (event) => {
-         setTimeout(() => {
-            // console.log(event);
-            
-            document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
-            
-            // console.log(addButtons.length, (document.querySelectorAll('.field-collection-add-button')).length);
-
-            if (addButtons.length !== (document.querySelectorAll('.field-collection-add-button')).length) {
-               addButtons = document.querySelectorAll('.field-collection-add-button');
-               addButtonsListener();
-            }
-
-         }, 200);
-      });
-   });
-}
+document.addEventListener("click", e => {
+   if (e.target.matches(".field-collection-add-button, .field-collection-delete-button")) {
+      console.log(e);
+      setTimeout(() => {
+         document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
+      }, 200);
+   }
+})
 
 document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
-addButtonsListener();
