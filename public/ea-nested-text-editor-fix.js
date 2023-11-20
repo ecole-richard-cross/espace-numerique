@@ -1,6 +1,4 @@
-const addButtons = document.querySelectorAll('.field-collection-add-button');
-
-function loadTextEditorJs() {
+const loadTextEditorJs = () => {
 
    const existingFieldTextEditor = document.getElementById('field-text-editor-js');
 
@@ -17,17 +15,27 @@ function loadTextEditorJs() {
    }
 }
 
-addButtons.forEach((addButton) => {
-   addButton.addEventListener("click", () => {
-      setTimeout(() => {
-         const trixEditors = document.querySelectorAll("trix-editor");
-         console.log(trixEditors);
 
-         trixEditors.forEach((trixEditor, i) => {
-            trixEditor.setAttribute('id', 'trix-editor-' + (i + 1))
-         });
+const addButtonsListener = () => {
+   let addButtons = document.querySelectorAll('.field-collection-add-button');
+   addButtons.forEach((addButton) => {
+      addButton.addEventListener("click", (event) => {
+         setTimeout(() => {
+            // console.log(event);
+            
+            document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
+            
+            // console.log(addButtons.length, (document.querySelectorAll('.field-collection-add-button')).length);
 
-         loadTextEditorJs();
-      }, 200);
+            if (addButtons.length !== (document.querySelectorAll('.field-collection-add-button')).length) {
+               addButtons = document.querySelectorAll('.field-collection-add-button');
+               addButtonsListener();
+            }
+
+         }, 200);
+      });
    });
-});
+}
+
+document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
+addButtonsListener();

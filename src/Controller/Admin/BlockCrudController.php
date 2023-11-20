@@ -8,10 +8,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class BlockCrudController extends AbstractCrudController
 {
@@ -25,7 +25,9 @@ class BlockCrudController extends AbstractCrudController
     {
         yield IdField::new('id')
             ->hideOnForm();
-        yield TextField::new('type');
+        $types = ['text', 'image', 'audio', 'video', 'question', 'danger', 'info', 'glossary'];
+        yield ChoiceField::new('type')
+            ->setChoices(array_combine($types, $types));
         yield TextEditorField::new('content');
         yield IntegerField::new('number');
         $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\BlockCrudController' &&
