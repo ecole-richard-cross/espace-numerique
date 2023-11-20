@@ -1,0 +1,5 @@
+{% set url = 'uploads/' ~ block.media.url %}
+<object>
+    <img src={{url}}>
+    <legend>{{block.content|raw}}</legend>
+</object>

@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -45,6 +46,10 @@ class SeminarCrudController extends AbstractCrudController
         yield CollectionField::new('chapters', 'Chapitres')
             ->addCssFiles('ea-nested-styling-fix.css')
             ->useEntryCrudForm(ChapterCrudController::class);
+        yield CollectionField::new('chapters', "Aperçu")
+            ->setTemplatePath('admin/seminarDisplay.html.twig')
+            ->hideOnForm()
+            ->hideOnIndex();
     }
 
 

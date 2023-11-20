@@ -1,0 +1,5 @@
+{% set url = 'uploads/' ~ block.media.url %}
+<object>
+    <a href="{{url}}" class="fas fa-file">Pièce jointe</a>
+    <legend>{{block.content|raw}}</legend>
+</object>

@@ -1,0 +1,8 @@
+{% set url = 'uploads/' ~ block.media.url %}
+<object>
+    <audio controls>
+        <source src={{url}}>
+        Objet audio non supporté par votre navigateur. 😢
+    </audio>
+    <legend>{{block.content|raw}}</legend>
+</object>

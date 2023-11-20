@@ -1,0 +1,10 @@
+{% set chapters = field.value %}
+{% for chapter in chapters %}
+    <h2>{{chapter.number ~ " - " ~ chapter.title}}</h2>
+    {% for section in chapter.sections %}
+        <h3>{{chapter.number ~"."~section.number ~ " - " ~ section.title}}</h3>
+        {% for block in section.blocks %}
+            {{ include("seminar/block_type_"~block.type|lower~".html.twig", {block: block}) }}
+        {% endfor %}
+    {% endfor %}
+{% endfor %}
