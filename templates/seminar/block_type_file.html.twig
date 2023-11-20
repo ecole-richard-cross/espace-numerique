@@ -1,5 +1,8 @@
 {% set url = 'uploads/' ~ block.media.url %}
-<object>
-    <a href="{{url}}" class="fas fa-file">Pièce jointe</a>
-    <legend>{{block.content|raw}}</legend>
-</object>
+<figure class="position-relative rounded-pill d-flex m-3 p-2 gap-3 align-items-center"  style="width: fit-content; background-color: var(--purple-100)">
+    <i class="ms-2 fa-solid fa-paperclip" style="color: var(--purple-500); font-size: 4rem; opacity: 0.10"></i>
+    <figcaption class="m-3" >{{block.content|raw}}</figcaption>
+    <a href="{{url}}" class="btn rounded-pill fs-6 p-3 border border-1 border-secondary d-flex gap-2 align-items-center">
+        <i class="fas fa-download fa-2xl" style="color: var(--purple-500)"></i> Télécharger
+    </a>
+</figure>
