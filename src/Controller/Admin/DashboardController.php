@@ -14,6 +14,8 @@ use App\Entity\Promotion;
 use App\Entity\Stagiaire;
 use App\Entity\Certification;
 use App\Entity\CentreFormation;
+use App\Entity\Comment;
+use App\Entity\Discussion;
 use App\Entity\SeminarConsultation;
 use App\Entity\PassageCertification;
 use Doctrine\ORM\EntityManagerInterface;
@@ -81,15 +83,17 @@ class DashboardController extends AbstractDashboardController
                     MenuItem::linkToCrud('Centres de formation', 'fas fa-school', CentreFormation::class),
                     MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
                     MenuItem::section("E-learning"),
+                    MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
+                    // MenuItem::linkToCrud('Consultation de Séminaire', 'fa fa-check-square-o', SeminarConsultation::class),
+                    MenuItem::linkToCrud('Séminaire', 'fas fa-book', Seminar::class),
+                    // MenuItem::linkToCrud('Chapitre', 'fas fa-file-text', Chapter::class),
+                    // MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
+                    // MenuItem::linkToCrud('Bloc', 'fas fa-cube', Block::class),
+                    MenuItem::linkToCrud('Média', 'fa  fa-file-picture-o', Media::class),
                     MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
                     MenuItem::linkToCrud('Hashtags', 'fas fa-hashtag', Tag::class),
-                    MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
-                    MenuItem::linkToCrud('Consultation de Séminaire', 'fa fa-check-square-o', SeminarConsultation::class),
-                    MenuItem::linkToCrud('Séminaire', 'fas fa-book', Seminar::class),
-                    MenuItem::linkToCrud('Chapitre', 'fas fa-file-text', Chapter::class),
-                    MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
-                    MenuItem::linkToCrud('Bloc', 'fas fa-cube', Block::class),
-                    MenuItem::linkToCrud('Média', 'fa  fa-file-picture-o', Media::class)
+                    MenuItem::linkToCrud("Discussions", 'fa-regular fa-message', Discussion::class),
+                    MenuItem::linkToCrud("Commentaires", "fa-regular fa-comments", Comment::class)
                 ])
         ];
     }

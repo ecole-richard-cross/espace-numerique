@@ -45,6 +45,11 @@ class Comment
         $this->replies = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->content;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,7 +73,7 @@ class Comment
     }
 
     #[ORM\PrePersist]
-    public function setCreatedAt(): static
+    public function setCreatedAt($p): static
     {
         $this->createdAt = new \DateTimeImmutable();;
 
@@ -82,7 +87,7 @@ class Comment
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-    public function setUpdatedAt(): static
+    public function setUpdatedAt($p): static
     {
         $this->updatedAt = new \DateTimeImmutable();;
 

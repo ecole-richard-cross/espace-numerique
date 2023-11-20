@@ -29,7 +29,7 @@ class Discussion
     #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'discussion', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'discussion', targetEntity: Comment::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $comments;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'discussions')]
@@ -68,9 +68,9 @@ class Discussion
     }
 
     #[ORM\PrePersist]
-    public function setCreatedAt(): static
+    public function setCreatedAt($p): static
     {
-        $this->createdAt = new \DateTimeImmutable();;
+        $this->createdAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -82,9 +82,9 @@ class Discussion
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-    public function setUpdatedAt(): static
+    public function setUpdatedAt($p): static
     {
-        $this->updatedAt = new \DateTimeImmutable();;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
