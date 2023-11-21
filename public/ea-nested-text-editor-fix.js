@@ -29,8 +29,9 @@ const drop = (event) => {
    const fromContainer = document.getElementById(data).parentNode;
    const toContainer = event.currentTarget;
    if (getDraggableGroup(document.getElementById(data)) === getDraggableGroup(toContainer.firstElementChild)) {
-      fromContainer.appendChild(toContainer.firstElementChild);
-      toContainer.appendChild(document.getElementById(data));
+      const elNb = (document.getElementById(data)).querySelector('input[name$="[number]"]').value;
+      const targetNb = (toContainer.firstElementChild).querySelector('input[name$="[number]"]').value;
+      elNb < targetNb ? toContainer.after(fromContainer) : fromContainer.parentNode.insertBefore(fromContainer, toContainer);
       autoNbValues();
       fillAccordionLabels();
    }
@@ -95,11 +96,11 @@ const fillAccordionLabels = () => {
       const titleInput = draggable.querySelector('input[name$="[title]"]') ?? null;
       const nbInput = draggable.querySelector('input[name$="[number]"]');
       if (titleInput) {
-         const chapterNb = titleInput.name.includes('section') ?  (draggable.closest('.row')).querySelector('input[name$="[number]"]').value : nbInput.value;
+         const chapterNb = titleInput.name.includes('section') ? (draggable.closest('.row')).querySelector('input[name$="[number]"]').value : nbInput.value;
          const sectionNb = titleInput.name.includes('section') ? nbInput.value : null;
          label.textContent = chapterNb + '.' + (sectionNb ? sectionNb + '. ' : ' ') + titleInput.value;
       } else {
-         label.textContent = nbInput.value + '. ' +
+         label.textContent = '[' + draggable.querySelector('select[name$="[type]"]').value + '] ' +
             (draggable.querySelector('textarea[name$="[content]"]')).value.slice(5,
                ((draggable.querySelector('textarea[name$="[content]"]')).value).lastIndexOf('<'));
       }
