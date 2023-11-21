@@ -100,9 +100,9 @@ const fillAccordionLabels = () => {
          const sectionNb = titleInput.name.includes('section') ? nbInput.value : null;
          label.textContent = chapterNb + '.' + (sectionNb ? sectionNb + '. ' : ' ') + titleInput.value;
       } else {
+         const htmlRemovedContent = ((draggable.querySelector('textarea[name$="[content]"]')).value.replace(/<.{0,10}>/gm, '')).replace(/&nbsp;/gm, ' ');
          label.textContent = '[' + draggable.querySelector('select[name$="[type]"]').value + '] ' +
-            (draggable.querySelector('textarea[name$="[content]"]')).value.slice(5,
-               ((draggable.querySelector('textarea[name$="[content]"]')).value).lastIndexOf('<'));
+            (htmlRemovedContent.length > 80 ? htmlRemovedContent.slice(0, 79) : htmlRemovedContent);
       }
 
    });
@@ -124,7 +124,7 @@ document.addEventListener("click", e => {
 });
 
 document.addEventListener("change", e => {
-   if (e.target.matches('input[name$="[title]"], input[name$="[number]"]')) {
+   if (e.target.matches('input[name$="[title]"], input[name$="[number]"], select[name$="[type]"], text-editor input')) {
       fillAccordionLabels();
    }
 });
