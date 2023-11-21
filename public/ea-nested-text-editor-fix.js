@@ -55,21 +55,13 @@ const initDragNDrop = () => {
          draggable.setAttribute("draggable", "true");
          draggable.setAttribute("ondragstart", "drag(event)");
       });
-      // const trixEditors = document.querySelectorAll('trix-editor');
-      // trixEditors.forEach((trixEditor) => {
-      //    trixEditor.setAttribute("onfocus", 'disableDrag(this)');
-      //    trixEditor.setAttribute("onblur", 'enableDrag(this)');
-      // })
+      const trixEditors = document.querySelectorAll('trix-editor');
+      trixEditors.forEach((trixEditor) => {
+         trixEditor.onfocus = () => {trixEditor.closest(".field-collection-item > .accordion-item").classList.add("on-focus");};
+         trixEditor.onblur = () => {trixEditor.closest(".field-collection-item > .accordion-item").classList.remove("on-focus");};
+      })
    }, 200);
 }
-
-// function disableDrag(e) { 
-//    e.closest(".field-collection-item > .accordion-item").setAttribute("draggable", false);
-// }
-// function enableDrag(e) { 
-//    e.closest(".field-collection-item > .accordion-item").setAttribute("draggable", true) 
-// }
-
 
 const autoNbValues = () => {
    const nbInputs = document.querySelectorAll('input[name$="[number]"]');
@@ -126,6 +118,12 @@ document.addEventListener("click", e => {
 document.addEventListener("change", e => {
    if (e.target.matches('input[name$="[title]"], input[name$="[number]"], select[name$="[type]"], text-editor input')) {
       fillAccordionLabels();
+   }
+});
+
+document.addEventListener("dragstart", e => {
+   if (e.target.matches('.field-collection-item > .accordion-item.on-focus')) {
+      e.preventDefault();
    }
 });
 
