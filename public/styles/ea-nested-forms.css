@@ -1,0 +1,5 @@
+label.form-control-label,
+legend.col-form-label {
+    width: 10% !important;
+    translate: -0.5rem;
+}

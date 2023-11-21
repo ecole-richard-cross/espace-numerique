@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -26,12 +27,19 @@ class SeminarCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        yield FormField::addColumn(6);
+        yield FormField::addFieldset('');
         yield TextField::new('title', 'Titre');
         yield TextField::new('description');
         yield AssociationField::new('categories', 'Catégories')
-            ->setTemplatePath('admin/collectionList.html.twig');
+            ->setTemplatePath('admin/collectionList.html.twig')
+            ->setColumns(6);
         yield AssociationField::new('tags', 'Hashtags')
-            ->setTemplatePath('admin/hashtagsList.html.twig');
+            ->setTemplatePath('admin/hashtagsList.html.twig')
+            ->setColumns(6);
+        yield FormField::addColumn(6);
+        yield FormField::addFieldset('Paramètres')
+            ->renderCollapsed();
         yield BooleanField::new('isPublished', 'Publié');
         $roles = ['ROLE_ADMIN', 'ROLE_USER'];
         yield ChoiceField::new('roles', 'Assigné à')
@@ -43,13 +51,14 @@ class SeminarCrudController extends AbstractCrudController
             ->hideOnForm();
         yield DateTimeField::new('updatedAt', 'Mis à jour le')
             ->hideOnForm();
+        yield FormField::addColumn(12);
+        yield FormField::addFieldset('Éditeur');
         yield CollectionField::new('chapters', 'Chapitres')
-            ->addCssFiles('ea-nested-styling-fix.css')
+            ->addCssFiles('styles\\ea-nested-forms.css')
             ->useEntryCrudForm(ChapterCrudController::class);
         yield CollectionField::new('chapters', "Aperçu")
             ->setTemplatePath('admin/seminarDisplay.html.twig')
-            ->hideOnForm()
-            ->hideOnIndex();
+            ->onlyOnDetail();
     }
 
 

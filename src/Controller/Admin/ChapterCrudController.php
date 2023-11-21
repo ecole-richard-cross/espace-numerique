@@ -6,14 +6,13 @@ use App\Entity\Chapter;
 use App\Controller\Admin\SectionCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 
 class ChapterCrudController extends AbstractCrudController
 {
@@ -22,15 +21,15 @@ class ChapterCrudController extends AbstractCrudController
         return Chapter::class;
     }
 
-    
+
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id')
-            ->hideOnForm();
+        yield FormField::addColumn(12);
         yield TextField::new('title');
         yield TextField::new('description');
-        yield IntegerField::new('number');
-        $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\ChapterCrudController' && 
+        yield HiddenField::new('number');
+
+        $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\ChapterCrudController' &&
             yield AssociationField::new('seminar');
         yield CollectionField::new('sections')
             ->useEntryCrudForm(SectionCrudController::class);
@@ -41,5 +40,4 @@ class ChapterCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
-    
 }
