@@ -15,34 +15,15 @@ const loadTextEditorJs = () => {
    }
 }
 
-const autoNbValues = () => {
-   const nbInputs = document.querySelectorAll('input[name$="[number]"]');
-   const groups = {};
-   nbInputs.forEach((nbInput, i) => {
-      nbInput.value = nbInput.value === "" ? i : nbInput.value;
-
-      const nameNbRemoved = (nbInput.name).slice(0, (nbInput.name.length - 11));
-      groups[nameNbRemoved] = groups[nameNbRemoved] ? [...groups[nameNbRemoved], nbInput] : [nbInput];
-
-
-      for (let nameNbRemoved in groups) {
-         groups[nameNbRemoved].sort((a, b) => a.value - b.value);
-         groups[nameNbRemoved].forEach((nbInput, i) => {
-            nbInput.value = i + 1;
-         })
-      };
-   });
-};
-
-function allowDrop(event) {
+const allowDrop = (event) => {
    event.preventDefault();
 }
 
-function drag(event) {
+const drag = (event) => {
    event.dataTransfer.setData("text", event.target.id);
 }
 
-function drop(event) {
+const drop = (event) => {
    event.preventDefault();
    const data = event.dataTransfer.getData("text");
    const fromContainer = document.getElementById(data).parentNode;
@@ -51,10 +32,16 @@ function drop(event) {
       fromContainer.appendChild(toContainer.firstElementChild);
       toContainer.appendChild(document.getElementById(data));
       autoNbValues();
+      fillAccordionLabels();
    }
 }
 
-function initDragNDrop() {
+const getDraggableGroup = (draggable) => {
+   const nearestNbInput = draggable.querySelector('input[name$="[number]"]');
+   return (nearestNbInput.name).slice(0, (nearestNbInput.name.length - 11));
+}
+
+const initDragNDrop = () => {
    setTimeout(() => {
       const dropPoints = document.querySelectorAll('.field-collection-item');
       dropPoints.forEach((dropPoint) => {
@@ -67,12 +54,57 @@ function initDragNDrop() {
          draggable.setAttribute("draggable", "true");
          draggable.setAttribute("ondragstart", "drag(event)");
       });
+      // const trixEditors = document.querySelectorAll('trix-editor');
+      // trixEditors.forEach((trixEditor) => {
+      //    trixEditor.setAttribute("onfocus", 'disableDrag(this)');
+      //    trixEditor.setAttribute("onblur", 'enableDrag(this)');
+      // })
    }, 200);
 }
 
-function getDraggableGroup(draggable) {
-   const nearestNbInput = draggable.querySelector('input[name$="[number]');
-   return (nearestNbInput.name).slice(0, (nearestNbInput.name.length - 11));
+// function disableDrag(e) { 
+//    e.closest(".field-collection-item > .accordion-item").setAttribute("draggable", false);
+// }
+// function enableDrag(e) { 
+//    e.closest(".field-collection-item > .accordion-item").setAttribute("draggable", true) 
+// }
+
+
+const autoNbValues = () => {
+   const nbInputs = document.querySelectorAll('input[name$="[number]"]');
+   const groups = {};
+   nbInputs.forEach((nbInput, i) => {
+      nbInput.value = nbInput.value === "" ? i : nbInput.value;
+
+      const nameNbRemoved = (nbInput.name).slice(0, (nbInput.name.length - 11));
+      groups[nameNbRemoved] = groups[nameNbRemoved] ? [...groups[nameNbRemoved], nbInput] : [nbInput];
+
+      for (let nameNbRemoved in groups) {
+         groups[nameNbRemoved].sort((a, b) => a.value - b.value);
+         groups[nameNbRemoved].forEach((nbInput, i) => {
+            nbInput.value = i + 1;
+         })
+      };
+   });
+};
+
+const fillAccordionLabels = () => {
+   const draggables = document.querySelectorAll('.field-collection-item > .accordion-item');
+   draggables.forEach((draggable) => {
+      const label = draggable.querySelector('.accordion-button');
+      const titleInput = draggable.querySelector('input[name$="[title]"]') ?? null;
+      const nbInput = draggable.querySelector('input[name$="[number]"]');
+      if (titleInput) {
+         const chapterNb = titleInput.name.includes('section') ?  (draggable.closest('.row')).querySelector('input[name$="[number]"]').value : nbInput.value;
+         const sectionNb = titleInput.name.includes('section') ? nbInput.value : null;
+         label.textContent = chapterNb + '.' + (sectionNb ? sectionNb + '. ' : ' ') + titleInput.value;
+      } else {
+         label.textContent = nbInput.value + '. ' +
+            (draggable.querySelector('textarea[name$="[content]"]')).value.slice(5,
+               ((draggable.querySelector('textarea[name$="[content]"]')).value).lastIndexOf('<'));
+      }
+
+   });
 }
 
 
@@ -84,8 +116,15 @@ document.addEventListener("click", e => {
 
          initDragNDrop();
          autoNbValues();
+         fillAccordionLabels();
 
       }, 200);
+   }
+});
+
+document.addEventListener("change", e => {
+   if (e.target.matches('input[name$="[title]"], input[name$="[number]"]')) {
+      fillAccordionLabels();
    }
 });
 

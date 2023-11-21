@@ -1,0 +1,8 @@
+.form-widget {
+	min-width: fit-content;
+}
+
+.form-group.field-collection .accordion-item .form-group {
+	min-width: 50vw;
+	justify-content: space-between;
+}
