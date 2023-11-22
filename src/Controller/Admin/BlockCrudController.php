@@ -38,7 +38,7 @@ class BlockCrudController extends AbstractCrudController
         yield ChoiceField::new('type')
             ->setChoices($types);
         yield AssociationField::new('media');
-        yield TextEditorField::new('content');
+        yield TextEditorField::new('content', 'Contenu');
         yield HiddenField::new('number');
         $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\BlockCrudController' &&
             yield AssociationField::new('section');

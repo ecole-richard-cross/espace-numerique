@@ -25,13 +25,13 @@ class ChapterCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield FormField::addColumn(12);
-        yield TextField::new('title');
-        yield TextField::new('description');
+        yield TextField::new('title', 'Titre');
+        yield TextField::new('description', 'Description');
         yield HiddenField::new('number');
 
         $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\ChapterCrudController' &&
             yield AssociationField::new('seminar');
-        yield CollectionField::new('sections')
+        yield CollectionField::new('sections', 'Sections')
             ->useEntryCrudForm(SectionCrudController::class);
     }
 

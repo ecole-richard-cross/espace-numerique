@@ -1,5 +1,4 @@
 const loadTextEditorJs = () => {
-
    const existingFieldTextEditor = document.getElementById('field-text-editor-js');
 
    if (existingFieldTextEditor === null) {
@@ -113,7 +112,6 @@ const fillAccordionLabels = () => {
 
 document.addEventListener("click", e => {
    if (e.target.matches(".field-collection-add-button, .field-collection-delete-button")) {
-      // console.log(e);
       setTimeout(() => {
          document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
 
