@@ -40,7 +40,7 @@ class BlockCrudController extends AbstractCrudController
         yield AssociationField::new('media');
         yield TextEditorField::new('content', 'Contenu');
         yield HiddenField::new('number');
-        $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\BlockCrudController' &&
+        $_REQUEST['crudControllerFqcn'] == self::class &&
             yield AssociationField::new('section');
     }
 

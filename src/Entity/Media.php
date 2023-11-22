@@ -54,7 +54,13 @@ class Media
 
     public function __toString(): string
     {
-        return $this->name;
+        $types = [
+            'image' => 'Image',
+            'audio' => 'Audio',
+            'video' => 'Vidéo',
+            'file' => 'Fichier'
+        ];
+        return $types[$this->type] . " - " . $this->name;
     }
 
     public function getId(): ?int

@@ -9,12 +9,15 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\FilterConfigDto;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 
 class MediaCrudController extends AbstractCrudController
 {
@@ -95,6 +98,19 @@ class MediaCrudController extends AbstractCrudController
             // ->hideOnForm()
             ->setValue($this->security->getUser() ?? null);
     }
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(ChoiceFilter::new('type')
+                ->setChoices([
+                    'Image' => 'image',
+                    'Audio' => 'audio',
+                    'Vidéo' => 'video',
+                    'Fichier' => 'file'
+                ]))
+            ->add('name', 'Étiquette')
+            ->add('uploadedBy', 'Ajouté par');
+    }
 
     public function configureActions(Actions $actions): Actions
     {
@@ -104,6 +120,7 @@ class MediaCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->showEntityActionsInlined();
+        return $crud
+            ->showEntityActionsInlined();
     }
 }

@@ -6,6 +6,7 @@ use App\Controller\Admin\Filter\ChoiceArrayFilter;
 use App\Entity\Seminar;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -14,9 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 
@@ -57,7 +56,12 @@ class SeminarCrudController extends AbstractCrudController
         yield FormField::addFieldset('Éditeur');
         yield CollectionField::new('chapters', 'Chapitres')
             ->addCssFiles('styles\\ea-nested-forms.css')
-            ->useEntryCrudForm(ChapterCrudController::class);
+            ->useEntryCrudForm(ChapterCrudController::class)
+            ->addJsFiles(
+                Asset::new('scripts/ea-block-form.js')
+                    ->defer()
+            );
+
         yield CollectionField::new('chapters', "Aperçu")
             ->setTemplatePath('admin/seminarDisplay.html.twig')
             ->onlyOnDetail();
