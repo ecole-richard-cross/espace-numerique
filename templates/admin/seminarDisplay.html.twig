@@ -24,7 +24,7 @@
                                 <div id="collapse-section{{section.id}}" class="accordion-collapse collapse show">
                                     <div class="accordion-body">
                                         {% for block in section.blocks %}
-                                            {{ include("seminar/block_type_"~block.type|lower~".html.twig", {block: block}) }}
+                                            {{ include("seminar/block_gate.html.twig", {block: block}) }}
                                         {% endfor %}
                                     </div>
                                 </div>
