@@ -19,7 +19,7 @@ class PresenceWeb
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
-    #[ORM\ManyToOne(inversedBy: 'PresenceWebs')]
+    #[ORM\ManyToOne(inversedBy: 'presenceWebs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

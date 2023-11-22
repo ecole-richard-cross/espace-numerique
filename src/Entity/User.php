@@ -65,7 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Stagiaire $stagiaire = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: PresenceWeb::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
-    private Collection $PresenceWebs;
+    private Collection $presenceWebs;
 
     #[ORM\OneToMany(mappedBy: 'uploadedBy', targetEntity: Media::class)]
     private Collection $media;
@@ -85,7 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->lieuxActivite = new ArrayCollection();
-        $this->PresenceWebs = new ArrayCollection();
+        $this->presenceWebs = new ArrayCollection();
         $this->media = new ArrayCollection();
         $this->seminarConsultations = new ArrayCollection();
         $this->discussions = new ArrayCollection();
@@ -328,13 +328,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPresenceWebs(): Collection
     {
-        return $this->PresenceWebs;
+        return $this->presenceWebs;
     }
 
     public function addPresenceWeb(PresenceWeb $presenceWeb): static
     {
-        if (!$this->PresenceWebs->contains($presenceWeb)) {
-            $this->PresenceWebs->add($presenceWeb);
+        if (!$this->presenceWebs->contains($presenceWeb)) {
+            $this->presenceWebs->add($presenceWeb);
             $presenceWeb->setUser($this);
         }
 
@@ -343,7 +343,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removePresenceWeb(PresenceWeb $presenceWeb): static
     {
-        if ($this->PresenceWebs->removeElement($presenceWeb)) {
+        if ($this->presenceWebs->removeElement($presenceWeb)) {
             // set the owning side to null (unless already changed)
             if ($presenceWeb->getUser() === $this) {
                 $presenceWeb->setUser(null);

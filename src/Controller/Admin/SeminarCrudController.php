@@ -2,10 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\Filter\ChoiceArrayFilter;
 use App\Entity\Seminar;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -16,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 
 class SeminarCrudController extends AbstractCrudController
 {
@@ -41,9 +44,8 @@ class SeminarCrudController extends AbstractCrudController
         yield FormField::addFieldset('Paramètres')
             ->renderCollapsed();
         yield BooleanField::new('isPublished', 'Publié');
-        $roles = ['ROLE_ADMIN', 'ROLE_USER'];
         yield ChoiceField::new('roles', 'Assigné à')
-            ->setChoices(array_combine($roles, $roles))
+            ->setChoices(['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'])
             ->allowMultipleChoices()
             ->renderExpanded()
             ->hideOnIndex();
@@ -70,8 +72,22 @@ class SeminarCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->showEntityActionsInlined()
+        return $crud
+            ->showEntityActionsInlined()
             ->setEntityLabelInSingular("Séminaire")
-            ->setEntityLabelInPlural("Séminaires");
+            ->setEntityLabelInPlural("Séminaires")
+            ->setSearchFields(['title', 'description', "chapters.title", 'categories.name', 'tags.name']);
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(BooleanFilter::new('isPublished'))
+            ->add('categories')
+            ->add('tags')
+            ->add(ChoiceArrayFilter::new('roles')
+                ->setChoices(['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'])
+                ->renderExpanded()
+                ->canSelectMultiple());
     }
 }
