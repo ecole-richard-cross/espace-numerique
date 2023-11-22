@@ -1,0 +1,14 @@
+{% set media = entity.instance %}
+{% set url = "uploads/"~media.url %}
+
+{% if media.type == 'image' %}
+    <img style="max-width: 800px; max-height: 600px" src={{url}}>
+{% elseif media.type == 'audio' %}
+    <audio src={{url}}>
+{% elseif media.type == 'video' %}
+    <video src={{url}}>
+{% elseif media.type == 'file' %}
+    <a href={{url}}>{{media.name}}</a>
+{% else %}
+    <p class="bg-danger text-light text-bold">Une erreur est survenue : type inconnu.</p>
+{% endif %}

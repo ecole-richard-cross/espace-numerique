@@ -2,10 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use Exception;
 use App\Entity\Media;
 use Symfony\Bundle\SecurityBundle\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use Symfony\Component\Validator\Constraints\File;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -14,7 +15,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use Exception;
 
 class MediaCrudController extends AbstractCrudController
 {
@@ -88,14 +88,22 @@ class MediaCrudController extends AbstractCrudController
             ->addJsFiles('scripts/ea-media-form.js');
         yield TextField::new('url', 'Nom du fichier')
             ->hideOnForm();
+        yield Field::new('url', 'Aperçu')
+            ->onlyOnDetail()
+            ->setTemplatePath('media/_show.html.twig');
         yield AssociationField::new('uploadedBy', 'Ajouté par')
             // ->hideOnForm()
             ->setValue($this->security->getUser() ?? null);
     }
 
-    function configureActions(Actions $actions): Actions
+    public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->showEntityActionsInlined();
     }
 }

@@ -1,5 +1,5 @@
 {% set url = 'uploads/' ~ block.media.url %}
 <figure class="w-100 d-flex flex-column gap-1 align-items-center">
-    <img src={{url}} alt={{block.media.name}}>
+    <img style="max-width: 800px; max-height: 600px" src={{url}} alt={{block.media.name}}>
     <figcaption>{{block.content|raw}}</figcaption>
 </figure>
