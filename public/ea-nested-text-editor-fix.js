@@ -49,16 +49,26 @@ const initDragNDrop = () => {
          dropPoint.setAttribute("ondrop", "drop(event)");
          dropPoint.setAttribute("ondragover", "allowDrop(event)");
       });
-      const draggables = document.querySelectorAll('.field-collection-item > .accordion-item');
-      draggables.forEach((draggable, i) => {
-         draggable.setAttribute("id", "drag" + i);
-         draggable.setAttribute("draggable", "true");
-         draggable.setAttribute("ondragstart", "drag(event)");
-      });
+      const initDraggables = () => {
+         const draggables = document.querySelectorAll('.field-collection-item > .accordion-item');
+         draggables.forEach((draggable, i) => {
+            !draggable.id && draggable.setAttribute("id", "drag" + i);
+            draggable.setAttribute("draggable", "true");
+            !draggable.ondragstart && draggable.setAttribute("ondragstart", "drag(event)");
+         });
+      }
+      const removeDraggables = () => {
+         const draggables = document.querySelectorAll('.field-collection-item > .accordion-item');
+         draggables.forEach((draggable) => {
+            draggable.setAttribute("draggable", "false");
+         });
+      }
+      initDraggables();
+
       const trixEditors = document.querySelectorAll('trix-editor');
       trixEditors.forEach((trixEditor) => {
-         trixEditor.onfocus = () => {trixEditor.closest(".field-collection-item > .accordion-item").classList.add("on-focus");};
-         trixEditor.onblur = () => {trixEditor.closest(".field-collection-item > .accordion-item").classList.remove("on-focus");};
+         trixEditor.onfocus = () => { removeDraggables(); };
+         trixEditor.onblur = () => { initDraggables(); };
       })
    }, 200);
 }
@@ -118,12 +128,6 @@ document.addEventListener("click", e => {
 document.addEventListener("change", e => {
    if (e.target.matches('input[name$="[title]"], input[name$="[number]"], select[name$="[type]"], text-editor input')) {
       fillAccordionLabels();
-   }
-});
-
-document.addEventListener("dragstart", e => {
-   if (e.target.matches('.field-collection-item > .accordion-item.on-focus')) {
-      e.preventDefault();
    }
 });
 
