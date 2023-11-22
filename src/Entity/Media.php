@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\MediaRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MediaRepository;
+use App\EventListener\MediaFileClear;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
+#[ORM\EntityListeners([MediaFileClear::class])]
 class Media
 {
     #[ORM\Id]
@@ -80,7 +82,6 @@ class Media
     public function setUrl(string $url): static
     {
         $this->url = $url;
-
         return $this;
     }
 
