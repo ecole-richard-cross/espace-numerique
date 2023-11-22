@@ -32,7 +32,7 @@ class Block
 
     public function __toString()
     {
-        return '['.$this->type.'] '.($this->content ? (substr(strip_tags($this->content),0 , 80) ) : '');
+        return ucfirst($this->type) . ' - ' . ($this->content ? (substr(strip_tags($this->content), 0, 80)) : '');
     }
 
     public function getId(): ?int

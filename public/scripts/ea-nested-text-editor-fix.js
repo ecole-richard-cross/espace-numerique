@@ -99,10 +99,12 @@ const fillAccordionLabels = () => {
       if (titleInput) {
          const chapterNb = titleInput.name.includes('section') ? (draggable.closest('.row')).querySelector('input[name$="[number]"]').value : nbInput.value;
          const sectionNb = titleInput.name.includes('section') ? nbInput.value : null;
-         label.textContent = chapterNb + '.' + (sectionNb ? sectionNb + '. ' : ' ') + titleInput.value;
+         label.childNodes[2].textContent = chapterNb + '.' + (sectionNb ? sectionNb + '. ' : ' ') + titleInput.value;
       } else {
+         const type = draggable.querySelector('select[name$="[type]"]').value
+         const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1)
          const htmlRemovedContent = ((draggable.querySelector('textarea[name$="[content]"]')).value.replace(/<.{0,10}>/gm, '')).replace(/&nbsp;/gm, ' ');
-         label.textContent = '[' + draggable.querySelector('select[name$="[type]"]').value + '] ' +
+         label.childNodes[2].textContent = capitalizedType + " - " +
             (htmlRemovedContent.length > 80 ? htmlRemovedContent.slice(0, 79) : htmlRemovedContent);
       }
 
@@ -123,8 +125,8 @@ document.addEventListener("click", e => {
    }
 });
 
-document.addEventListener("change", e => {
-   if (e.target.matches('input[name$="[title]"], input[name$="[number]"], select[name$="[type]"], text-editor input')) {
+document.addEventListener("input", e => {
+   if (e.target.matches('input[name$="[title]"], input[name$="[number]"], select[name$="[type]"], trix-editor')) {
       fillAccordionLabels();
    }
 });

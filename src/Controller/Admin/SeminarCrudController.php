@@ -59,6 +59,8 @@ class SeminarCrudController extends AbstractCrudController
             ->useEntryCrudForm(ChapterCrudController::class)
             ->addJsFiles(
                 Asset::new('scripts/ea-block-form.js')
+                    ->defer(),
+                Asset::new('scripts/ea-nested-text-editor-fix.js')
                     ->defer()
             );
 
