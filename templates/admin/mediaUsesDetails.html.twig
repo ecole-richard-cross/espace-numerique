@@ -1,0 +1,45 @@
+{% set uses = field.value %}
+{% if uses.blocks is empty and uses.users is empty and uses.seminars is empty %}
+    <p class="info">Le média n'est pas utilisé, il peut être supprimé.</p>
+{% else %}
+    <p class="fs-5">Blocs</p>
+    <ul class="list-group list-group-flush">
+    {% for block in uses.blocks %}
+        <li class="list-group-item bg-light">
+            {% if block.content is not empty %}
+                "{{block.content}}"
+            {% else %}
+                Bloc sans texte
+            {% endif %}
+            <br>
+            <em>({{ block.section.chapter.seminar }},
+            chapitre {{block.section.chapter.number}},
+            section {{ block.section.number }}, position {{block.number}})</em>
+        </li>
+    {% else %}
+        <li class="list-group-item bg-light">Aucun bloc.</li>
+    {% endfor %}
+
+
+    <p class="fs-5 mt-3">Séminaires</p>
+    <ul class="list-group list-group-flush">
+    {% for seminar in uses.seminars %}
+        <li class="list-group-item bg-light">
+            Séminaire {{ seminar }}
+        </li>
+    {% else %}
+        <li class="list-group-item bg-light">Aucun séminaire n'utilise ce média comme illustration.</li>
+    {% endfor %}
+
+    
+    <p class="fs-5 mt-3">Avatars</p>
+    <ul class="list-group list-group-flush">
+    {% for user in uses.users %}
+        <li class="list-group-item bg-light">
+            {{user}}
+        </li>
+    {% else %}
+        <li class="list-group-item bg-light">Aucun utilisateur n'utilise ce média comme avatar.</li>
+    {% endfor %}
+{% endif %}
+</ul>

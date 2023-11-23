@@ -231,4 +231,24 @@ class Media
 
         return $this;
     }
+
+    /**
+     * Returns all instances linked to this media
+     *
+     * @return array<Collection>
+     */
+    public function getUses(): array
+    {
+        $uses = [
+            'blocks' => $this->getBlocks(),
+            'seminars' => $this->getSeminars(),
+            'users' => $this->getUsers()
+        ];
+        return $uses;
+    }
+
+    public function getUsesAmount(): int
+    {
+        return  count($this->getBlocks()) + count($this->getSeminars()) + count($this->getUsers());
+    }
 }

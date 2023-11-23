@@ -6,20 +6,18 @@ use Exception;
 use App\Entity\Media;
 use Symfony\Bundle\SecurityBundle\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Dto\FilterConfigDto;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
-use PhpParser\ErrorHandler\Collecting;
 
 class MediaCrudController extends AbstractCrudController
 {
@@ -93,18 +91,18 @@ class MediaCrudController extends AbstractCrudController
             ->addJsFiles('scripts/ea-media-form.js');
         yield TextField::new('url', 'Nom du fichier')
             ->hideOnForm();
-        yield Field::new('url', 'Aperçu')
+        yield ImageField::new('url', 'Aperçu')
             ->onlyOnDetail()
             ->setTemplatePath('media/_show.html.twig');
         yield AssociationField::new('uploadedBy', 'Ajouté par')
             // ->hideOnForm()
             ->setValue($this->security->getUser() ?? null);
 
-        yield AssociationField::new('blocks', "Nombre d'utilisations")
+        yield NumberField::new('usesAmount', "Nombre d'utilisations")
             ->hideOnForm();
-        yield CollectionField::new('blocks', "Utilisé dans")
+        yield CollectionField::new('uses', "Utilisé dans")
             ->onlyOnDetail()
-            ->setTemplatePath('admin/blockDetails.html.twig');
+            ->setTemplatePath('admin/mediaUsesDetails.html.twig');
     }
     public function configureFilters(Filters $filters): Filters
     {
@@ -139,7 +137,11 @@ class MediaCrudController extends AbstractCrudController
         return function (Action $action) {
             return $action
                 ->displayIf(static function (Media $entity) {
-                    return $entity->getBlocks()->isEmpty();
+                    return (
+                        $entity->getBlocks()->isEmpty() &&
+                        $entity->getUsers()->isEmpty() &&
+                        $entity->getSeminars()->isEmpty()
+                    );
                 });
         };
     }
