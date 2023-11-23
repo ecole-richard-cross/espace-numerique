@@ -77,7 +77,8 @@ class MediaCrudController extends AbstractCrudController
                 'Vidéo' => 'video',
                 'Fichier' => 'file'
             ])
-            ->renderExpanded();
+            ->renderExpanded()
+            ->onlyWhenCreating();
         yield TextField::new('name', 'Étiquette');
         yield ImageField::new('url', 'Fichier')
             ->setFormTypeOptions([
@@ -86,7 +87,7 @@ class MediaCrudController extends AbstractCrudController
             ->setUploadDir('public/uploads')
             ->setBasePath('uploads/')
             ->setUploadedFileNamePattern('[contenthash].[extension]')
-            ->onlyOnForms()
+            ->onlyWhenCreating()
             ->setRequired($pageName === Crud::PAGE_NEW)
             ->addJsFiles('scripts/ea-media-form.js');
         yield TextField::new('url', 'Nom du fichier')
@@ -96,11 +97,13 @@ class MediaCrudController extends AbstractCrudController
             ->setTemplatePath('media/_show.html.twig');
         yield AssociationField::new('uploadedBy', 'Ajouté par')
             // ->hideOnForm()
-            ->setValue($this->security->getUser() ?? null);
+            ->setValue($this->security->getUser() ?? null)
+            ->setDisabled()
+            ->onlyWhenCreating();
 
         yield NumberField::new('usesAmount', "Nombre d'utilisations")
             ->hideOnForm();
-        yield CollectionField::new('uses', "Utilisé dans")
+        yield CollectionField::new('uses', "Détail des utilisations")
             ->onlyOnDetail()
             ->setTemplatePath('admin/mediaUsesDetails.html.twig');
     }

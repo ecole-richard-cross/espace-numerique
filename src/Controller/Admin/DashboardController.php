@@ -4,29 +4,23 @@ namespace App\Controller\Admin;
 
 use App\Entity\Tag;
 use App\Entity\User;
-use App\Entity\Block;
-use App\Entity\Media;
-use App\Entity\Chapter;
-use App\Entity\Section;
+use App\Entity\Comment;
 use App\Entity\Seminar;
 use App\Entity\Category;
 use App\Entity\Promotion;
 use App\Entity\Stagiaire;
+use App\Entity\Discussion;
 use App\Entity\Certification;
 use App\Entity\CentreFormation;
-use App\Entity\Comment;
-use App\Entity\Discussion;
-use App\Entity\SeminarConsultation;
 use App\Entity\PassageCertification;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -92,7 +86,16 @@ class DashboardController extends AbstractDashboardController
                     // MenuItem::linkToCrud('Chapitre', 'fas fa-file-text', Chapter::class),
                     // MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
                     // MenuItem::linkToCrud('Bloc', 'fas fa-cube', Block::class),
-                    MenuItem::linkToCrud('Média', 'fa  fa-file-picture-o', Media::class),
+                    // MenuItem::linkToCrud('Média', 'fa  fa-file-picture-o', Media::class),
+                    MenuItem::linkToUrl(
+                        'Média',
+                        'fa  fa-file-picture-o',
+                        $this
+                            ->container
+                            ->get(AdminUrlGenerator::class)
+                            ->setController(MediaCrudController::class)
+                            ->generateUrl()
+                    ),
                     MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
                     MenuItem::linkToCrud('Hashtags', 'fas fa-hashtag', Tag::class),
                     MenuItem::linkToCrud("Discussions", 'fa-regular fa-message', Discussion::class),
@@ -105,7 +108,6 @@ class DashboardController extends AbstractDashboardController
     {
         return Crud::new()
             ->setTimezone('Europe/Paris')
-            ->setDateTimeFormat('dd/MM/yyyy HH:mm')
-            ;
+            ->setDateTimeFormat('dd/MM/yyyy HH:mm');
     }
 }

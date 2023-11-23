@@ -5,8 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use App\Controller\Admin\Filter\ChoiceArrayFilter;
+use App\Entity\Media;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -26,10 +28,23 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
+    public function createEntity(string $entityFqcn): User
+    {
+        $user = parent::createEntity($entityFqcn);
+        dump($user);
+        $user
+            ->setAvatar(new Media())
+            ->getAvatar()
+            ->setCreatedAt(new \DateTimeImmutable())
+            ->setUploadedBy($this->getUser())
+            ->setType('image')
+            ->setName('avatar-' . $this->getUser());
+        return $user;
+    }
 
     public function configureFields(string $pageName): iterable
     {
-        $_REQUEST['crudAction'] !== 'detail' &&
+        $_REQUEST['crudAction'] !== Crud::PAGE_DETAIL &&
             yield FormField::addTab('Général');
         yield FormField::addColumn(6);
         yield FormField::addFieldset('');
@@ -42,6 +57,12 @@ class UserCrudController extends AbstractCrudController
         yield TextField::new('nomStructure');
         yield TelephoneField::new('phoneNumber')
             ->hideOnIndex();
+
+        yield FormField::addFieldset('');
+        yield CollectionField::new('presenceWebs')
+            ->useEntryCrudForm()
+            ->hideOnIndex();
+
         yield FormField::addColumn(6);
         yield FormField::addFieldset('');
         yield AssociationField::new('avatar')
@@ -50,6 +71,18 @@ class UserCrudController extends AbstractCrudController
         yield AssociationField::new('avatar')
             ->onlyOnIndex()
             ->setTemplatePath('user/avatar_tiny.html.twig');
+
+        ($_REQUEST['crudAction'] === Crud::PAGE_NEW ||
+            $_REQUEST['crudAction'] === Crud::PAGE_EDIT) &&
+            yield AssociationField::new('avatar')
+            ->renderAsEmbeddedForm()
+            ->addJsFiles(
+                Asset::new('scripts/ea-force-media-type-value.js')
+                    ->defer()
+            )
+            ->onlyOnForms();
+
+        yield FormField::addFieldset('');
         yield EmailField::new('email');
         yield TextField::new('password'); // Remove before prod
         yield ChoiceField::new('roles')
@@ -63,11 +96,6 @@ class UserCrudController extends AbstractCrudController
         yield ChoiceField::new('statut')
             ->setChoices(['Associé' => 'Associé', 'Indépendant' => 'Indépendant'])
             ->renderExpanded();
-        yield FormField::addColumn(12);
-        yield FormField::addFieldset('');
-        yield CollectionField::new('presenceWebs')
-            ->useEntryCrudForm()
-            ->hideOnIndex();
 
         $_REQUEST['crudAction'] !== 'detail' &&
             yield FormField::addTab('Adresses');

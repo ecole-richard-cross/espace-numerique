@@ -73,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: SeminarConsultation::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $seminarConsultations;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\ManyToOne(inversedBy: 'users', cascade: ['persist', 'remove'])]
     private ?Media $avatar = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Discussion::class, orphanRemoval: false)]

@@ -5,7 +5,7 @@
         {% set url = "uploads/"~media.url|default('') %}
         <object style="max-width:32px; max-height:32px">
             {% if media.type|lower == 'image' %}
-                <img src={{url}}>
+                <img class="mw-100" alt="Avatar de {{entity.instance}}" src={{url}}>
             {% else %}
                 <p class="bg-danger text-light text-bold">Une erreur est survenue : l'avatar n'est pas une image.</p>
             {% endif %}
