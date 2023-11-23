@@ -17,7 +17,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\FilterConfigDto;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
+use PhpParser\ErrorHandler\Collecting;
 
 class MediaCrudController extends AbstractCrudController
 {
@@ -97,6 +99,12 @@ class MediaCrudController extends AbstractCrudController
         yield AssociationField::new('uploadedBy', 'Ajouté par')
             // ->hideOnForm()
             ->setValue($this->security->getUser() ?? null);
+
+        yield AssociationField::new('blocks', "Nombre d'utilisations")
+            ->hideOnForm();
+        yield CollectionField::new('blocks', "Utilisé dans")
+            ->onlyOnDetail()
+            ->setTemplatePath('admin/blockDetails.html.twig');
     }
     public function configureFilters(Filters $filters): Filters
     {
@@ -115,6 +123,8 @@ class MediaCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
+            ->update(Crud::PAGE_INDEX, ACTION::DELETE, $this->allowDelete())
+            ->update(Crud::PAGE_DETAIL, ACTION::DELETE, $this->allowDelete())
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
@@ -122,5 +132,15 @@ class MediaCrudController extends AbstractCrudController
     {
         return $crud
             ->showEntityActionsInlined();
+    }
+
+    protected function allowDelete()
+    {
+        return function (Action $action) {
+            return $action
+                ->displayIf(static function (Media $entity) {
+                    return $entity->getBlocks()->isEmpty();
+                });
+        };
     }
 }
