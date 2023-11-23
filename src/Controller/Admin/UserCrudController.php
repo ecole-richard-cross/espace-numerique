@@ -29,7 +29,6 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        dump($_REQUEST);
         $_REQUEST['crudAction'] !== 'detail' &&
             yield FormField::addTab('Général');
         yield FormField::addColumn(6);

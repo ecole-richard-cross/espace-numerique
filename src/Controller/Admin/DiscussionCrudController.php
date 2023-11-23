@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Discussion;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -33,6 +34,10 @@ class DiscussionCrudController extends AbstractCrudController
             CollectionField::new('comments', 'Commentaires')
                 ->useEntryCrudForm(CommentCrudController::class)
                 ->setTemplatePath('admin/collectionList.html.twig')
+                ->addJsFiles(
+                    Asset::new('scripts/ea-nested-text-editor-fix.js')
+                        ->defer()
+                )
         ];
     }
 

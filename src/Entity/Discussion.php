@@ -45,6 +45,11 @@ class Discussion
         $this->tags = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->title.' (modifiée le '.$this->updatedAt->format('d M Y').')';
+    }
+
     public function getId(): ?int
     {
         return $this->id;

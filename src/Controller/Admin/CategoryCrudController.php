@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class CategoryCrudController extends AbstractCrudController
 {
@@ -19,6 +20,14 @@ class CategoryCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield TextField::new('name');
+        $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\CategoryCrudController' &&
+            yield AssociationField::new('seminars')
+            ->setTemplatePath('admin/collectionList.html.twig')
+            ->setFormTypeOptionIfNotSet('by_reference', false);
+        $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\CategoryCrudController' &&
+            yield AssociationField::new('discussions')
+            ->setTemplatePath('admin/collectionList.html.twig')
+            ->setFormTypeOptionIfNotSet('by_reference', false);
     }
 
     public function configureActions(Actions $actions): Actions
