@@ -7,6 +7,7 @@ use App\Repository\MediaRepository;
 use App\EventListener\MediaFileClear;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
@@ -19,6 +20,10 @@ class Media
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Choice(
+        choices: ['image', 'audio', 'video', 'file'],
+        message: "Sélectionnez un type valide."
+    )]
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
@@ -60,7 +65,7 @@ class Media
             'video' => 'Vidéo',
             'file' => 'Fichier'
         ];
-        return $types[$this->type] . " - " . $this->name;
+        return ($types[$this->type] ?? "") . " - " . $this->name;
     }
 
     public function getId(): ?int
