@@ -1,3 +1,26 @@
+setTimeout(() => {
+   document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
+   initDragNDrop();
+
+   document.addEventListener("click", e => {
+      if (e.target.matches(".field-collection-add-button, .field-collection-delete-button")) {
+         document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
+         initDragNDrop();
+         autoNbValues();
+         fillAccordionLabels();
+      }
+   });
+
+   document.addEventListener("input", e => {
+      if (e.target.matches('input[name$="[title]"], input[name$="[number]"], select[name$="[type]"], trix-editor')) {
+         fillAccordionLabels();
+      }
+   });
+
+}, 200);
+
+
+
 const loadTextEditorJs = () => {
    const existingFieldTextEditor = document.getElementById('field-text-editor-js');
 
@@ -14,62 +37,59 @@ const loadTextEditorJs = () => {
    }
 }
 
+const initDragNDrop = () => {
+   const dropPoints = document.querySelectorAll('.field-collection-item');
+   dropPoints.forEach((dropPoint) => {
+      dropPoint.setAttribute("ondrop", "drop(event)");
+      dropPoint.setAttribute("ondragover", "allowDrop(event)");
+   });
+   const initDraggables = () => {
+      const draggables = document.querySelectorAll('.field-collection-item > .accordion-item');
+      draggables.forEach((draggable, i) => {
+         !draggable.id && draggable.setAttribute("id", "drag" + i);
+         draggable.setAttribute("draggable", "true");
+         !draggable.ondragstart && draggable.setAttribute("ondragstart", "drag(event)");
+      });
+   }
+   const removeDraggables = () => {
+      const draggables = document.querySelectorAll('.field-collection-item > .accordion-item');
+      draggables.forEach((draggable) => {
+         draggable.setAttribute("draggable", "false");
+      });
+   }
+   initDraggables();
+
+   const inputs = document.querySelectorAll('input, trix-editor');
+   inputs.forEach((input) => {
+      input.onfocus = () => { removeDraggables(); };
+      input.onblur = () => { initDraggables(); };
+   })
+}
+
 const allowDrop = (event) => {
    event.preventDefault();
 }
-
 const drag = (event) => {
    event.dataTransfer.setData("text", event.target.id);
 }
-
 const drop = (event) => {
    event.preventDefault();
+
+   const getGroup = (el) => {
+      const nearestNbInput = el.querySelector('input[name$="[number]"]');
+      return (nearestNbInput.name).slice(0, (nearestNbInput.name.length - 11));
+   }
+
    const data = event.dataTransfer.getData("text");
    const fromContainer = document.getElementById(data).parentNode;
    const toContainer = event.currentTarget;
-   if (getDraggableGroup(document.getElementById(data)) === getDraggableGroup(toContainer.firstElementChild)) {
+   if (getGroup(document.getElementById(data)) === getGroup(toContainer.firstElementChild)) {
       const elNb = (document.getElementById(data)).querySelector('input[name$="[number]"]').value;
       const targetNb = (toContainer.firstElementChild).querySelector('input[name$="[number]"]').value;
       elNb < targetNb ? toContainer.after(fromContainer) : fromContainer.parentNode.insertBefore(fromContainer, toContainer);
       autoNbValues();
       fillAccordionLabels();
    }
-}
-
-const getDraggableGroup = (draggable) => {
-   const nearestNbInput = draggable.querySelector('input[name$="[number]"]');
-   return (nearestNbInput.name).slice(0, (nearestNbInput.name.length - 11));
-}
-
-const initDragNDrop = () => {
-   setTimeout(() => {
-      const dropPoints = document.querySelectorAll('.field-collection-item');
-      dropPoints.forEach((dropPoint) => {
-         dropPoint.setAttribute("ondrop", "drop(event)");
-         dropPoint.setAttribute("ondragover", "allowDrop(event)");
-      });
-      const initDraggables = () => {
-         const draggables = document.querySelectorAll('.field-collection-item > .accordion-item');
-         draggables.forEach((draggable, i) => {
-            !draggable.id && draggable.setAttribute("id", "drag" + i);
-            draggable.setAttribute("draggable", "true");
-            !draggable.ondragstart && draggable.setAttribute("ondragstart", "drag(event)");
-         });
-      }
-      const removeDraggables = () => {
-         const draggables = document.querySelectorAll('.field-collection-item > .accordion-item');
-         draggables.forEach((draggable) => {
-            draggable.setAttribute("draggable", "false");
-         });
-      }
-      initDraggables();
-
-      const inputs = document.querySelectorAll('input, trix-editor');
-      inputs.forEach((input) => {
-         input.onfocus = () => { removeDraggables(); };
-         input.onblur = () => { initDraggables(); };
-      })
-   }, 200);
 }
 
 const autoNbValues = () => {
@@ -110,26 +130,3 @@ const fillAccordionLabels = () => {
 
    });
 }
-
-
-document.addEventListener("click", e => {
-   if (e.target.matches(".field-collection-add-button, .field-collection-delete-button")) {
-      setTimeout(() => {
-         document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
-
-         initDragNDrop();
-         autoNbValues();
-         fillAccordionLabels();
-
-      }, 200);
-   }
-});
-
-document.addEventListener("input", e => {
-   if (e.target.matches('input[name$="[title]"], input[name$="[number]"], select[name$="[type]"], trix-editor')) {
-      fillAccordionLabels();
-   }
-});
-
-document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
-initDragNDrop();

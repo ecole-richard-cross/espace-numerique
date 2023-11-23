@@ -3,8 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Comment;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -21,7 +23,17 @@ class CommentCrudController extends AbstractCrudController
     {
         return [
             TextEditorField::new('content', 'Commentaire'),
-            AssociationField::new('user', 'Auteur')
+            AssociationField::new('user', 'Auteur'),
+            DateTimeField::new('updatedAt')
+                ->hideOnForm(),
+            DateTimeField::new('createdAt')
+                ->hideOnForm(),
         ];
     }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->showEntityActionsInlined();
+    }
+    
 }
