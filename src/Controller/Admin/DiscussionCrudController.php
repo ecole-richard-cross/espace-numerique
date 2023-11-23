@@ -29,10 +29,13 @@ class DiscussionCrudController extends AbstractCrudController
             TextField::new('title', 'Titre'),
             AssociationField::new('user', 'Auteur')->setRequired(true),
             AssociationField::new('categories', 'Catégorie')
-                ->setTemplatePath('admin/collectionList.html.twig'),
+                ->setTemplatePath('admin/hashtagsList.html.twig'),
             AssociationField::new('tags', 'Hashtags')
                 ->setTemplatePath('admin/hashtagsList.html.twig'),
+            AssociationField::new('comments')
+                ->onlyOnIndex(),
             CollectionField::new('comments', 'Commentaires')
+                ->hideOnIndex()
                 ->useEntryCrudForm(CommentCrudController::class)
                 ->setTemplatePath('admin/collectionList.html.twig')
                 ->addJsFiles(

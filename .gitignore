@@ -22,3 +22,5 @@
 ###>Uploads directory content
 /public/uploads/*
 ###<Uploads directory content
+
+/migrations

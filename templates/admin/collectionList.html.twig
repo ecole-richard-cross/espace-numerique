@@ -1,5 +1,7 @@
+<ul class="list-group list-group-flush">
 {% for instance in field.value %}
-    <span class="">{{instance|raw}}</span> {% if not loop.last %}, {% endif %}
+    <li class="list-group-item">{{instance|raw}}</li>
 {% else %}
-    <span class="badge badge-outline">Aucun(e)</span>
+    <li class="list-group-item">Aucun(e)</li>
 {% endfor %}
+</ul>

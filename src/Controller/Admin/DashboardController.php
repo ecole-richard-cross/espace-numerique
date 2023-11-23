@@ -93,6 +93,7 @@ class DashboardController extends AbstractDashboardController
                         $this
                             ->container
                             ->get(AdminUrlGenerator::class)
+                            ->unsetAll()
                             ->setController(MediaCrudController::class)
                             ->generateUrl()
                     ),

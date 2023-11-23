@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class TagCrudController extends AbstractCrudController
 {
@@ -20,14 +21,16 @@ class TagCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield TextField::new('name');
-        $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\TagCrudController' &&
-            yield AssociationField::new('seminars')
-            ->setTemplatePath('admin/collectionList.html.twig')
-            ->setFormTypeOptionIfNotSet('by_reference', false);
-        $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\TagCrudController' &&
-            yield AssociationField::new('discussions')
-            ->setTemplatePath('admin/collectionList.html.twig')
-            ->setFormTypeOptionIfNotSet('by_reference', false);
+        yield AssociationField::new('seminars')
+            ->onlyOnIndex();
+        yield AssociationField::new('discussions')
+            ->onlyOnIndex();
+        yield CollectionField::new('seminars')
+            ->onlyOnDetail()
+            ->setTemplatePath('admin/collectionList.html.twig');
+        yield CollectionField::new('discussions')
+            ->onlyOnDetail()
+            ->setTemplatePath('admin/collectionList.html.twig');
     }
 
     public function configureActions(Actions $actions): Actions
