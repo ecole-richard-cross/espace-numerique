@@ -2,13 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\Admin\Filter\ChoiceArrayFilter;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use App\Controller\Admin\Filter\ChoiceArrayFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -17,7 +18,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -44,6 +44,12 @@ class UserCrudController extends AbstractCrudController
             ->hideOnIndex();
         yield FormField::addColumn(6);
         yield FormField::addFieldset('');
+        yield AssociationField::new('avatar')
+            ->onlyOnDetail()
+            ->setTemplatePath('user/avatar_small.html.twig');
+        yield AssociationField::new('avatar')
+            ->onlyOnIndex()
+            ->setTemplatePath('user/avatar_tiny.html.twig');
         yield EmailField::new('email');
         yield TextField::new('password'); // Remove before prod
         yield ChoiceField::new('roles')
