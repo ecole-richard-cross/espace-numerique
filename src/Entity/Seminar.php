@@ -40,7 +40,7 @@ class Seminar
     #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: SeminarConsultation::class, orphanRemoval: true)]
     private Collection $seminarConsultations;
 
-    #[ORM\ManyToOne(inversedBy: 'seminars')]
+    #[ORM\ManyToOne(inversedBy: 'seminars', cascade: ['persist'])]
     private ?Media $image = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'seminars')]

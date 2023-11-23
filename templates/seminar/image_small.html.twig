@@ -1,0 +1,13 @@
+{% set media = entity.instance.image ?? null %}
+{% if media is null %}
+    <p class="m-0 badge badge-outline">Aucune</p>
+{% else %}
+    {% set url = "uploads/"~media.url|default('') %}
+        <div>
+            {% if media.type|lower == 'image' %}
+                <img  class="mw-100" alt="Illustration de {{entity.instance}}" src={{url}}>
+            {% else %}
+                <p class="bg-danger text-light text-bold">Une erreur est survenue : l'illustration n'est pas une image.</p>
+            {% endif %}
+        </div>
+{% endif %}

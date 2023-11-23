@@ -75,7 +75,7 @@ class UserCrudController extends AbstractCrudController
         ($_REQUEST['crudAction'] === Crud::PAGE_NEW ||
             $_REQUEST['crudAction'] === Crud::PAGE_EDIT) &&
             yield AssociationField::new('avatar')
-            ->renderAsEmbeddedForm()
+            ->renderAsEmbeddedForm(MediaImageCrudController::class)
             ->addJsFiles(
                 Asset::new('scripts/ea-force-media-type-value.js')
                     ->defer()

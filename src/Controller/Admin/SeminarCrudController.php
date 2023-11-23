@@ -31,7 +31,21 @@ class SeminarCrudController extends AbstractCrudController
     {
         yield FormField::addColumn(6);
         yield FormField::addFieldset('');
-        yield TextField::new('title', 'Titre');
+        yield AssociationField::new('image', 'Illustration')
+            ->onlyOnDetail()
+            ->setTemplatePath('seminar/image_small.html.twig');
+
+        ($_REQUEST['crudAction'] === Crud::PAGE_NEW ||
+            $_REQUEST['crudAction'] === Crud::PAGE_EDIT) &&
+            yield AssociationField::new('image', 'Illustration')
+            ->renderAsEmbeddedForm(MediaImageCrudController::class)
+            ->addJsFiles(
+                Asset::new('scripts/ea-force-media-type-value.js')
+                    ->defer()
+            )
+            ->onlyOnForms();
+        yield TextField::new('title', 'Titre')
+            ->hideOnDetail();
         yield TextField::new('description');
         yield AssociationField::new('categories', 'Catégories')
             ->setTemplatePath('admin/collectionList.html.twig')

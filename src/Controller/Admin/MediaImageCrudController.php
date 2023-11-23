@@ -24,6 +24,7 @@ class MediaImageCrudController extends AbstractCrudController
             $file->move($uploadDir, $fileName);
         };
         yield HiddenField::new('type');
+        yield HiddenField::new('name');
         yield ImageField::new('url', 'Fichier')
             ->setFormTypeOptions([
                 'upload_new' => $uploadNew
