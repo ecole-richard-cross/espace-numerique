@@ -64,10 +64,10 @@ const initDragNDrop = () => {
       }
       initDraggables();
 
-      const trixEditors = document.querySelectorAll('trix-editor');
-      trixEditors.forEach((trixEditor) => {
-         trixEditor.onfocus = () => { removeDraggables(); };
-         trixEditor.onblur = () => { initDraggables(); };
+      const inputs = document.querySelectorAll('input, trix-editor');
+      inputs.forEach((input) => {
+         input.onfocus = () => { removeDraggables(); };
+         input.onblur = () => { initDraggables(); };
       })
    }, 200);
 }
