@@ -29,6 +29,7 @@ class SeminarCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        yield FormField::addTab('Général');
         yield FormField::addColumn(6);
         yield FormField::addFieldset('');
         yield AssociationField::new('image', 'Illustration')
@@ -81,6 +82,12 @@ class SeminarCrudController extends AbstractCrudController
         yield CollectionField::new('chapters', "Aperçu")
             ->setTemplatePath('admin/seminarDisplay.html.twig')
             ->onlyOnDetail();
+        yield FormField::addTab('Consulté par');
+        yield FormField::addColumn(8);
+        yield FormField::addFieldset('');
+        yield CollectionField::new('seminarConsultations', false)
+            ->useEntryCrudForm()
+            ->hideOnIndex();
     }
 
 

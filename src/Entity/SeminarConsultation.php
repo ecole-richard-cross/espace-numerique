@@ -30,6 +30,14 @@ class SeminarConsultation
     #[ORM\JoinColumn(nullable: false)]
     private ?Seminar $seminar = null;
 
+    public function __toString()
+    {
+        return $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\UserCrudController' ? $this->seminar->getTitle() : 
+        ($_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\SeminarCrudController' ?
+                $this->user->getPrenom() . ' ' . $this->user->getNomNaissance() :
+                $this->seminar->getTitle() . ' - ' . $this->user->getPrenom() . ' ' . $this->user->getNomNaissance());
+    }
+
     public function getId(): ?int
     {
         return $this->id;

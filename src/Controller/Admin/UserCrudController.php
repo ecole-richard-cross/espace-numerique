@@ -111,6 +111,14 @@ class UserCrudController extends AbstractCrudController
             ->useEntryCrudForm()
             ->renderExpanded()
             ->hideOnIndex();
+            
+        $_REQUEST['crudAction'] !== 'detail' &&
+            yield FormField::addTab('Séminaires Consultés');
+        yield FormField::addColumn(6);
+        yield FormField::addFieldset('');
+        yield CollectionField::new('seminarConsultations', 'Séminaires Consultés')
+            ->useEntryCrudForm()
+            ->hideOnIndex();
     }
 
     public function configureActions(Actions $actions): Actions

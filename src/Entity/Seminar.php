@@ -37,7 +37,7 @@ class Seminar
     #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: Chapter::class, cascade: ['persist', 'remove'])]
     private Collection $chapters;
 
-    #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: SeminarConsultation::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'seminar', targetEntity: SeminarConsultation::class, cascade: ['persist', 'remove'])]
     private Collection $seminarConsultations;
 
     #[ORM\ManyToOne(inversedBy: 'seminars', cascade: ['persist'])]

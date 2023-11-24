@@ -57,13 +57,13 @@ const initDragNDrop = () => {
          draggable.setAttribute("draggable", "false");
       });
    }
-   initDraggables();
-
    const inputs = document.querySelectorAll('input, trix-editor');
    inputs.forEach((input) => {
       input.onfocus = () => { removeDraggables(); };
       input.onblur = () => { initDraggables(); };
    })
+
+   initDraggables();
 }
 
 const allowDrop = (event) => {

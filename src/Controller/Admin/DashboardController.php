@@ -69,7 +69,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linkToDashboard('Accueil', 'fa fa-home'),
+            // MenuItem::linkToDashboard('Accueil', 'fa fa-home'),
             Menuitem::subMenu('Gestion', 'fa fa-list')
                 ->setSubItems([
                     MenuItem::section("Certification"),
@@ -81,7 +81,7 @@ class DashboardController extends AbstractDashboardController
                     MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
                     MenuItem::section("E-learning"),
                     MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
-                    // MenuItem::linkToCrud('Consultation de Séminaire', 'fa fa-check-square-o', SeminarConsultation::class),
+                    MenuItem::linkToCrud('Consultation de Séminaire', 'fa fa-check-square-o', SeminarConsultation::class),
                     MenuItem::linkToCrud('Séminaire', 'fas fa-book', Seminar::class),
                     // MenuItem::linkToCrud('Chapitre', 'fas fa-file-text', Chapter::class),
                     // MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
