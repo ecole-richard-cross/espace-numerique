@@ -13,6 +13,7 @@ use App\Entity\Discussion;
 use App\Entity\Certification;
 use App\Entity\CentreFormation;
 use App\Entity\PassageCertification;
+use App\Entity\SeminarConsultation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -69,7 +70,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
-            // MenuItem::linkToDashboard('Accueil', 'fa fa-home'),
+            MenuItem::linkToDashboard('Accueil', 'fa fa-home'),
             Menuitem::subMenu('Gestion', 'fa fa-list')
                 ->setSubItems([
                     MenuItem::section("Certification"),
