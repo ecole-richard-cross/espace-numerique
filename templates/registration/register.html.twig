@@ -1,23 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Créer un compte | {{parent()}} {% endblock %}
 
 {% block body %}
+<div class="d-flex flex-column gap-3 align-items-center" style="max-width: 600px; margin: 0 auto;">
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <h1 class="text-center">Créer un compte</h1>
 
     {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
+    {{ form_start(registrationForm, {attr:{class:'flex-grow-1 w-100'}}) }}
+    <fieldset class="border border-secondary-subtle m-3 p-3 rounded-3">
+        <legend>Vous</legend>
+        <p class="small text-secondary">Pour que l'on puisse faire connaissance</p>
+        {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.nomNaissance) }}
+        {{ form_row(registrationForm.adressePostale.codePostal)}}
+        {{ form_row(registrationForm.adressePostale.pays)}}
+        <input type="checkbox" id="notFrench" name="notFrench" class="btn-check">
+        <label for="notFrench" class="btn btn-outline-primary small">Je ne réside pas en France</label>
+
+        <script type="text/javascript">
+            document.querySelector('#notFrench').addEventListener('click', e => {
+                const cp = document.querySelector('input[name$="[codePostal]"]');
+                const pays = document.querySelector('input[name$="[pays]"]');
+                if (e.target.checked) {
+                    cp.parentNode.classList.add('d-none');
+                    cp.value = 'n/a';
+                    pays.parentNode.classList.remove('d-none');
+                    pays.value = '';
+                }
+                else {
+                    cp.parentNode.classList.remove('d-none');
+                    cp.value = '';
+                    pays.parentNode.classList.add('d-none');
+                    pays.value = 'France';
+                }
+            })
+        </script>
+
+    </fieldset>
+    <fieldset class="border border-secondary-subtle m-3 p-3 rounded-3">
+        <legend>Vos identifiants</legend>
+        <p class="small text-secondary">Ils vous serviront pour vous connecter.</p>
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+            label: 'Mot de passe'
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    </fieldset>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    <fieldset class="border border-3 border-light p-3 rounded-3 text-center" style="width: fit-content; margin: 1rem auto ">
+        {{ form_row(registrationForm.agreeTerms, {
+            label:'J\'accepte les conditions d\'utilisation'
+            })
+        }}
+        <button type="submit" class="btn btn-primary">Valider</button>
+        {{ form_end(registrationForm) }}
+    </fieldset>
+</div>
 {% endblock %}

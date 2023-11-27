@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use PostalCodeTools;
 
 #[ORM\Entity(repositoryClass: LocalisationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Localisation
 {
     #[ORM\Id]
@@ -44,11 +45,11 @@ class Localisation
     public function __toString()
     {
         if (isset($this->adresse) && isset($this->codePostal) && isset($this->ville)) {
-            return $this->adresse . ' ' . $this->codePostal . ' ' . $this->ville;
+            return $this->adresse . ' ' . $this->codePostal . ' ' . $this->ville . ' (' . $this->departement . ', ' . $this->region . ')';
         } else if (isset($this->ville) && isset($this->pays)) {
             return  $this->ville . ' (' . $this->pays . ')';
         } else {
-            return $this->codePostal ? $this->codePostal : ($this->ville ? $this->ville : ($this->pays ? $this->pays : 'Localisation vide'));
+            return $this->codePostal ? $this->codePostal . ' (' . $this->departement . ', ' . $this->region . ')' : ($this->ville ? $this->ville : ($this->pays ? $this->pays : 'Localisation vide'));
         }
     }
 
@@ -80,12 +81,15 @@ class Localisation
 
         return $this;
     }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function fetchFromCodePostal(): static
     {
-        if (trim(strtolower($this->getPays())) !== "france")
+        if (trim(strtolower($this->pays)) !== "france")
             return $this;
 
-        $details = PostalCodeTools::fetchDetails($this->getCodePostal());
+        $details = PostalCodeTools::fetchDetails($this->codePostal);
         $this->setDepartement($details['department']);
         $this->setRegion($details['region']);
 

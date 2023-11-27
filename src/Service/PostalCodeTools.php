@@ -28,7 +28,7 @@ class PostalCodeTools
             return trim($string);
         }, explode(',', $props['context']));
 
-        $dep = "$context[1] ($context[0])";
+        $dep = "$context[1]";
         $region = $context[2];
         return [
             "postalCode" => $postalCode,

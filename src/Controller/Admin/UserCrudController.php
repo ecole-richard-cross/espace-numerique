@@ -31,7 +31,6 @@ class UserCrudController extends AbstractCrudController
     public function createEntity(string $entityFqcn): User
     {
         $user = parent::createEntity($entityFqcn);
-        dump($user);
         $user
             ->setAvatar(new Media())
             ->getAvatar()
@@ -64,7 +63,6 @@ class UserCrudController extends AbstractCrudController
             ->hideOnIndex();
 
         yield FormField::addColumn(6);
-        yield FormField::addFieldset('');
         yield AssociationField::new('avatar')
             ->onlyOnDetail()
             ->setTemplatePath('user/avatar_small.html.twig');
@@ -72,21 +70,22 @@ class UserCrudController extends AbstractCrudController
             ->onlyOnIndex()
             ->setTemplatePath('user/avatar_tiny.html.twig');
 
-        ($_REQUEST['crudAction'] === Crud::PAGE_NEW ||
-            $_REQUEST['crudAction'] === Crud::PAGE_EDIT) &&
-            yield AssociationField::new('avatar')
-            ->renderAsEmbeddedForm(MediaImageCrudController::class)
-            ->addJsFiles(
-                Asset::new('scripts/ea-force-media-type-value.js')
-                    ->defer()
-            )
-            ->onlyOnForms();
+        // yield AssociationField::new('avatar')
+        //     ->renderAsEmbeddedForm(MediaImageCrudController::class)
+        //     ->setRequired(false)
+        //     ->addJsFiles(
+        //         Asset::new('scripts/ea-force-media-type-value.js')
+        //             ->defer()
+        //     )
+        //     ->onlyOnForms();
 
         yield FormField::addFieldset('');
         yield EmailField::new('email');
         yield TextField::new('password'); // Remove before prod
+        yield BooleanField::new('isVerified', 'Compte vérifié')
+            ->hideOnIndex();
         yield ChoiceField::new('roles')
-            ->setChoices(['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'])
+            ->setChoices(User::ROLES)
             ->allowMultipleChoices()
             ->renderExpanded()
             ->hideOnIndex();
@@ -104,14 +103,16 @@ class UserCrudController extends AbstractCrudController
         yield FormField::addFieldset('');
         yield AssociationField::new('adressePostale')
             ->renderAsEmbeddedForm()
-            ->hideOnIndex();
+            ->onlyOnForms();
+        yield TextField::new('adressePostale')
+            ->onlyOnDetail();
         yield FormField::addColumn(8);
         yield FormField::addFieldset('');
         yield CollectionField::new('lieuxActivite')
             ->useEntryCrudForm()
             ->renderExpanded()
             ->hideOnIndex();
-            
+
         $_REQUEST['crudAction'] !== 'detail' &&
             yield FormField::addTab('Séminaires Consultés');
         yield FormField::addColumn(6);

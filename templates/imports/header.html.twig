@@ -3,14 +3,27 @@
     <ul class="nav">
         <li class="nav-item"><a href="/" class="nav-link">Accueil</a></li>
     </ul>
-        <ul class="nav place-self-end">
-            <li class="nav-item">
-                {% if app.user %}
-                    <a href="{{ path('app_logout') }}">Logout</a>
-                {% else %}
-                    <a class="nav-link" href="{{ path('app_login')}}" >S'identifier</a>
+    <ul class="nav place-self-end">
+        {% if app.user %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('admin')}}">Espace admin</a>
+                </li>
                 {% endif %}
-        </li>
+            <li class="nav-item">
+                    <a class="nav-link" href="#">Mon profil</a>
+            </li>
+            <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login')}}" >S'identifier</a>
+            </li>
+            <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_register')}}" >S'enregistrer</a>
+            </li>
+        {% endif %}
     </ul>
 </nav>
 {% endblock %}
