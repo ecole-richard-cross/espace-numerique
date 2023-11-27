@@ -47,7 +47,6 @@ class MediaFileClear
     public function isUsed($filename)
     {
         $isUsed = $this->entityManager->getRepository(Media::class)->findBy(['url' => $filename]);
-        dump($isUsed);
         return !empty($isUsed);
     }
 }

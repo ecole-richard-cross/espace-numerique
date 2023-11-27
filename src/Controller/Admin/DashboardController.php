@@ -71,38 +71,38 @@ class DashboardController extends AbstractDashboardController
     {
         return [
             MenuItem::linkToDashboard('Accueil', 'fa fa-home'),
-            Menuitem::subMenu('Gestion', 'fa fa-list')
-                ->setSubItems([
-                    MenuItem::section("Certification"),
-                    MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
-                    MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
-                    MenuItem::linkToCrud("Passage de certification", 'fas fa-user-graduate', PassageCertification::class),
-                    MenuItem::section("Ecole"),
-                    MenuItem::linkToCrud('Centres de formation', 'fas fa-school', CentreFormation::class),
-                    MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
-                    MenuItem::section("E-learning"),
-                    MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
-                    MenuItem::linkToCrud('Consultation de Séminaire', 'fa fa-check-square-o', SeminarConsultation::class),
-                    MenuItem::linkToCrud('Séminaire', 'fas fa-book', Seminar::class),
-                    // MenuItem::linkToCrud('Chapitre', 'fas fa-file-text', Chapter::class),
-                    // MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
-                    // MenuItem::linkToCrud('Bloc', 'fas fa-cube', Block::class),
-                    // MenuItem::linkToCrud('Média', 'fa  fa-file-picture-o', Media::class),
-                    MenuItem::linkToUrl(
-                        'Média',
-                        'fa  fa-file-picture-o',
-                        $this
-                            ->container
-                            ->get(AdminUrlGenerator::class)
-                            ->unsetAll()
-                            ->setController(MediaCrudController::class)
-                            ->generateUrl()
-                    ),
-                    MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
-                    MenuItem::linkToCrud('Hashtags', 'fas fa-hashtag', Tag::class),
-                    MenuItem::linkToCrud("Discussions", 'fa-regular fa-message', Discussion::class),
-                    MenuItem::linkToCrud("Commentaires", "fa-regular fa-comments", Comment::class)
-                ])
+            // Menuitem::subMenu('Gestion', 'fa fa-list')
+            //     ->setSubItems([
+            MenuItem::section("Certification"),
+            MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
+            MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
+            MenuItem::linkToCrud("Passage de certification", 'fas fa-user-graduate', PassageCertification::class),
+            MenuItem::section("Ecole"),
+            MenuItem::linkToCrud('Centres de formation', 'fas fa-school', CentreFormation::class),
+            MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
+            MenuItem::section("E-learning"),
+            MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
+            MenuItem::linkToCrud('Consultation de Séminaire', 'fa fa-check-square-o', SeminarConsultation::class),
+            MenuItem::linkToCrud('Séminaire', 'fas fa-book', Seminar::class),
+            // MenuItem::linkToCrud('Chapitre', 'fas fa-file-text', Chapter::class),
+            // MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
+            // MenuItem::linkToCrud('Bloc', 'fas fa-cube', Block::class),
+            // MenuItem::linkToCrud('Média', 'fa  fa-file-picture-o', Media::class),
+            MenuItem::linkToUrl(
+                'Média',
+                'fa  fa-file-picture-o',
+                $this
+                    ->container
+                    ->get(AdminUrlGenerator::class)
+                    ->unsetAll()
+                    ->setController(MediaCrudController::class)
+                    ->generateUrl()
+            ),
+            MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
+            MenuItem::linkToCrud('Hashtags', 'fas fa-hashtag', Tag::class),
+            MenuItem::linkToCrud("Discussions", 'fa-regular fa-message', Discussion::class),
+            MenuItem::linkToCrud("Commentaires", "fa-regular fa-comments", Comment::class)
+            // ])
         ];
     }
 
