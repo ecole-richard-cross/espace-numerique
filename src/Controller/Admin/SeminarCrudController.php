@@ -90,6 +90,7 @@ class SeminarCrudController extends AbstractCrudController
                 Asset::new('scripts/ea-consultation-no-duplicates.js')
                     ->defer()
             )
+            ->setTemplatePath('admin/consultationDisplay.html.twig')
             ->useEntryCrudForm()
             ->hideOnIndex();
     }

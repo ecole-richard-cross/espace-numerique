@@ -1,0 +1,69 @@
+{% dump(app.request.attributes.get('_controller')[0]) %}
+{% set assignedConsultations = field.value|filter(c => c.isToRead == true and c.isFinished == false) %}
+{% set finishedConsultations = field.value|filter(c => c.isFinished == true ) %}
+{% set otherConsultations = field.value|filter(c => c.isFinished == false and c.isToRead == false ) %}
+{% set fromUser = app.request.attributes.get('_controller')[0] == "App\Controller\Admin\UserCrudController" %}
+{# {% set fromSeminar = app.request.attributes.get('_controller')[0] == "App\Controller\Admin\SeminarCrudController" %} #}
+
+{% if assignedConsultations|length > 0 %}
+	<div class="field-group field-text">
+		{% if fromUser %}
+			<div class="field-label">Assigné(s)</div>
+		{% else %}
+			<div class="field-label">Assigné à</div>
+		{% endif %}
+		<div class="field-value">
+			{% for consultation in assignedConsultations %}
+				<div>{{consultation|raw}}
+					{% if consultation.lastConsultedAt is not empty %}
+						<span class="small mx-1">
+							| dernière consultation le
+							{{consultation.lastConsultedAt}}</span>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}
+
+{% if finishedConsultations|length > 0 %}
+	<div class="field-group field-text">
+		{% if fromUser %}
+			<div class="field-label">Terminé(s)</div>
+		{% else %}
+			<div class="field-label">Terminé par</div>
+		{% endif %}
+		<div class="field-value">
+			{% for consultation in finishedConsultations %}
+				<div>{{consultation|raw}}
+					{% if consultation.lastConsultedAt is not empty %}
+						<span class="small mx-1">
+							| dernière consultation le
+							{{consultation.lastConsultedAt}}</span>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}
+
+{% if otherConsultations|length > 0 %}
+	<div class="field-group field-text">
+		{% if fromUser %}
+			<div class="field-label">Autres(s)</div>
+		{% else %}
+			<div class="field-label"> Vu par </div>
+		{% endif %}
+		<div class="field-value">
+			{% for consultation in otherConsultations %}
+				<div>{{consultation|raw}}
+					{% if consultation.lastConsultedAt is not empty %}
+						<span class="small mx-1">
+							| dernière consultation le
+							{{consultation.lastConsultedAt}}</span>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}

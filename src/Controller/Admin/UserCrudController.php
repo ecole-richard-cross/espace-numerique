@@ -43,8 +43,7 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $_REQUEST['crudAction'] !== Crud::PAGE_DETAIL &&
-            yield FormField::addTab('Général');
+        yield FormField::addTab('Général');
         yield FormField::addColumn(6);
         yield FormField::addFieldset('');
         yield TextField::new('prenom');
@@ -100,28 +99,28 @@ class UserCrudController extends AbstractCrudController
             yield FormField::addTab('Adresses');
         yield FormField::addColumn(12);
         yield FormField::addColumn(4);
-        yield FormField::addFieldset('');
-        yield AssociationField::new('adressePostale')
+        yield FormField::addFieldset('Adresse Postale');
+        yield AssociationField::new('adressePostale', false)
             ->renderAsEmbeddedForm()
             ->onlyOnForms();
-        yield TextField::new('adressePostale')
+        yield TextField::new('adressePostale', false)
             ->onlyOnDetail();
         yield FormField::addColumn(8);
-        yield FormField::addFieldset('');
-        yield CollectionField::new('lieuxActivite')
+        yield FormField::addFieldset('Lieux d\'activité');
+        yield CollectionField::new('lieuxActivite', false)
             ->useEntryCrudForm()
             ->renderExpanded()
             ->hideOnIndex();
 
-        $_REQUEST['crudAction'] !== 'detail' &&
-            yield FormField::addTab('Séminaires Consultés');
+        yield FormField::addTab('Séminaires Consultés');
         yield FormField::addColumn(6);
-        yield FormField::addFieldset('');
-        yield CollectionField::new('seminarConsultations', 'Séminaires Consultés')
+        yield FormField::addFieldset('Séminaires');
+        yield CollectionField::new('seminarConsultations', false)
             ->addJsFiles(
                 Asset::new('scripts/ea-consultation-no-duplicates.js')
                     ->defer()
             )
+            ->setTemplatePath('admin/consultationDisplay.html.twig')
             ->useEntryCrudForm()
             ->hideOnIndex();
     }
