@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SeminarConsultationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\UniqueConstraint(name: 'unique_user_seminar', columns: ['user_id', 'seminar_id'])]
 #[ORM\Entity(repositoryClass: SeminarConsultationRepository::class)]
 class SeminarConsultation
 {

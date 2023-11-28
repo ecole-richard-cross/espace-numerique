@@ -86,6 +86,10 @@ class SeminarCrudController extends AbstractCrudController
         yield FormField::addColumn(8);
         yield FormField::addFieldset('');
         yield CollectionField::new('seminarConsultations', false)
+            ->addJsFiles(
+                Asset::new('scripts/ea-consultation-no-duplicates.js')
+                    ->defer()
+            )
             ->useEntryCrudForm()
             ->hideOnIndex();
     }

@@ -24,11 +24,13 @@ class SeminarConsultationCrudController extends AbstractCrudController
     {
         if ($_REQUEST['crudControllerFqcn'] !== 'App\Controller\Admin\UserCrudController') {
             yield FormField::addColumn(4);
-            yield AssociationField::new('user', false);
+            yield AssociationField::new('user', false)
+                ->renderAsNativeWidget();
         }
         if ($_REQUEST['crudControllerFqcn'] !== 'App\Controller\Admin\SeminarCrudController') {
             yield FormField::addColumn(4);
-            yield AssociationField::new('seminar', false);
+            yield AssociationField::new('seminar', false)
+                ->renderAsNativeWidget();
         }
         yield FormField::addColumn(2);
         yield BooleanField::new('isToRead', 'Assigné');

@@ -70,14 +70,14 @@ class UserCrudController extends AbstractCrudController
             ->onlyOnIndex()
             ->setTemplatePath('user/avatar_tiny.html.twig');
 
-        // yield AssociationField::new('avatar')
-        //     ->renderAsEmbeddedForm(MediaImageCrudController::class)
-        //     ->setRequired(false)
-        //     ->addJsFiles(
-        //         Asset::new('scripts/ea-force-media-type-value.js')
-        //             ->defer()
-        //     )
-        //     ->onlyOnForms();
+        yield AssociationField::new('avatar')
+            ->renderAsEmbeddedForm(MediaImageCrudController::class)
+            ->setRequired(false)
+            ->addJsFiles(
+                Asset::new('scripts/ea-force-media-type-value.js')
+                    ->defer()
+            )
+            ->onlyOnForms();
 
         yield FormField::addFieldset('');
         yield EmailField::new('email');
@@ -118,6 +118,10 @@ class UserCrudController extends AbstractCrudController
         yield FormField::addColumn(6);
         yield FormField::addFieldset('');
         yield CollectionField::new('seminarConsultations', 'Séminaires Consultés')
+            ->addJsFiles(
+                Asset::new('scripts/ea-consultation-no-duplicates.js')
+                    ->defer()
+            )
             ->useEntryCrudForm()
             ->hideOnIndex();
     }

@@ -120,9 +120,9 @@ const fillAccordionLabels = () => {
          const chapterNb = titleInput.name.includes('section') ? (draggable.closest('.row')).querySelector('input[name$="[number]"]').value : nbInput.value;
          const sectionNb = titleInput.name.includes('section') ? nbInput.value : null;
          label.childNodes[2].textContent = chapterNb + '.' + (sectionNb ? sectionNb + '. ' : ' ') + titleInput.value;
-      } else {
-         const type = draggable.querySelector('select[name$="[type]"]').value
-         const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1)
+      } else if (draggable.querySelector('select[name$="[type]"]')) {
+         const type = draggable.querySelector('select[name$="[type]"]').value;
+         const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
          const htmlRemovedContent = ((draggable.querySelector('textarea[name$="[content]"]')).value.replace(/<.{0,10}>/gm, '')).replace(/&nbsp;/gm, ' ');
          label.childNodes[2].textContent = capitalizedType + " - " +
             (htmlRemovedContent.length > 80 ? htmlRemovedContent.slice(0, 79) : htmlRemovedContent);
