@@ -44,7 +44,7 @@ class XmlConverter
 
         $rootNode = [
             ...$rootAttributes,
-            '#' => CpfFormat($data)
+            '#' => $data
         ];
         return $serializer->serialize(
             $rootNode,

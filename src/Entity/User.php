@@ -17,7 +17,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     const ROLES = [
         'Admin' => 'ROLE_ADMIN',
-        'Formateur' => 'ROLE_FORMATEUR',
+        'Formateur ERC' => 'ROLE_FORMATEUR_ERC',
+        'Formateur Externe' => 'ROLE_FORMATEUR_EXT',
         'Stagiaire' => 'ROLE_STAGIAIRE',
         'Utilisateur' => 'ROLE_USER'
     ];
