@@ -20,8 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -67,10 +69,16 @@ class DashboardController extends AbstractDashboardController
             ->setLocales(['fr' => '🇫🇷 Français']);
     }
 
+    public function configureUserMenu(UserInterface $user): UserMenu
+    {
+        return parent::configureUserMenu($user)
+            ->setAvatarUrl('uploads/' . $user->getAvatar()->getUrl());
+    }
+
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linkToUrl('Retour à l\'accueil', 'fa fa-home', '/'),
+            MenuItem::linkToUrl('Retour à l\'accueil', 'fa fa-home', $this->generateUrl('app_index')),
             MenuItem::linkToDashboard('Statistiques', 'fa-solid fa-chart-line'),
             // Menuitem::subMenu('Gestion', 'fa fa-list')
             //     ->setSubItems([

@@ -31,7 +31,7 @@ class Stagiaire
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $identifiantsFinanceurs = null;
 
-    #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: PassageCertification::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'stagiaire', targetEntity: PassageCertification::class, cascade: ['persist'])]
     private Collection $passageCertifications;
 
     #[ORM\Column]
@@ -40,8 +40,8 @@ class Stagiaire
     #[ORM\ManyToMany(targetEntity: Promotion::class, inversedBy: 'stagiaires')]
     private Collection $Promotion;
 
-    #[ORM\OneToOne(inversedBy: 'stagiaire', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'stagiaire', cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?User $User = null;
 
     public function __construct()
