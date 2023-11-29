@@ -86,7 +86,10 @@ class Localisation
     #[ORM\PreUpdate]
     public function fetchFromCodePostal(): static
     {
-        if (trim(strtolower($this->pays)) !== "france")
+        if (
+            trim(strtolower($this->pays)) !== "france" ||
+            !preg_match("/^\d{5}$/", trim($this->codePostal))
+        )
             return $this;
 
         $details = PostalCodeTools::fetchDetails($this->codePostal);

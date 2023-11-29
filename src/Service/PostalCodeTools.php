@@ -28,8 +28,8 @@ class PostalCodeTools
             return trim($string);
         }, explode(',', $props['context']));
 
-        $dep = "$context[1]";
-        $region = $context[2];
+        $dep = $context[1];
+        $region = $context[2] ?? "DROM-COM";
         return [
             "postalCode" => $postalCode,
             "department" => $dep,
