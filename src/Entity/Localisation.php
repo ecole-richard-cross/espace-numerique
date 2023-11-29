@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\LocalisationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use PostalCodeTools;
 
 #[ORM\Entity(repositoryClass: LocalisationRepository::class)]
@@ -91,10 +92,14 @@ class Localisation
             !preg_match("/^\d{5}$/", trim($this->codePostal))
         )
             return $this;
-
-        $details = PostalCodeTools::fetchDetails($this->codePostal);
-        $this->setDepartement($details['department']);
-        $this->setRegion($details['region']);
+        try {
+            $details = PostalCodeTools::fetchDetails($this->codePostal);
+            $this->setDepartement($details['department']);
+            $this->setRegion($details['region']);
+        } catch (Exception $e) {
+            $this->setDepartement('dpt');
+            $this->setRegion("reg");
+        }
 
         return $this;
     }
