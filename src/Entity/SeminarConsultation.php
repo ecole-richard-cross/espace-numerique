@@ -31,6 +31,9 @@ class SeminarConsultation
     #[ORM\JoinColumn(nullable: false)]
     private ?Seminar $seminar = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?array $finishedChapters = null;
+
     public function __toString()
     {
         return $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\UserCrudController' ? $this->seminar->getTitle() : 
@@ -100,6 +103,18 @@ class SeminarConsultation
     public function setSeminar(?Seminar $seminar): static
     {
         $this->seminar = $seminar;
+
+        return $this;
+    }
+
+    public function getFinishedChapters(): ?array
+    {
+        return $this->finishedChapters;
+    }
+
+    public function setFinishedChapters(?array $finishedChapters): static
+    {
+        $this->finishedChapters = $finishedChapters;
 
         return $this;
     }
