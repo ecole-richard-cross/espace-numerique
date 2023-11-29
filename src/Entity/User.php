@@ -12,15 +12,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     const ROLES = [
         'Admin' => 'ROLE_ADMIN',
         'Formateur ERC' => 'ROLE_FORMATEUR_ERC',
         'Formateur Externe' => 'ROLE_FORMATEUR_EXT',
-        'Stagiaire' => 'ROLE_STAGIAIRE',
-        'Utilisateur' => 'ROLE_USER'
+        'Stagiaire en formation' => 'ROLE_STAGIAIRE',
+        'Stagiaire formé' => 'ROLE_EX_STAGIAIRE',
+        'Utilisateur public' => 'ROLE_USER'
     ];
     #[ORM\Id]
     #[ORM\GeneratedValue]
