@@ -39,11 +39,8 @@ class SeminarCrudController extends AbstractCrudController
         ($_REQUEST['crudAction'] === Crud::PAGE_NEW ||
             $_REQUEST['crudAction'] === Crud::PAGE_EDIT) &&
             yield AssociationField::new('image', 'Illustration')
+            ->addWebpackEncoreEntries('ea-force-media-type-value')
             ->renderAsEmbeddedForm(MediaImageCrudController::class)
-            ->addJsFiles(
-                Asset::new('scripts/ea-force-media-type-value.js')
-                    ->defer()
-            )
             ->onlyOnForms();
         yield TextField::new('title', 'Titre')
             ->hideOnDetail();
@@ -70,14 +67,8 @@ class SeminarCrudController extends AbstractCrudController
         yield FormField::addColumn(12);
         yield FormField::addFieldset('Éditeur');
         yield CollectionField::new('chapters', 'Chapitres')
-            ->addCssFiles('styles\\ea-nested-forms.css')
-            ->useEntryCrudForm(ChapterCrudController::class)
-            ->addJsFiles(
-                Asset::new('scripts/ea-block-form.js')
-                    ->defer(),
-                Asset::new('scripts/ea-nested-text-editor-fix.js')
-                    ->defer()
-            );
+            ->addWebpackEncoreEntries('ea-nested-forms', 'ea-block-form', 'ea-nested-text-editor-fix')
+            ->useEntryCrudForm(ChapterCrudController::class);
 
         yield CollectionField::new('chapters', "Aperçu")
             ->setTemplatePath('admin/seminarDisplay.html.twig')
@@ -86,10 +77,7 @@ class SeminarCrudController extends AbstractCrudController
         yield FormField::addColumn(8);
         yield FormField::addFieldset('');
         yield CollectionField::new('seminarConsultations', false)
-            ->addJsFiles(
-                Asset::new('scripts/ea-consultation-no-duplicates.js')
-                    ->defer()
-            )
+            ->addWebpackEncoreEntries('ea-consultation-no-duplicates')
             ->setTemplatePath('admin/consultationDisplay.html.twig')
             ->useEntryCrudForm()
             ->hideOnIndex();
