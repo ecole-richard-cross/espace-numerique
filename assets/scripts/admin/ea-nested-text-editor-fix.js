@@ -1,4 +1,7 @@
+import '../../styles/ea-nested-forms.css';
+
 setTimeout(() => {
+   orderCollectionsByNb();
    document.querySelectorAll("trix-editor").length > 0 && loadTextEditorJs();
    initDragNDrop();
 
@@ -77,11 +80,6 @@ window.drop = drop;
 function drop(event) {
    event.preventDefault();
 
-   const getGroup = (el) => {
-      const nearestNbInput = el.querySelector('input[name$="[number]"]');
-      return (nearestNbInput.name).slice(0, (nearestNbInput.name.length - 11));
-   }
-
    const data = event.dataTransfer.getData("text");
    const fromContainer = document.getElementById(data).parentNode;
    const toContainer = event.currentTarget;
@@ -93,6 +91,33 @@ function drop(event) {
       fillAccordionLabels();
    }
 }
+
+const getGroup = (el) => {
+   const nearestNbInput = el.querySelector('input[name$="[number]"]');
+   return (nearestNbInput.name).slice(0, (nearestNbInput.name.length - 11));
+}
+
+const orderCollectionsByNb = () => {
+   const collectionItems = Array.from(document.querySelectorAll('.field-collection-item'))
+      .filter(item => item.querySelector('input[name$="[number]"]') != null);
+   const groups = {};
+   collectionItems.forEach((item) => {
+      const groupName = getGroup(item);
+      groups[groupName] = groups[groupName] ? [...groups[groupName], item] : [item];
+   });
+   for (let groupName in groups) {
+      groups[groupName].forEach((item) => {
+         const itemNb = item.querySelector('input[name$="[number]"]').value;
+         const siblings = groups[groupName].filter((el => el != item));
+         siblings.forEach(sibling => {
+            const siblingNb = sibling.querySelector('input[name$="[number]"]').value;
+            if (itemNb > siblingNb) {
+               sibling.after(item);
+            }
+         })
+      })
+   }
+};
 
 const autoNbValues = () => {
    const nbInputs = document.querySelectorAll('input[name$="[number]"]');

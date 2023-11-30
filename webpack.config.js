@@ -21,14 +21,13 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/scripts/app.js')
-    
+
     .addEntry('ea-block-form', './assets/scripts/admin/ea-block-form.js')
     .addEntry('ea-consultation-no-duplicates', './assets/scripts/admin/ea-consultation-no-duplicates.js')
     .addEntry('ea-force-media-type-value', './assets/scripts/admin/ea-force-media-type-value.js')
     .addEntry('ea-media-form', './assets/scripts/admin/ea-media-form.js')
     .addEntry('ea-nested-text-editor-fix', './assets/scripts/admin/ea-nested-text-editor-fix.js')
     .addEntry('remove-xml-batch-popup', './assets/scripts/admin/remove-xml-batch-popup.js')
-    .addStyleEntry('ea-nested-forms', './assets/styles/ea-nested-forms.css')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

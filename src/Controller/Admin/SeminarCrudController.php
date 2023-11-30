@@ -6,7 +6,6 @@ use App\Controller\Admin\Filter\ChoiceArrayFilter;
 use App\Entity\Seminar;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -67,7 +66,7 @@ class SeminarCrudController extends AbstractCrudController
         yield FormField::addColumn(12);
         yield FormField::addFieldset('Éditeur');
         yield CollectionField::new('chapters', 'Chapitres')
-            ->addWebpackEncoreEntries('ea-nested-forms', 'ea-block-form', 'ea-nested-text-editor-fix')
+            ->addWebpackEncoreEntries('ea-block-form', 'ea-nested-text-editor-fix')
             ->useEntryCrudForm(ChapterCrudController::class);
 
         yield CollectionField::new('chapters', "Aperçu")
