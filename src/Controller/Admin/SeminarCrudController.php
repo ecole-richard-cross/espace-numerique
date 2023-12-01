@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Filter\ChoiceArrayFilter;
 use App\Entity\Seminar;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
@@ -59,7 +60,7 @@ class SeminarCrudController extends AbstractCrudController
             ->renderCollapsed();
         yield BooleanField::new('isPublished', 'Publié');
         yield ChoiceField::new('roles', 'Assigné à')
-            ->setChoices(['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'])
+            ->setChoices(User::ROLES)
             ->allowMultipleChoices()
             ->renderExpanded()
             ->hideOnIndex();
@@ -70,6 +71,7 @@ class SeminarCrudController extends AbstractCrudController
         yield FormField::addColumn(12);
         yield FormField::addFieldset('Éditeur');
         yield CollectionField::new('chapters', 'Chapitres')
+            ->hideOnIndex()
             ->addCssFiles('styles\\ea-nested-forms.css')
             ->useEntryCrudForm(ChapterCrudController::class)
             ->addJsFiles(
@@ -78,7 +80,8 @@ class SeminarCrudController extends AbstractCrudController
                 Asset::new('scripts/ea-nested-text-editor-fix.js')
                     ->defer()
             );
-
+        yield AssociationField::new('chapters', 'Chapitres')
+            ->onlyOnIndex();
         yield CollectionField::new('chapters', "Aperçu")
             ->setTemplatePath('admin/seminarDisplay.html.twig')
             ->onlyOnDetail();
