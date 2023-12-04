@@ -3,84 +3,121 @@
     CUSTOM VARIABLES
 */
 $theme: (
-    /* COLOURS */
-    // Other than primary
-    beige: #CEB5A7,
-    beige-dark: #948781,
-    // Backgrounds
-    primary-bg-light : rgba($primary, 8%),
-    primary-bg-medium : rgba($primary, 25%),
-    primary-bg-strong : rgba($primary, 40%),
-    dark-bg: rgba($dark, 40%),
-    light-grey: $gray-200,
-    dark-grey: $gray-600,
+	/* COLOURS */ // Other than primary
+	beige: #ceb5a7,
+	beige-dark: #948781,
+	// Backgrounds
+	primary-bg-light: rgba($primary, 8%),
+	primary-bg-medium: rgba($primary, 25%),
+	primary-bg-strong: rgba($primary, 40%),
+	dark-bg: rgba($dark, 40%),
+	light-grey: $gray-200,
+	dark-grey: $gray-600,
 
-    /* LAYOUT */
-    radius: $border-radius-lg,
+	/* LAYOUT */ radius: $border-radius-lg
 );
 
+.nav-shadow {
+	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
 /* HEADER */
-
+header {
+	.nav-item {
+		font-size: 1.25rem;
+		font-weight: 500;
+	}
+	.form-control {
+		font-size: 1rem;
+		color: var(--bs-secondary);
+		border-radius: 8px;
+	}
+	form svg {
+		color: var(--bs-secondary);
+	}
+	.navbar-toggler {
+		border: none;
+		padding: 0;
+		margin-right: 1.2rem;
+		&::after,
+		&:focus,
+		&-icon:focus,
+		&.collapsed {
+			outline: none;
+			box-shadow: none;
+		}
+		&:hover, &:focus:hover {
+			color: var(--bs-primary-bg-subtle);
+		}
+		&:focus {
+			color: var(--bs-primary);
+		}
+	}
+	.log-action {
+		font-size: 1rem;
+		font-style: italic;
+		font-weight: bolder;
+	}
+}
 /* FOOTER */
 footer {
-    background-color: $light;
+	background-color: $light;
 
-    a {
-        @include m.strongText;
-        text-decoration: none;
-        color: $dark;
-    }
+	a {
+		@include m.strongText;
+		text-decoration: none;
+		color: $dark;
+	}
 }
 
 /* TYPOGRAPHY */
 // Titles
 h1 {
-    color: $primary;
-    text-align: center;
+	color: $primary;
+	text-align: center;
 
-    font-weight: 600;
-    font-variant: small-caps;
-    letter-spacing: 0.1125rem;
+	font-weight: 600;
+	font-variant: small-caps;
+	letter-spacing: 0.1125rem;
 }
 
 h2 {
-    font-variant-numeric: oldstyle-nums proportional-nums;
-    font-weight: 600;
-    font-variant: all-small-caps;
+	font-variant-numeric: oldstyle-nums proportional-nums;
+	font-weight: 600;
+	font-variant: all-small-caps;
 }
 
 h3 {
-    font-weight: 500;
+	font-weight: 500;
 }
 
 h4 {
-    font-weight: 500;
+	font-weight: 500;
 }
 
 legend,
 .legend {
-    opacity: 0.7;
-    font-weight: 500;
-    font-style: italic;
+	opacity: 0.7;
+	font-weight: 500;
+	font-style: italic;
 }
 
 .strong,
 strong {
-    @include m.strongText;
+	@include m.strongText;
 }
 
 /* BUILDING BLOCKS */
 .card {
-    box-shadow: $box-shadow;
-    border-radius: $border-radius-lg;
+	box-shadow: $box-shadow;
+	border-radius: $border-radius-lg;
 }
 
 .btn {
-    &[class*='outline'] {
-        border-width: 2px;
-    }
+	&[class*="outline"] {
+		border-width: 2px;
+	}
 
-    &:active {
-        box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.25);
-    }
+	&:active {
+		box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.25);
+	}
 }

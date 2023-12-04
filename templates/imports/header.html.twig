@@ -1,62 +1,67 @@
 {% block header %}
-	<nav class="navbar navbar-expand-md navbar-light bg-light py-0 px-3">
-		<div class="container-fluid p-0">
-			<button class="navbar-toggler  me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<a class="navbar-brand me-auto me-0--md" href="/"><img src="{{ asset('build/images/logo-erc.svg')}}" width="85" height="52"></a>
-			<div class="collapse navbar-collapse order-3 order-md-2" id="navbarNav">
-				<div class="d-flex flex-column flex-md-row flex-grow-1">
-					<ul class="navbar-nav  order-3 order-md-2">
-						<li class="nav-item mx-2">
-							<a href="/" class="nav-link">Séminaires</a>
-						</li>
-						<li class="nav-item mx-2">
-							<a href="/" class="nav-link">Discussions</a>
-						</li>
-					</ul>
-					<form class="d-flex order-2 order-md-3 ms-md-auto">
-						<input class="form-control form-control-sm ps-3 pe5" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn ms-n5" type="submit" aria-label="Search Button">
-							<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewbox="0 0 16 16">
-								<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-							</svg>
-						</button>
-					</form>
-				</div>
-			</div>
-			<ul class="navbar-nav ms-auto order-2 order-md-3">
-				{% if app.user %}
-					<li class="nav-item dropdown">
-						<button class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-							PFP
-						</button>
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-							<li>
-								<a class="dropdown-item" href="#">Mon dashboard</a>
+	<header class="row justify-self-start">
+		<nav class="navbar navbar-expand-md navbar-light bg-light py-0 px-3 nav-shadow">
+			<div class="container-fluid p-0">
+				<button
+					class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-list" viewbox="0 0 16 16">
+						<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+					</svg>
+				</button>
+				<a class="navbar-brand me-auto me-0--md" href="/"><img src="{{ asset('build/images/logo-erc.svg')}}" width="85" height="52"></a>
+				<div class="collapse navbar-collapse order-3 order-md-2" id="navbarNav">
+					<div class="d-flex flex-column flex-md-row flex-grow-1 p-3 p-0--md">
+						<ul class="navbar-nav  order-3 order-md-2">
+							<li class="nav-item mx-2">
+								<a href="/" class="nav-link">Séminaires</a>
 							</li>
-							<li>
-								<a class="dropdown-item" href="#">Mon profil</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="#">Reprendre ma lecture</a>
-							</li>
-							{% if is_granted("ROLE_ADMIN") %}
-								<li class="dropdown-item">
-									<a href="{{path('admin')}}">Espace admin</a>
-								</li>
-							{% endif %}
-							<li>
-								<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+							<li class="nav-item mx-2">
+								<a href="/" class="nav-link">Discussions</a>
 							</li>
 						</ul>
-					</li>
-				{% else %}
-					<li class="nav-item ms-2">
-						<a class="nav-link fw-bolder fst-italic" href="{{ path('app_login')}}">Se connecter</a>
-					</li>
-				{% endif %}
+						<form class="d-flex order-2 order-md-3 ms-md-auto">
+							<input class="form-control form-control-sm ps-3 pe5" type="search" placeholder="Rechercher... " aria-label="Search">
+							<button class="btn ms-n5" type="submit" aria-label="Search Button">
+								<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewbox="0 0 16 16">
+									<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+								</svg>
+							</button>
+						</form>
+					</div>
+				</div>
+				<ul class="navbar-nav ms-auto order-2 order-md-3">
+					{% if app.user %}
+						<li class="nav-item dropdown">
+							<button class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+								PFP
+							</button>
+							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+								<li>
+									<a class="dropdown-item" href="#">Mon dashboard</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">Mon profil</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">Reprendre ma lecture</a>
+								</li>
+								{% if is_granted("ROLE_ADMIN") %}
+									<li class="dropdown-item">
+										<a href="{{path('admin')}}">Espace admin</a>
+									</li>
+								{% endif %}
+								<li>
+									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+								</li>
+							</ul>
+						</li>
+					{% else %}
+						<li class="nav-item ms-2">
+							<a class="nav-link log-action" href="{{ path('app_login')}}">Se connecter</a>
+						</li>
+					{% endif %}
 
-			</ul>
-		</nav>
+				</ul>
+			</nav>
+		</header>
 	{% endblock %}
