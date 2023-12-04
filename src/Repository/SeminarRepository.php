@@ -36,11 +36,11 @@ class SeminarRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Seminar
+//    public function findOneById($value): ?Seminar
 //    {
 //        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
+//            ->andWhere('s.id = :id')
+//            ->setParameter('id', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()
 //        ;

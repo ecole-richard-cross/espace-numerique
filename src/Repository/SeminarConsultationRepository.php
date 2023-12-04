@@ -24,13 +24,13 @@ class SeminarConsultationRepository extends ServiceEntityRepository
 //    /**
 //     * @return SeminarConsultation[] Returns an array of SeminarConsultation objects
 //     */
-//    public function findByExampleField($value): array
+//    public function findBySeminar($value): array
 //    {
 //        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
+//            ->andWhere('s.seminar = :seminar')
+//            ->setParameter('seminar', $value)
 //            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
+//         //    ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
 //        ;

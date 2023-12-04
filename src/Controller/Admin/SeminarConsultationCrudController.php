@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\SeminarConsultation;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -15,6 +16,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 
 class SeminarConsultationCrudController extends AbstractCrudController
 {
+    public function __construct(private EntityManagerInterface $em)
+    {
+        
+    }
     public static function getEntityFqcn(): string
     {
         return SeminarConsultation::class;
