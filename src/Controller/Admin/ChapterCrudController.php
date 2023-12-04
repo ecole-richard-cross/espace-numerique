@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 
 class ChapterCrudController extends AbstractCrudController
 {
@@ -26,7 +27,7 @@ class ChapterCrudController extends AbstractCrudController
     {
         yield FormField::addColumn(12);
         yield TextField::new('title', 'Titre');
-        yield TextField::new('description', 'Description');
+        yield TextEditorField::new('description', 'Description');
         yield HiddenField::new('number');
 
         $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\ChapterCrudController' &&
