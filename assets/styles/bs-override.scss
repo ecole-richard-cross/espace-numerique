@@ -20,6 +20,10 @@
 $enable-dark-mode: false;
 
 // Colours
+$red: #dc3545;
+$yellow: #ffc107;
+$green: #198754;
+$cyan: #0dcaf0;
 
 $primary: #9100B2;
 $secondary: #5D626D;
@@ -27,7 +31,20 @@ $accent: #B900E2;
 $light: #FFF9ED;
 $dark: #222E50;
 
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+
 $theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "dark": $dark,
     "accent": $accent,
 );
 
