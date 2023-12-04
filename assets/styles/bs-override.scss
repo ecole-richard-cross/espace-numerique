@@ -20,16 +20,34 @@
 $enable-dark-mode: false;
 
 // Colours
+
 $primary: #9100B2;
 $secondary: #5D626D;
 $accent: #B900E2;
 $light: #FFF9ED;
 $dark: #222E50;
 
+$theme-colors: (
+    "accent": $accent,
+);
+
 $body-color: $dark;
 
 // Add Montserrat as main font family
-$font-family-base: Montserrat, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-base: Montserrat,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    "Noto Sans",
+    "Liberation Sans",
+    Arial,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
 
 // Add more position values 
 $position-values: (
@@ -49,3 +67,5 @@ $position-values: (
     90: 90%,
     100: 100%,
 );
+$box-shadow: 0.2rem 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+$btn-font-weight: 600;
