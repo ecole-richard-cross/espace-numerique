@@ -7,7 +7,6 @@ use App\Entity\Seminar;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -37,14 +36,11 @@ class SeminarCrudController extends AbstractCrudController
             ->onlyOnDetail()
             ->setTemplatePath('seminar/image_small.html.twig');
 
-        ($_REQUEST['crudAction'] === Crud::PAGE_NEW ||
-            $_REQUEST['crudAction'] === Crud::PAGE_EDIT) &&
+        ($pageName === Crud::PAGE_NEW ||
+            $pageName === Crud::PAGE_EDIT) &&
             yield AssociationField::new('image', 'Illustration')
+            ->addWebpackEncoreEntries('ea-force-media-type-value')
             ->renderAsEmbeddedForm(MediaImageCrudController::class)
-            ->addJsFiles(
-                Asset::new('scripts/ea-force-media-type-value.js')
-                    ->defer()
-            )
             ->onlyOnForms();
         yield TextField::new('title', 'Titre')
             ->hideOnDetail();
@@ -70,16 +66,14 @@ class SeminarCrudController extends AbstractCrudController
             ->hideOnForm();
         yield FormField::addColumn(12);
         yield FormField::addFieldset('Éditeur');
-        yield CollectionField::new('chapters', 'Chapitres')
+
+        ($pageName === Crud::PAGE_NEW ||
+            $pageName === Crud::PAGE_EDIT) &&
+            yield CollectionField::new('chapters', 'Chapitres')
             ->hideOnIndex()
-            ->addCssFiles('styles\\ea-nested-forms.css')
-            ->useEntryCrudForm(ChapterCrudController::class)
-            ->addJsFiles(
-                Asset::new('scripts/ea-block-form.js')
-                    ->defer(),
-                Asset::new('scripts/ea-nested-text-editor-fix.js')
-                    ->defer()
-            );
+            ->addWebpackEncoreEntries('ea-block-form', 'ea-nested-text-editor-fix')
+            ->useEntryCrudForm(ChapterCrudController::class);
+
         yield AssociationField::new('chapters', 'Chapitres')
             ->onlyOnIndex();
         yield CollectionField::new('chapters', "Aperçu")
@@ -88,11 +82,11 @@ class SeminarCrudController extends AbstractCrudController
         yield FormField::addTab('Consulté par');
         yield FormField::addColumn(8);
         yield FormField::addFieldset('');
-        yield CollectionField::new('seminarConsultations', false)
-            ->addJsFiles(
-                Asset::new('scripts/ea-consultation-no-duplicates.js')
-                    ->defer()
-            )
+
+        ($pageName === Crud::PAGE_NEW ||
+            $pageName === Crud::PAGE_EDIT) &&
+            yield CollectionField::new('seminarConsultations', false)
+            ->addWebpackEncoreEntries('ea-consultation-no-duplicates')
             ->setTemplatePath('admin/consultationDisplay.html.twig')
             ->useEntryCrudForm()
             ->hideOnIndex();

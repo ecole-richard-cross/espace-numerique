@@ -28,7 +28,7 @@ class Chapter
     #[ORM\JoinColumn(nullable: false)]
     private ?Seminar $seminar = null;
 
-    #[ORM\OneToMany(mappedBy: 'chapter', targetEntity: Section::class, orphanRemoval: true, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'chapter', targetEntity: Section::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $sections;
 
     public function __construct()
@@ -38,7 +38,7 @@ class Chapter
 
     public function __toString()
     {
-        return $this->number.'. '.$this->title;
+        return $this->number . '. ' . $this->title;
     }
 
     public function getId(): ?int

@@ -1,3 +1,4 @@
+{# {% dump(app.request.attributes.get('_controller')[0]) %} #}
 {% set assignedConsultations = field.value|filter(c => c.isToRead == true and c.isFinished == false) %}
 {% set finishedConsultations = field.value|filter(c => c.isFinished == true ) %}
 {% set otherConsultations = field.value|filter(c => c.isFinished == false and c.isToRead == false ) %}

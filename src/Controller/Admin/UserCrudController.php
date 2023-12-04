@@ -8,7 +8,6 @@ use App\Controller\Admin\Filter\ChoiceArrayFilter;
 use App\Entity\Media;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -70,12 +69,9 @@ class UserCrudController extends AbstractCrudController
             ->setTemplatePath('user/avatar_tiny.html.twig');
 
         yield AssociationField::new('avatar')
+            ->addWebpackEncoreEntries('ea-force-media-type-value')
             ->renderAsEmbeddedForm(MediaImageCrudController::class)
             ->setRequired(false)
-            ->addJsFiles(
-                Asset::new('scripts/ea-force-media-type-value.js')
-                    ->defer()
-            )
             ->onlyOnForms();
 
         yield FormField::addFieldset('');
@@ -116,10 +112,7 @@ class UserCrudController extends AbstractCrudController
         yield FormField::addColumn(6);
         yield FormField::addFieldset('Séminaires');
         yield CollectionField::new('seminarConsultations', false)
-            ->addJsFiles(
-                Asset::new('scripts/ea-consultation-no-duplicates.js')
-                    ->defer()
-            )
+            ->addWebpackEncoreEntries('ea-consultation-no-duplicates')
             ->setTemplatePath('admin/consultationDisplay.html.twig')
             ->useEntryCrudForm()
             ->hideOnIndex();

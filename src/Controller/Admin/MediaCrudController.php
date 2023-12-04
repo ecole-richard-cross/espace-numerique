@@ -34,7 +34,6 @@ class MediaCrudController extends AbstractCrudController
     {
 
         $uploadNew = static function (UploadedFile $file, string $uploadDir, string $fileName) {
-            dump($file->getMimeType());
             if (
                 !in_array(explode('/', $file->getMimeType())[0], ['image', 'audio', 'video']) &&
                 !in_array($file->getMimeType(), [
@@ -80,16 +79,18 @@ class MediaCrudController extends AbstractCrudController
             ->renderExpanded()
             ->onlyWhenCreating();
         yield TextField::new('name', 'Étiquette');
-        yield ImageField::new('url', 'Fichier')
+        ($pageName === Crud::PAGE_NEW) &&
+            yield ImageField::new('url', 'Fichier')
             ->setFormTypeOptions([
                 'upload_new' => $uploadNew
             ])
+            ->onlyWhenCreating()
             ->setUploadDir('public/uploads')
             ->setBasePath('uploads/')
             ->setUploadedFileNamePattern('[contenthash].[extension]')
-            ->onlyWhenCreating()
             ->setRequired($pageName === Crud::PAGE_NEW)
-            ->addJsFiles('scripts/ea-media-form.js');
+            ->addWebpackEncoreEntries('ea-media-form');
+
         yield TextField::new('url', 'Nom du fichier')
             ->hideOnForm();
         yield ImageField::new('url', 'Aperçu')

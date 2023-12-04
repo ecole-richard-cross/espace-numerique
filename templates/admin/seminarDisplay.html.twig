@@ -1,5 +1,5 @@
 {% set chapters = field.value %}
-{% for chapter in chapters %}
+{% for chapter in chapters|sort ((a, b) => a.number <=> b.number) %}
     <div class="accordion" id="accordion-chap-{{chapter.id}}">
         <div class="accordion-item">
 
@@ -12,7 +12,7 @@
             <div id="collapse-chapter{{chapter.id}}" class="accordion-collapse collapse show">
                 <div class="accordion-body">
                     
-                    {% for section in chapter.sections %}
+                    {% for section in chapter.sections|sort ((a, b) => a.number <=> b.number) %}
                         <div class="accordion" id="accordion-section-{{section.id}}">
 
                             <div class="accordion-item">
@@ -23,7 +23,7 @@
                                 </h3>
                                 <div id="collapse-section{{section.id}}" class="accordion-collapse collapse show">
                                     <div class="accordion-body">
-                                        {% for block in section.blocks %}
+                                        {% for block in section.blocks|sort ((a, b) => a.number <=> b.number) %}
                                             {{ include("seminar/block_gate.html.twig", {block: block}) }}
                                         {% endfor %}
                                     </div>
