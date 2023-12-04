@@ -1,0 +1,19 @@
+/*
+    CUSTOM VARIABLES
+*/
+$theme: (
+    /* COLOURS */
+    // Other than primary
+    beige: #CEB5A7,
+    beige-dark: #948781,
+    // Backgrounds
+    primary-bg-light : rgba($primary, 8%),
+    primary-bg-medium : rgba($primary, 25%),
+    primary-bg-strong : rgba($primary, 40%),
+    dark-bg: rgba($dark, 40%),
+    light-grey: $gray-200,
+    dark-grey: $gray-600,
+
+    /* LAYOUT */
+    radius: $border-radius-lg,
+);
