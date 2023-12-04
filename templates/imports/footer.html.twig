@@ -1,0 +1,15 @@
+<footer class="row d-flex justify-content-between align-items-center justify-self-end py-3 px-4">
+    <div class="col">
+        <a href="/cgu">Conditions générales d'utilisation</a>
+    </div>
+    <div class="col">
+        <div class="d-flex justify-content-center align-items-center gap-3">
+            {% for social in socials %}
+                <a href="social.url" target="_blank"><img width="36" height="36" src="{{social.iconUrl}}" alt="{{ social.altText }}"></a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col text-end">
+        <a href="/mentions">Mentions légales</a>
+    </div>
+</footer>

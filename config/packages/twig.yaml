@@ -1,6 +1,28 @@
 twig:
     default_path: "%kernel.project_dir%/templates"
     form_themes: ["bootstrap_5_layout.html.twig"]
+    globals:
+        socials:
+            instagram:
+                url:
+                iconUrl: https://www.ecole-richard-cross.com/img/icons/logo-instagram.png
+                altText: "Lien vers le compte Instagram de l'Ecole"
+            twitter:
+                url:
+                iconUrl: https://www.ecole-richard-cross.com/img/icons/logo-twitter.png
+                altText: "Lien vers le compte Twitter de l'Ecole"
+            linkedin:
+                url:
+                iconUrl: https://www.ecole-richard-cross.com/img/icons/logo-linkedin.png
+                altText: "Lien vers le compte LinkedIn de l'Ecole"
+            youtube:
+                url:
+                iconUrl: https://www.ecole-richard-cross.com/img/icons/logo-youtube.png
+                altText: "Lien vers le compte YouTube de l'Ecole"
+            facebook:
+                url: https://www.facebook.com/ecolerichardcross
+                iconUrl: https://www.ecole-richard-cross.com/img/icons/logo-facebook.png
+                altText: "Lien vers le compte Facebook de l'Ecole"
 
 when@test:
     twig:

@@ -13,9 +13,12 @@
         {% endblock %}
     </head>
     <body>
-        {% include 'imports/header.html.twig' %}
-        <main class="p-3">
-            {% block body %}{% endblock %}
-        </main>
+        <div class="container d-flex flex-column mw-100 vh-100">
+            {% include 'imports/header.html.twig' %}
+            <main class="flex-grow-1 p-3">
+                {% block body %}{% endblock %}
+            </main>
+            {{ include('imports/footer.html.twig') }}
+        </div>
     </body>
 </html>
