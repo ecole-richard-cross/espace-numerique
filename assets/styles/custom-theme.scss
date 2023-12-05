@@ -19,15 +19,24 @@ $theme: (
     radius: $border-radius-lg,
 );
 
-/* HEADER */
+a {
+    text-decoration: none !important;
+}
 
-/* FOOTER */
+#seminar_navbar {
+    a {
+        padding-left: 0;
+        transition: all 100ms ease;
+
+        &:hover {
+            padding-left: 0.5rem;
+        }
+    }
+}
+
 footer {
-    background-color: $light;
-
     a {
         @include m.strongText;
-        text-decoration: none;
         color: $dark;
     }
 }
@@ -64,8 +73,7 @@ legend,
     font-style: italic;
 }
 
-.strong,
-strong {
+.strong {
     @include m.strongText;
 }
 
@@ -83,4 +91,8 @@ strong {
     &:active {
         box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.25);
     }
+}
+
+.seminar-content {
+    max-width: 800px;
 }

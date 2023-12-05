@@ -1,5 +1,5 @@
-{% set url = 'uploads/' ~ block.media.url %}
-<figure class="w-100 d-flex flex-column gap-1 align-items-center">
+{% set url = '/uploads/' ~ block.media.url %}
+<figure class="w-100 d-flex flex-column gap-1 align-items-center my-2">
     <audio controls>
         <source src={{url}}>
         Objet audio non supporté par votre navigateur. 😢
