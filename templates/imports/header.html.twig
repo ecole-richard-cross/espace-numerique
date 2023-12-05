@@ -18,7 +18,7 @@
 								<a href="/" class="nav-link">Discussions</a>
 							</li>
 						</ul>
-						<form class="d-flex order-2 order-md-3 ms-md-auto">
+						<form class="d-flex order-2 order-md-3 ms-md-auto me-2">
 							<input class="form-control form-control-sm ps-3 pe5" type="search" placeholder="Rechercher... " aria-label="Search">
 							<button class="btn ms-n5" type="submit" aria-label="Search Button">
 								<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewbox="0 0 16 16">
@@ -28,12 +28,13 @@
 						</form>
 					</div>
 				</div>
-				<ul class="navbar-nav ms-auto order-2 order-md-3">
+				<ul class="navbar-nav ms-auto order-2 order-md-3 align-items-center gap-1">
 					{% if app.user %}
+						<li class="strong d-none d-lg-block">{{ app.user }}</li>
 						<li class="nav-item dropdown">
 							<button class="nav-link" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 								{% if app.user.avatar != null %}
-									<img class="avatar" src="uploads/{{ app.user.avatar.url }}" height="44" width="44">
+									<img class="rounded-circle" src="uploads/{{ app.user.avatar.url }}" height="44" width="44">
 								{% else %}
 									<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-fill" viewbox="0 0 16 16">
 										<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
@@ -51,7 +52,7 @@
 									<a class="dropdown-item" href="#">Mon dashboard</a>
 								</li>
 								<li>
-									<a class="dropdown-item" href="#">Mon profil</a>
+									<a class="dropdown-item" href="{{path('app_user_profile')}}">Mon profil</a>
 								</li>
 								<li>
 									<a class="dropdown-item" href="#">Reprendre ma lecture</a>

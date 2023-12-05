@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil
+{% endblock %}
+
+{% block body %}
+	{% set infoPers = [app.user, app.user.dateNaissance, app.user.adressePostale, app.user.phoneNumber, app.user.email] %}
+	{% set infoPro = [app.user.nomStructure, app.user.lieuxActivite] %}
+
+	<h1>Mon Profil</h1>
+	<div class="profile-content">
+		<div class="wrapper">
+			<div class="profile-card flex-grow-1">
+				<div class="d-flex gap-3 align-items-center mt-auto">
+					<div
+						class="d-flex">
+						{# {{ include('user/avatar_small.html.twig') }} #}
+						{% if app.user.avatar != null %}
+							<img class="rounded-circle" src="uploads/{{ app.user.avatar.url }}" height="44" width="44">
+						{% else %}
+							<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="#FFF" class="bi bi-person-fill rounded-circle bg-secondary p-2" viewbox="0 0 16 16">
+								<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+							</svg>
+						{% endif %}
+						<button
+							class="btn p-0 align-self-end ms-n1">
+							{# <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewbox="0 0 16 16">
+																																																																																																																																																																																																																											</svg> #}
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewbox="0 0 16 16">
+								<path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+							</svg>
+						</button>
+					</div>
+					<p class="highlight">{{ app.user }}</p>
+				</div>
+				<a class="small-cta" href="">Changer de mot de passe</a>
+			</div>
+			<div class="profile-card status-badge">
+				<div class="status">Stagiaire</div>
+				<div>Centre de Formation</div>
+				<div class="strong">2023</div>
+			</div>
+		</div>
+
+		<div class="d-flex flex-column gap-2">
+			<div class="profile-card accordion">
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="infoGenT">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#infoGen" aria-expanded="true" aria-controls="collapseOne">
+							Informations générales
+						</button>
+					</h2>
+					<div id="infoGen" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+						<div class="accordion-body d-flex justify-content-between">
+							<div class="flex-grow-1">
+								{% for info in infoPers%}
+									{% if info is not empty %}
+										<p>{{info}}</p>
+									{% endif %}
+								{% endfor %}
+							</div>
+							<div class="flex-grow-1">
+								{% for info in infoPro%}
+									{% if info is not empty %}
+										{% if info is iterable %}
+											{% for sub in info%}
+												<p>{{sub}}</p>
+											{% endfor %}
+										{% else %}
+											<p>{{info}}</p>
+										{% endif %}
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{% if app.user.stagiaire is not empty %}
+				<div class="profile-card accordion">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="formationIdsT">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#formationIds" aria-expanded="true" aria-controls="collapseOne">
+								Identifiants de formation
+							</button>
+						</h2>
+						<div id="formationIds" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								{% for info in app.user.stagiaire%}
+									{% if info is not empty %}
+										{% if info is iterable %}
+											{% for sub in info%}
+												<p>{{sub}}</p>
+											{% endfor %}
+										{% else %}
+											<p>{{info}}</p>
+										{% endif %}
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+
+			{% if app.user.presenceWebs is not empty %}
+				<div class="profile-card accordion">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="reseauxT">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#reseaux" aria-expanded="true" aria-controls="collapseOne">
+								Réseaux
+							</button>
+						</h2>
+						<div id="reseaux" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								{% for reseau in app.user.presenceWebs%}
+									{% if reseau is not empty %}
+										<p>
+											<a href="{{reseau.url}}">{{reseau.url}}</a>
+										</p>
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+
+		</div>
+	</div>
+{% endblock %}

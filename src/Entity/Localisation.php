@@ -50,7 +50,7 @@ class Localisation
         } else if (isset($this->ville) && isset($this->pays)) {
             return  $this->ville . ' (' . $this->pays . ')';
         } else {
-            return $this->codePostal ? $this->codePostal . ' (' . $this->departement . ', ' . $this->region . ')' : ($this->ville ? $this->ville : ($this->pays ? $this->pays : 'Localisation vide'));
+            return ($this->codePostal != "n/a") ? $this->codePostal . ' (' . $this->departement . ', ' . $this->region . ')' : ($this->ville ? $this->ville : ($this->pays ? $this->pays : 'Localisation vide'));
         }
     }
 
