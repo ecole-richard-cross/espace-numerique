@@ -33,6 +33,9 @@ header {
 	.form-control, form svg {
 		color: var(--bs-secondary);
 	}
+	.navbar-nav .dropdown-menu {
+		position: absolute;
+	}
 	.navbar-toggler {
 		border: none;
 		padding: 0;
