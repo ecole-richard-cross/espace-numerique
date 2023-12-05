@@ -1,13 +1,13 @@
 {% set url = '/uploads/' ~ block.media.url %}
 <input type="checkbox" class="d-none" id="image-zoom-{{block.media.id}}">
-<label for="image-zoom-{{block.media.id}}">
-    <div>
-        <figure class="w-100 d-flex flex-column gap-1 align-items-center my-2">
-            <video controls>
+<div class="zoom w-100 d-flex justify-content-center">
+    <label for="image-zoom-{{block.media.id}}">
+        <figure class="w-100 d-flex flex-column gap-1 justify-content-center align-items-center my-2">
+            <video class="rounded-3" style="max-width: min(800px,100%); max-height: 600px" controls>
                 <source src={{url}}>
                 Objet vidéo non supporté par votre navigateur. 😢
             </video>
-            <figcaption class="legend">{{block.content|raw}}</figcaption>
+            <figcaption class="legend">{{block.content|replace({"h1":"h4"})|raw}}</figcaption>
         </figure>
-    </div>
-</label>
+    </label>
+</div>

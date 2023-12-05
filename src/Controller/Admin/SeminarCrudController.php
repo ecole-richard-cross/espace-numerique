@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 
@@ -44,7 +45,8 @@ class SeminarCrudController extends AbstractCrudController
             ->onlyOnForms();
         yield TextField::new('title', 'Titre')
             ->hideOnDetail();
-        yield TextField::new('description');
+        yield TextEditorField::new('description')
+            ->setTemplatePath('admin/textEditorDisplay.html.twig');
         yield AssociationField::new('categories', 'Catégories')
             ->setTemplatePath('admin/collectionList.html.twig')
             ->setColumns(6);
@@ -115,7 +117,7 @@ class SeminarCrudController extends AbstractCrudController
             ->add('categories')
             ->add('tags')
             ->add(ChoiceArrayFilter::new('roles')
-                ->setChoices(['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'])
+                ->setChoices(User::ROLES)
                 ->renderExpanded()
                 ->canSelectMultiple());
     }

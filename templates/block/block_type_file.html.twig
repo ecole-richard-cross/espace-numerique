@@ -1,8 +1,8 @@
 {% set url = '/uploads/' ~ block.media.url %}
-<figure class="position-relative rounded-pill d-flex my-3 p-2 gap-3 align-items-center"  style="width: fit-content; background-color: var(--purple-100)">
-    <i class="ms-2 fa-solid fa-paperclip" style="color: var(--purple-500); font-size: 4rem; opacity: 0.10"></i>
-    <figcaption class="m-3" >{{block.content|raw}}</figcaption>
-    <a href="{{url}}" target="_blank" class="btn rounded-pill fs-6 p-3 border border-1 border-secondary d-flex gap-2 align-items-center">
-        <i class="fas fa-download fa-2xl" style="color: var(--purple-500)"></i> Télécharger
+<figure class="bg-primary-subtle rounded-3 d-flex my-2 mx-auto py-2 px-3 gap-3 justify-content-between align-items-center"  style="width: fit-content;">
+    <i class="ms-2 fa-solid fa-paperclip text-accent opacity-25 display-5"></i>
+    <figcaption>{{block.content|replace({"h1":"h4"})|raw}}</figcaption>
+    <a href="{{url}}" target="_blank" class="btn btn-outline-accent">
+        <i class="fas fa-download fa-2xl"></i> Télécharger
     </a>
 </figure>
