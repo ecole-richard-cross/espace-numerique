@@ -181,6 +181,16 @@ class Seminar
         return $this->seminarConsultations;
     }
 
+    public function getConsultByUser(User $user): ?SeminarConsultation
+    {
+        $result = null;
+        foreach ($this->seminarConsultations as $consult) {
+            if ($consult->getUser() == $user)
+                $result = $consult;
+        }
+        return $result;
+    }
+
     public function addSeminarConsultation(SeminarConsultation $seminarConsultation): static
     {
         if (!$this->seminarConsultations->contains($seminarConsultation)) {

@@ -111,7 +111,7 @@ class SeminarReadController extends AbstractController
 
         $entityManager->persist($consult);
         $entityManager->flush();
-        // Redirect to user dashboard ?
-        return $this->redirectToRoute('app_seminar_index', ['id' => $id]);
+        // Redirect to seminars list
+        return $this->redirectToRoute('app_seminars_index');
     }
 }

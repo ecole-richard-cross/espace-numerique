@@ -83,15 +83,12 @@ header {
 footer {
     background-color: $light;
 
-    a {
-        font-weight: 500;
-        text-decoration: none;
-        color: $dark;
-    }
 }
 
 a {
-    text-decoration: none !important;
+    font-weight: 500;
+    text-decoration: none;
+    color: $secondary;
 }
 
 #seminar_navbar {
@@ -136,6 +133,13 @@ legend,
     font-weight: 500;
     font-style: italic;
 }
+
+@media screen and (max-width: 768px) {
+    .no-mobile {
+        display: none !important;
+    }
+}
+
 
 .strong {
     font-weight: 500;
@@ -213,6 +217,24 @@ legend,
         figure img,
         figure figcaption {
             cursor: zoom-in
+        }
+    }
+}
+
+.progress-bar-bg {
+    border-radius: 0.5rem;
+    background-color: $gray-200;
+    height: 0.5rem;
+    width: 70%;
+    margin: 0 auto;
+
+    .progress-bar {
+        border-radius: 0.5rem;
+        background-color: $success;
+        height: 100%;
+
+        &.complete {
+            background-color: $primary;
         }
     }
 }

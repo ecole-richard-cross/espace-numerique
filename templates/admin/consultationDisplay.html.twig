@@ -18,7 +18,7 @@
 					{% if consultation.lastConsultedAt is not empty %}
 						<span class="small mx-1">
 							| dernière consultation le
-							{{consultation.lastConsultedAt}}</span>
+							{{consultation.lastConsultedAt|date()}}</span>
 					{% endif %}
 				</div>
 			{% endfor %}
@@ -39,7 +39,7 @@
 					{% if consultation.lastConsultedAt is not empty %}
 						<span class="small mx-1">
 							| dernière consultation le
-							{{consultation.lastConsultedAt}}</span>
+							{{consultation.lastConsultedAt|date()}}</span>
 					{% endif %}
 				</div>
 			{% endfor %}
@@ -60,7 +60,7 @@
 					{% if consultation.lastConsultedAt is not empty %}
 						<span class="small mx-1">
 							| dernière consultation le
-							{{consultation.lastConsultedAt}}</span>
+							{{consultation.lastConsultedAt|date()}}</span>
 					{% endif %}
 				</div>
 			{% endfor %}

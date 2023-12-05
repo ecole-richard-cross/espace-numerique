@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Liste des séminaires disponibles | {{parent()}}
+{% endblock %}
+{% block body %}
+<div class="container-md">
+    <h1>Tous les séminaires</h1>
+    <div class="card p-3">
+        <div class="d-flex justify-content-between align-items-center gap-1 small">
+            <div style="min-width: 60%">
+                Cours
+            </div>
+            <div class="w-100 d-flex align-items-center justify-content-center">
+                Progression
+            </div>
+            <div class="w-100 d-flex align-items-center justify-content-center no-mobile">
+                Consulté le
+            </div>
+        </div>
+        <div class="d-flex align-items-center">
+            <ul class="w-100 list-group list-group-flush">
+                {% for seminar in seminars|filter(s => s.consultByUser(app.user).isFinished == false) %}
+                {% set consult = seminar.consultByUser(app.user) %}
+                {% set percentDone = (consult.finishedChapters|length / seminar.chapters|length * 100)|round %}
+
+                {% if percentDone == 0 %}
+                    {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
+                {% else %}
+                    {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|sort|last + 1}) %}
+                {% endif %}
+                    <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1">
+                        <div style="min-width: 60%;" class="h5 m-0"><a href="{{semLink}}">{{seminar}}</a></div>
+                        <div class="w-100 text-success d-flex flex-column align-items-center justify-content-center">
+                            {{percentDone}}%
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar" style="width:{{percentDone}}%;"></div>
+                            </div>
+                        </div>
+                        <div class="w-100 d-flex align-items-center justify-content-center legend no-mobile">{{consult.lastConsultedAt|date('d/m/Y à h:m')}}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% if seminars|filter(s => s.consultByUser(app.user).isFinished == true)|length > 0 %}
+            
+        <div class="d-flex justify-content-between align-items-center gap-1 small mt-5">
+            <div style="min-width: 60%" >
+                {% if seminars|filter(s => s.consultByUser(app.user).isFinished == true)|length > 1 %}
+                Terminés
+                {% else %}
+                Terminé
+                {% endif %}
+            </div>
+            <div class="w-100 d-flex align-items-center justify-content-center">
+                Progression
+            </div>
+            <div class="w-100 d-flex align-items-center justify-content-center no-mobile">
+                Consulté le
+            </div>
+        </div>
+        <div class="d-flex align-items-center">
+            <ul class="w-100 list-group list-group-flush">
+                {% for seminar in seminars|filter(s => s.consultByUser(app.user).isFinished == true) %}
+                {% set consult = seminar.consultByUser(app.user) %}
+                {% set percentDone = consult.finishedChapters|length / seminar.chapters|length * 100 %}
+
+                {% if percentDone == 0 %}
+                    {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
+                {% else %}
+                    {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|sort|last + 1}) %}
+                {% endif %}
+
+                    <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1">
+                        <div style="min-width: 60%" class="fst-italic h6 m-0"><a href="{{path('app_seminar_index',{id:seminar.id})}}">{{seminar}}</a></div>
+                        <div class="w-100 text-primary fst-italic small d-flex flex-column align-items-center justify-content-center">
+                            {{percentDone}}%
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar complete" style="width:{{percentDone}}%;"></div>
+                            </div>
+                        </div>
+                        <div class="w-100 d-flex align-items-center justify-content-center legend no-mobile">{{consult.lastConsultedAt|date('d/m/Y à h:m')}}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
