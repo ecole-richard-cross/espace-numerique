@@ -15,10 +15,10 @@ class SeminarConsultation
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?bool $isToRead = null;
+    private ?bool $isToRead = false;
 
     #[ORM\Column]
-    private ?bool $isFinished = null;
+    private ?bool $isFinished = false;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $lastConsultedAt = null;
@@ -32,7 +32,7 @@ class SeminarConsultation
     private ?Seminar $seminar = null;
 
     #[ORM\Column(nullable: true)]
-    private ?array $finishedChapters = null;
+    private ?array $finishedChapters = [];
 
     public function __toString()
     {

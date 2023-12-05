@@ -66,6 +66,12 @@ class SeminarReadController extends AbstractController
         $consult = $entityManager
             ->getRepository(SeminarConsultation::class)
             ->findOneBy(['seminar' => $seminar, 'user' => $this->getUser()]);
+        if ($consult == null) {
+            $consult = new SeminarConsultation();
+            $consult
+                ->setSeminar($seminar)
+                ->setUser($this->getUser());
+        }
         $consult->setLastConsultedAtNow();
 
         $entityManager->persist($consult);

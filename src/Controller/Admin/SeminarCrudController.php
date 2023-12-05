@@ -45,7 +45,8 @@ class SeminarCrudController extends AbstractCrudController
             ->onlyOnForms();
         yield TextField::new('title', 'Titre')
             ->hideOnDetail();
-        yield TextEditorField::new('description');
+        yield TextEditorField::new('description')
+            ->setTemplatePath('admin/textEditorDisplay.html.twig');
         yield AssociationField::new('categories', 'Catégories')
             ->setTemplatePath('admin/collectionList.html.twig')
             ->setColumns(6);
@@ -116,7 +117,7 @@ class SeminarCrudController extends AbstractCrudController
             ->add('categories')
             ->add('tags')
             ->add(ChoiceArrayFilter::new('roles')
-                ->setChoices(['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'])
+                ->setChoices(User::ROLES)
                 ->renderExpanded()
                 ->canSelectMultiple());
     }
