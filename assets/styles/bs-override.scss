@@ -25,6 +25,7 @@ $red: #dc3545;
 $yellow: #ffc107;
 $green: #198754;
 $cyan: #0dcaf0;
+$white: #fff;
 
 $primary: #9100B2;
 $secondary: #5D626D;
@@ -85,5 +86,18 @@ $position-values: (
     90: 90%,
     100: 100%,
 );
+
 $box-shadow: 0.2rem 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+
 $btn-font-weight: 600;
+
+$accordion-button-bg: $light;
+$accordion-button-active-bg: rgba($warning, 30%);
+
+.accordion-button {
+    font-weight: 500;
+
+    &.finished {
+        $accordion-button-active-bg: $success;
+    }
+}

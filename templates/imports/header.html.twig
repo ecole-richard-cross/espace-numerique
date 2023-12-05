@@ -2,8 +2,7 @@
 	<header class="row justify-self-start">
 		<nav class="navbar navbar-expand-md navbar-light bg-light py-0 px-3">
 			<div class="container-fluid p-0">
-				<button
-					class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-list" viewbox="0 0 16 16">
 						<path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
 					</svg>
@@ -36,6 +35,12 @@
 								<img class="avatar" src="uploads/{{ app.user.avatar.url }}" height="44" width="44">
 							</button>
 							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+								{% if is_granted("ROLE_ADMIN") %}
+									<li class="dropdown-item">
+										<a href="{{path('admin')}}">Admin</a>
+									</li>
+									<li><hr class="dropdown-divider"></li>
+								{% endif %}
 								<li>
 									<a class="dropdown-item" href="#">Mon dashboard</a>
 								</li>
@@ -45,11 +50,7 @@
 								<li>
 									<a class="dropdown-item" href="#">Reprendre ma lecture</a>
 								</li>
-								{% if is_granted("ROLE_ADMIN") %}
-									<li class="dropdown-item">
-										<a href="{{path('admin')}}">Espace admin</a>
-									</li>
-								{% endif %}
+								<li><hr class="dropdown-divider"></li>
 								<li>
 									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
 								</li>
