@@ -7,7 +7,7 @@
                 <source src={{url}}>
                 Objet vidéo non supporté par votre navigateur. 😢
             </video>
-            <figcaption class="legend">{{block.content|raw}}</figcaption>
+            <figcaption class="legend">{{block.content|replace({"h1":"h4"})|raw}}</figcaption>
         </figure>
     </div>
 </label>

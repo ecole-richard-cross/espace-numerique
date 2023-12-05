@@ -59,7 +59,7 @@ class Block
 
     public function setContent(?string $content): static
     {
-        $this->content = str_replace('h1', 'h4', $content);
+        $this->content = $content;
 
         return $this;
     }

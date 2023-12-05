@@ -1,6 +1,6 @@
 <div class="bg-danger-subtle p-3 my-2 rounded d-flex gap-3 align-items-center fs-6">
     <i class="fa-solid fa-triangle-exclamation fa-2xl text-danger"></i>
     <div>
-        {{block.content|raw}}
+        {{block.content|replace({"h1":"h4"})|raw}}
     </div>
 </div>

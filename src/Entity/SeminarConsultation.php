@@ -36,10 +36,9 @@ class SeminarConsultation
 
     public function __toString()
     {
-        return $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\UserCrudController' ? $this->seminar->getTitle() : 
-        ($_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\SeminarCrudController' ?
-                $this->user->getPrenom() . ' ' . $this->user->getNomNaissance() :
-                $this->seminar->getTitle() . ' - ' . $this->user->getPrenom() . ' ' . $this->user->getNomNaissance());
+        return $_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\UserCrudController' ? $this->seminar->getTitle() : ($_REQUEST['crudControllerFqcn'] == 'App\Controller\Admin\SeminarCrudController' ?
+            $this->user->getPrenom() . ' ' . $this->user->getNomNaissance() :
+            $this->seminar->getTitle() . ' - ' . $this->user->getPrenom() . ' ' . $this->user->getNomNaissance());
     }
 
     public function getId(): ?int
@@ -76,6 +75,13 @@ class SeminarConsultation
         return $this->lastConsultedAt;
     }
 
+    public function setLastConsultedAtNow(): static
+    {
+        $this->lastConsultedAt = new \DateTimeImmutable();
+
+        return $this;
+    }
+
     public function setLastConsultedAt(?\DateTimeImmutable $lastConsultedAt): static
     {
         $this->lastConsultedAt = $lastConsultedAt;
@@ -110,6 +116,24 @@ class SeminarConsultation
     public function getFinishedChapters(): ?array
     {
         return $this->finishedChapters;
+    }
+
+    public function addFinishedChapter(int $id): static
+    {
+        $old = $this->finishedChapters ?? [];
+        array_push($old, $id);
+        $this->finishedChapters = array_unique($old);
+        return $this;
+    }
+
+    public function markAllChaptersRead(): static
+    {
+        $all = [];
+        foreach ($this->seminar->getChapters() as $id => $chapter) {
+            $all[] = $id;
+        }
+        $this->finishedChapters = [...$all];
+        return $this;
     }
 
     public function setFinishedChapters(?array $finishedChapters): static
