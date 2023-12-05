@@ -24,7 +24,7 @@
                         data-bs-parent="#accordion-chapter">
                             <div class="accordion-body">
                             {% for contentBlock in section.blocks %}
-                                {{ include('seminar/block_gate.html.twig', {block: contentBlock}) }}
+                                {{ include('block/block_gate.html.twig', {block: contentBlock}) }}
                             {% endfor %}
                             </div>
                         </div>
@@ -45,16 +45,13 @@
                 </div>
             </div> 
         {% else %}
-            <div class="p-0 my-0 mx-auto seminar-content">
+            <div class="p-0 my-0 mx-auto seminar-content d-flex flex-column gap-4 align-items-center">
                 <h1>{{seminar}}</h1>
                 
-                <div class="row m-3 p-3 justify-content-center align-items-center">
-                    <div class="col-4">
-                        <img class="rounded-3 mw-100" src="/uploads/{{seminar.image.url}}" alt="{{seminar.image}}">
-                    </div>
-                    <div class="col-6">
-                        {{seminar.description|replace({"h1":"h4"})|raw}}
-                    </div>
+                <img class="rounded-3 mw-100" style="max-height:450px;" src="/uploads/{{seminar.image.url}}" alt="{{seminar.image}}">
+
+                <div>
+                    {{seminar.description|replace({"h1":"h4"})|raw}}
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
                     <a href="{{path('app_seminar_read',{'id':seminar.id, 'chapterId': 0})}}" class="btn btn-outline-primary">Démarrer le cours</a>

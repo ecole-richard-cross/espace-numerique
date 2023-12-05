@@ -16,7 +16,7 @@ setTimeout(() => {
             showIfMedia(blockTypeSelects[i], i);
         })
     })
-}, 10)
+}, 100);
 
 function showIfMedia(bs, i) {
     if (['image', 'audio', 'video', 'file'].includes(bs.value)) {
@@ -29,7 +29,9 @@ function showIfMedia(bs, i) {
 
         // Check if selected option matches, if not remove it
         const displayEl = mediaSelects[i].nextElementSibling.querySelector("div.item");
-        if (displayEl && !displayEl.textContent.toLowerCase().includes(bs.value.toLowerCase())) {
+        displayValue = displayEl.textContent.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+        if (displayEl && !displayValue.replace('fichier', 'file').includes(bs.value.toLowerCase())) {
             clearMediaSelector(i);
         }
 
@@ -47,15 +49,21 @@ function showIfMedia(bs, i) {
                 const listBoxItems = mediaSelects[i]
                     .nextElementSibling
                     .querySelectorAll("div.option");
-                console.log(listBoxItems)
 
                 listBoxItems.forEach(child => {
-                    if (!child.textContent.toLowerCase().includes(bs.value.toLowerCase()))
+                    const childText = child
+                        .textContent
+                        .toLowerCase()
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .replace('fichier', 'file');
+
+                    if (!childText.includes(bs.value.toLowerCase()))
                         child.classList.add("d-none");
                     else
                         child.classList.remove("d-none");
                 })
-            }, 10);
+            }, 25);
 
         });
     }
