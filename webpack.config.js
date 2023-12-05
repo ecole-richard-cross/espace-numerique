@@ -29,6 +29,7 @@ Encore
     .addEntry('ea-nested-text-editor-fix', './assets/scripts/admin/ea-nested-text-editor-fix.js')
     .addEntry('remove-xml-batch-popup', './assets/scripts/admin/remove-xml-batch-popup.js')
 
+    .addStyleEntry('fontawesome', '/assets/styles/fontawesome/css/all.css')
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
