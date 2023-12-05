@@ -1,0 +1,18 @@
+{% if not lastRead.isFinished %}
+    
+    {% set lastChap = lastRead.finishedChapters|sort|last %}
+    {% if lastChap is same as(false) %}
+        {% set nextChap = 0 %}
+    {% else %}
+        {% set nextChap = lastChap + 1 %}
+    {% endif %}
+
+    {% if nextChap < lastRead.seminar.chapters|length %}
+        
+        {% set url = path('app_seminar_read', {id:lastRead.seminar.id, chapterId: nextChap }) %}
+        <li>
+            <a class="dropdown-item" href="{{url}}">Reprendre ma lecture</a>
+        </li>
+
+    {% endif %}
+{% endif %}
