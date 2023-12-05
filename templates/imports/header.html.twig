@@ -31,8 +31,14 @@
 				<ul class="navbar-nav ms-auto order-2 order-md-3">
 					{% if app.user %}
 						<li class="nav-item dropdown">
-							<button class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-								<img class="avatar" src="uploads/{{ app.user.avatar.url }}" height="44" width="44">
+							<button class="nav-link" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+								{% if app.user.avatar != null %}
+									<img class="avatar" src="uploads/{{ app.user.avatar.url }}" height="44" width="44">
+								{% else %}
+									<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-fill" viewbox="0 0 16 16">
+										<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+									</svg>
+								{% endif %}
 							</button>
 							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
 								{% if is_granted("ROLE_ADMIN") %}
