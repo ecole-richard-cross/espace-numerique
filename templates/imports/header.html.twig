@@ -1,6 +1,6 @@
 {% block header %}
 	<header class="row justify-self-start">
-		<nav class="navbar navbar-expand-md navbar-light bg-light py-0 px-3 nav-shadow">
+		<nav class="navbar navbar-expand-md navbar-light bg-light py-0 px-3">
 			<div class="container-fluid p-0">
 				<button
 					class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@
 					{% if app.user %}
 						<li class="nav-item dropdown">
 							<button class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-								PFP
+								<img class="avatar" src="uploads/{{ app.user.avatar.url }}" height="44" width="44">
 							</button>
 							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
 								<li>

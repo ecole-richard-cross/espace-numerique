@@ -17,7 +17,7 @@ $theme: (
 	/* LAYOUT */ radius: $border-radius-lg
 );
 
-.nav-shadow {
+header nav, footer {
 	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 /* HEADER */
@@ -28,10 +28,9 @@ header {
 	}
 	.form-control {
 		font-size: 1rem;
-		color: var(--bs-secondary);
 		border-radius: 8px;
 	}
-	form svg {
+	.form-control, form svg {
 		color: var(--bs-secondary);
 	}
 	.navbar-toggler {
@@ -56,6 +55,9 @@ header {
 		font-size: 1rem;
 		font-style: italic;
 		font-weight: bolder;
+	}
+	.avatar {
+		border-radius: 90px;
 	}
 }
 /* FOOTER */
