@@ -8,6 +8,8 @@
 					</svg>
 				</button>
 				<a class="navbar-brand me-auto me-0--md" href="/"><img src="{{ asset('build/images/logo-erc.svg')}}" width="85" height="52"></a>
+				{% if is_granted('ROLE_USER') %}
+					
 				<div class="collapse navbar-collapse order-3 order-md-2" id="navbarNav">
 					<div class="d-flex flex-column flex-md-row flex-grow-1 p-3 p-0--md">
 						<ul class="navbar-nav  order-3 order-md-2">
@@ -28,6 +30,8 @@
 						</form>
 					</div>
 				</div>
+				
+				{% endif %}
 				<ul class="navbar-nav ms-auto order-2 order-md-3">
 					{% if app.user %}
 						<li class="nav-item dropdown">

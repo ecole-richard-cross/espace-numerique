@@ -13,6 +13,10 @@ class IndexController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        dump($this->getUser());
+        if ($this->getUser() == null)
+            return $this->redirectToRoute('app_login');
+
         $seminars = $entityManager->getRepository(Seminar::class)->findAll();
         return $this->render('index/index.html.twig', [
             'seminars' => $seminars
