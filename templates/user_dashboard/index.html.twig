@@ -40,9 +40,7 @@
             <div>
                 <h2 class="m-3 text-center">Mes questions</h2>
                 {% for question in userQs %}
-                    {% set ressourceLink = '#' %}
-                    {% set lastComment = question.comments|sort((a,b) => a.createdAt - b.createdAt)|last %}
-                    {{ include('discussion/preview.html.twig', {lastComment:lastComment, content: true}) }}
+                    {{ include('discussion/preview.html.twig', {question:question, content: true}) }}
                 {% else %}
                     <div class="card px-4 py-3 d-grid place-content-center">
                         <p class="text-center legend mb-0">Aucune question posée.</p>
