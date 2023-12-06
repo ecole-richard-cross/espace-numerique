@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Seminar;
+use App\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +16,11 @@ class SeminarsController extends AbstractController
     {
         $user = $this->getUser();
         $seminars = $em->getRepository(Seminar::class)->findByRoles($user->getRoles());
+        $tags = $em->getRepository(Tag::class)->findAll();
         // Get all seminars
         return $this->render('seminars/index.html.twig', [
-            'seminars' => $seminars
+            'seminars' => $seminars,
+            'tags' => $tags
         ]);
     }
 }
