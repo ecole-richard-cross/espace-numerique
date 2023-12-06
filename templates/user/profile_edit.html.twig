@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier son profil
+{% endblock %}
+
+{% block body %}
+
+	{{ form_start(form) }}
+	<h1>Modifier mon profil</h1>
+	<div class="profile-content">
+		<div class="profile-card col-lg-6 col-xxl-4">
+			<div>
+				<div class="d-flex gap-2 flex-column flex-lg-row">
+					{{ form_row(form.prenom) }}
+					{{ form_row(form.nomNaissance) }}
+					{{ form_row(form.nomUsage) }}
+				</div>
+				{{ form_row(form.dateNaissance) }}
+				<div class="d-flex gap-2 flex-column flex-lg-row">
+					{{ form_row(form.adressePostale.adresse) }}
+					{{ form_row(form.adressePostale.codePostal) }}
+					{{ form_row(form.adressePostale.ville) }}
+					{{ form_row(form.adressePostale.pays) }}
+				</div>
+				{{ form_row(form.phoneNumber) }}
+				{{ form_row(form.email) }}
+			</div>
+		</div>
+
+		<div class="profile-card col-lg-6 col-xxl-4">
+			{{ form_row(form.nomStructure) }}
+		</div>
+
+      <div class="profile-card col-lg-6 col-xxl-4">
+			{{ form_row(form.presenceWebs) }}
+		</div>
+
+		{% if is_granted("ROLE_STAGIAIRE") %}
+			<div class="profile-card col-lg-6 col-xxl-4">
+				{{ form_row(form.stagiaire.idDossierCpf) }}
+				{{ form_row(form.stagiaire.identifiantsFinanceurs) }}
+				{{ form_row(form.stagiaire.sexe) }}
+			</div>
+		{% endif %}
+
+		<div class="w-100 d-flex justify-content-center mt-2">
+			{{ form_row(form.submit, { 'label': 'Confirmer'}) }}
+		</div>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock %}

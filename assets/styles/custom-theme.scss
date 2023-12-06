@@ -196,11 +196,12 @@ legend,
 //profile specific
 .profile-content {
 	display: flex;
-	flex-direction: column;
+	flex-wrap: wrap;
 	gap: 2rem;
 	margin-top: 2rem;
 	align-self: center;
-	width: 600px;
+	justify-content: center;
+	// align-items: center;
 	.highlight {
 		margin: 0;
 		font-weight: 600;
@@ -245,4 +246,8 @@ legend,
 	font-size: 0.85rem;
 	align-self: flex-end;
 	margin-top: auto;
+}
+.radio-2 {
+	display: flex;
+	gap: 1rem;
 }
