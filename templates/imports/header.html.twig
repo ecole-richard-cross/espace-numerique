@@ -8,11 +8,13 @@
 					</svg>
 				</button>
 				<a class="navbar-brand me-auto me-0--md" href="/"><img src="{{ asset('build/images/logo-erc.svg')}}" width="85" height="52"></a>
+				{% if is_granted('ROLE_USER') %}
+					
 				<div class="collapse navbar-collapse order-3 order-md-2" id="navbarNav">
 					<div class="d-flex flex-column flex-md-row flex-grow-1 p-3 p-0--md">
 						<ul class="navbar-nav  order-3 order-md-2">
 							<li class="nav-item mx-2">
-								<a href="/" class="nav-link">Séminaires</a>
+								<a href="{{path('app_seminars_index')}}" class="nav-link">Séminaires</a>
 							</li>
 							<li class="nav-item mx-2">
 								<a href="/" class="nav-link">Discussions</a>
@@ -28,6 +30,8 @@
 						</form>
 					</div>
 				</div>
+				{% endif %}
+				
 				<ul class="navbar-nav ms-auto order-2 order-md-3 align-items-center gap-1">
 					{% if app.user %}
 						<li class="strong d-none d-lg-block">{{ app.user }}</li>
@@ -43,20 +47,21 @@
 							</button>
 							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
 								{% if is_granted("ROLE_ADMIN") %}
-									<li class="dropdown-item">
-										<a href="{{path('admin')}}">Admin</a>
+									<li>
+										<a class="dropdown-item" href="{{path('admin')}}">Admin</a>
 									</li>
-									<li><hr class="dropdown-divider"></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
 								{% endif %}
 								<li>
-									<a class="dropdown-item" href="#">Mon dashboard</a>
+									<a class="dropdown-item" href="{{path('app_user_dashboard')}}">Mon dashboard</a>
 								</li>
 								<li>
 									<a class="dropdown-item" href="{{path('app_user_profile')}}">Mon profil</a>
 								</li>
-								<li>
-									<a class="dropdown-item" href="#">Reprendre ma lecture</a>
-								</li>
+								<!-- Renders "Reprendre ma lecture" if applicable -->
+								{# {{render(controller('App\\Controller\\UserController::getLastReadLink'))}}  #}
 								<li><hr class="dropdown-divider"></li>
 								<li>
 									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>

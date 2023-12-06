@@ -54,8 +54,15 @@
                     {{seminar.description|replace({"h1":"h4"})|raw}}
                 </div>
                 <div class="d-flex justify-content-center align-items-center">
-                    <a href="{{path('app_seminar_read',{'id':seminar.id, 'chapterId': 0})}}" class="btn btn-outline-primary">Démarrer le cours</a>
+                    <a href="{{path('app_seminar_read',{'id':seminar.id, 'chapterId': 0})}}" class="btn btn-primary">Démarrer le cours</a>
                 </div>
+                {% if seminar.getConsultByUser(app.user).isFinished is same as (true) %}
+                    
+                <div class="d-flex justify-content-center align-items-center">
+                    <a href="{{path('app_seminar_reset',{'id':seminar.id})}}" class="btn btn-outline-danger" style="font-size:0.8rem">Réinitialiser ma progression</a>
+                </div>
+                    
+                {% endif %}
             </div>
         {% endif %}
     </div>
