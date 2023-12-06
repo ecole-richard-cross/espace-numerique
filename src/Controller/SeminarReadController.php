@@ -114,4 +114,21 @@ class SeminarReadController extends AbstractController
         // Redirect to seminars list
         return $this->redirectToRoute('app_seminars_index');
     }
+
+    #[Route('/seminar-reset/{id}', 'app_seminar_reset')]
+    public function resetProgression(int $id, EntityManagerInterface $em): Response
+    {
+        $c = $em
+            ->getRepository(Seminar::class)
+            ->findOneBy(['id' => $id])
+            ->getConsultByUser($this->getUser());
+        $c
+            ->setIsFinished(false)
+            ->setFinishedChapters([]);
+
+        $em->persist($c);
+        $em->flush();
+
+        return $this->redirectToRoute('app_seminar_index', ['id' => $id]);
+    }
 }
