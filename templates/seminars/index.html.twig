@@ -84,36 +84,9 @@
             <div class="d-flex align-items-center px-3">
                 <ul class="seminar-list w-100 list-group list-group-flush">
                     {% for seminar in seminars|filter(s => s.consultByUser(app.user).finishedChapters|default|length == 0) %}
-                    {% set consult = seminar.consultByUser(app.user) %}
-                    {% set percentDone = (consult.finishedChapters|default|length / seminar.chapters|length * 100)|round %}
 
-                    {% if percentDone == 0 %}
-                        {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
-                    {% else %}
-                        {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|default|sort|last + 1}) %}
-                    {% endif %}
-
-                        <li class="px-0 list-group-item d-flex justify-content-between gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
-                            <div style="min-width: 60%;" class="h6 m-0 d-flex flex-column justify-content-center align-items-start">
-                                <p class="m-0 d-flex gap-2">
-                                    <i class="fa-regular fa-file-lines text-dark opacity-50"></i>
-                                    <a href="{{semLink}}">{{seminar}}</a>
-                                </p>
-                                <div class="mt-1 mb-0 d-flex gap-2 align-items-center">
-                                    <i class="fa-solid fa-tags text-dark opacity-50"></i>
-                                    {% for tag in seminar.tags %}
-                                    <div class="badge border border-dark text-dark opacity-25">{{tag}}</div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <div class="w-100 text-dark d-flex flex-column align-items-center justify-content-center small">
-                                Aucun chapitre lu
-                                <div class="progress-bar-bg">
-                                    <div class="progress-bar" style="width:{{percentDone}}%;"></div>
-                                </div>
-                            </div>
-                            <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult ? consult.lastConsultedAt|date('d/m/Y à h:i','Europe/Paris') : "-"}}</div>
-                        </li>
+                        {{ include('seminar/preview.html.twig', {seminar:seminar}) }}
+                        
                     {% else %}
                         <li class="list-group-item small fst-italic">Aucun nouveau séminaire disponible pour l'instant.</li>
                     {% endfor %}
@@ -142,33 +115,9 @@
             <div class="d-flex align-items-center px-3">
                 <ul class="seminar-list w-100 list-group list-group-flush">
                     {% for seminar in seminars|filter(s => s.consultByUser(app.user).isFinished|default == false and s.consultByUser(app.user).finishedChapters|default|length > 0) %}
-                    {% set consult = seminar.consultByUser(app.user) %}
-                    {% set percentDone = (consult.finishedChapters|length / seminar.chapters|length * 100)|round %}
 
-                    {% if percentDone == 0 %}
-                        {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
-                    {% else %}
-                        {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|sort|last + 1}) %}
-                    {% endif %}
+                        {{ include('seminar/preview.html.twig', {seminar:seminar}) }}
 
-                        <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
-                            <div style="min-width: 60%;" class="h6 m-0 d-flex flex-column justify-content-center align-items-start">
-                                <p class="m-0 d-flex gap-2"><i class="fa-regular fa-file-lines text-dark opacity-50"></i><a href="{{semLink}}">{{seminar}}</a></p>
-                                <div class="mt-1 mb-0 d-flex gap-2 align-items-center">
-                                    <i class="fa-solid fa-tags text-dark opacity-50"></i>
-                                    {% for tag in seminar.tags %}
-                                    <div class="badge border border-dark text-dark opacity-25">{{tag}}</div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <div class="w-100 text-success d-flex flex-column align-items-center justify-content-center small">
-                                {{consult.finishedChapters|length}} / {{seminar.chapters|length}} chapitres lus
-                                <div class="progress-bar-bg">
-                                    <div class="progress-bar" style="width:{{percentDone}}%;"></div>
-                                </div>
-                            </div>
-                            <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult.lastConsultedAt|date('d/m/Y à h:i','Europe/Paris')}}</div>
-                        </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -195,27 +144,9 @@
             <div class="d-flex align-items-center px-3">
                 <ul class="seminar-list w-100 list-group list-group-flush">
                     {% for seminar in seminars|filter(s => s.consultByUser(app.user).isFinished|default == true) %}
-                    {% set consult = seminar.consultByUser(app.user) %}
-                    {% set percentDone = consult.finishedChapters|default|length / seminar.chapters|length * 100 %}
-
-                    {% if percentDone == 0 %}
-                        {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
-                    {% else %}
-                        {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|default|sort|last + 1}) %}
-                    {% endif %}
-
-                        <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
-                            <div style="min-width: 60%" class="fst-italic h6 small m-0">
-                                <p class="p-0"><a href="{{path('app_seminar_index',{id:seminar.id})}}">{{seminar}}</a></p>
-                            </div>
-                            <div class="w-100 text-primary fst-italic small d-flex flex-column align-items-center justify-content-center">
-                                {{percentDone}}%
-                                <div class="progress-bar-bg">
-                                    <div class="progress-bar complete" style="width:{{percentDone}}%;"></div>
-                                </div>
-                            </div>
-                            <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult.lastConsultedAt|date('d/m/Y à h:i','Europe/Paris')}}</div>
-                        </li>
+                    
+                        {{ include('seminar/preview.html.twig', {seminar:seminar}) }}
+                        
                     {% endfor %}
                 </ul>
             </div>
