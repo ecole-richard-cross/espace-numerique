@@ -16,7 +16,8 @@
 {% block body %}
 <div class="container-md d-flex flex-column gap-4 justify-items-start align-items-stretch">
     <h1>Tous les séminaires</h1>
-        <div style="width: min(100%, 350px)">
+        <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-tags text-dark opacity-50"></i>
             <select multiple
                 id="hashtags-select">
             {% for tag in tags %}<option>{{tag}}</option>{% if not loop.last %}, {%endif%}{% endfor %}
@@ -32,7 +33,7 @@
                             return '<div class="border-1 border-secondary-subtle"></div>'
                         },
                         item: (data, escape) => {
-                            return '<div class="badge legend">' + escape(data.text.trim()) + '</div>'
+                            return '<div class="badge legend tall">' + escape(data.text.trim()) + '</div>'
                         }
                     },
                     onChange: (filters) => {
@@ -43,7 +44,7 @@
                                 try {
                                     const optionTags = option.dataset.seminarTags.split(',');
                                     if (filters.length > 0 && 
-                                        optionTags.filter(value => filters.includes(value)).length < 1)
+                                        optionTags.filter(value => filters.includes(value)).length < filters.length)
                                         option.classList.add('d-none');
                                     else
                                         option.classList.remove('d-none')
@@ -63,14 +64,14 @@
                 selector.clear()
             </script>
         </div>
-    <ul class="list-group shadow">
-        <li class="list-group-item p-3">
-            <div class="d-flex justify-content-between align-items-center gap-1 small">
+    <ul class="rounded-4 shadow px-0 pb-1">
+        <li class="list-group-item p-0 mb-1">
+            <div class="d-flex justify-content-between align-items-center gap-1 small bg-light p-2 rounded-3 strong">
             <div class="m-0" style="min-width: 60%">
                 Cours
             </div>
 
-            {% if seminars|filter(s => s.consultByUser(app.user).finishedChapters|length == 0)|length > 0 %}
+            {% if seminars|filter(s => s.consultByUser(app.user).finishedChapters|default|length == 0)|length > 0 %}
                 <div class="w-100 d-flex align-items-center justify-content-center">
                     Progression
                 </div>
@@ -79,124 +80,145 @@
                 </div>
             {% endif %}
 
-        </div>
-        <div class="d-flex align-items-center">
-            <ul class="seminar-list w-100 list-group list-group-flush">
-                {% for seminar in seminars|filter(s => s.consultByUser(app.user).finishedChapters|length == 0) %}
-                {% set consult = seminar.consultByUser(app.user) %}
-                {% set percentDone = (consult.finishedChapters|length / seminar.chapters|length * 100)|round %}
+            </div>
+            <div class="d-flex align-items-center px-3">
+                <ul class="seminar-list w-100 list-group list-group-flush">
+                    {% for seminar in seminars|filter(s => s.consultByUser(app.user).finishedChapters|default|length == 0) %}
+                    {% set consult = seminar.consultByUser(app.user) %}
+                    {% set percentDone = (consult.finishedChapters|default|length / seminar.chapters|length * 100)|round %}
 
-                {% if percentDone == 0 %}
-                    {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
-                {% else %}
-                    {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|sort|last + 1}) %}
-                {% endif %}
+                    {% if percentDone == 0 %}
+                        {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
+                    {% else %}
+                        {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|default|sort|last + 1}) %}
+                    {% endif %}
 
-                    <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
-                        <div style="min-width: 60%;" class="h6 m-0"><a href="{{semLink}}">{{seminar}}</a></div>
-                        <div class="w-100 text-success d-flex flex-column align-items-center justify-content-center">
-                            {{percentDone}}%
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar" style="width:{{percentDone}}%;"></div>
+                        <li class="px-0 list-group-item d-flex justify-content-between gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
+                            <div style="min-width: 60%;" class="h6 m-0 d-flex flex-column justify-content-center align-items-start">
+                                <p class="m-0 d-flex gap-2">
+                                    <i class="fa-regular fa-file-lines text-dark opacity-50"></i>
+                                    <a href="{{semLink}}">{{seminar}}</a>
+                                </p>
+                                <div class="mt-1 mb-0 d-flex gap-2 align-items-center">
+                                    <i class="fa-solid fa-tags text-dark opacity-50"></i>
+                                    {% for tag in seminar.tags %}
+                                    <div class="badge border border-dark text-dark opacity-25">{{tag}}</div>
+                                    {% endfor %}
+                                </div>
                             </div>
-                        </div>
-                        <div class="w-100 d-flex align-items-center justify-content-center legend no-mobile">{{consult.lastConsultedAt|date('d/m/Y à h:m')}}</div>
-                    </li>
-                {% else %}
-                    <li class="list-group-item small fst-italic">Aucun nouveau séminaire disponible pour l'instant.</li>
-                {% endfor %}
-            </ul>
-        </div>
+                            <div class="w-100 text-dark d-flex flex-column align-items-center justify-content-center small">
+                                Aucun chapitre lu
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar" style="width:{{percentDone}}%;"></div>
+                                </div>
+                            </div>
+                            <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult ? consult.lastConsultedAt|date('d/m/Y à h:i','Europe/Paris') : "-"}}</div>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item small fst-italic">Aucun nouveau séminaire disponible pour l'instant.</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </li>
 
 
-        {% if seminars|filter(s => s.consultByUser(app.user).finishedChapters|length > 0 and s.consultByUser(app.user).isFinished == false)|length > 0 %}
-        <li class="list-group-item p-3">
-            <div class="d-flex justify-content-between align-items-center gap-1 small">
-            <div class="m-0" style="min-width: 60%">
-                {% if seminars|filter(s => s.consultByUser(app.user).finishedChapters|length > 0)|length > 1 %}
-                Démarrés
-                {% else %}
-                Démarré
-                {% endif %}
+        {% if seminars|filter(s => s.consultByUser(app.user).finishedChapters|default|length > 0 and s.consultByUser(app.user).isFinished|default == false)|length > 0 %}
+        <li class="list-group-item p-0">
+            <div class="d-flex justify-content-between align-items-center gap-1 small bg-light p-2 strong">
+                <div class="m-0" style="min-width: 60%">
+                    {% if seminars|filter(s => s.consultByUser(app.user).finishedChapters|default|length > 0)|length > 1 %}
+                    Démarrés
+                    {% else %}
+                    Démarré
+                    {% endif %}
+                </div>
+                <!-- <div class="w-100 d-flex align-items-center justify-content-center">
+                    Progression
+                </div>
+                <div class="w-100 d-flex align-items-center justify-content-center no-mobile">
+                    Consulté le
+                </div> -->
             </div>
-            <div class="w-100 d-flex align-items-center justify-content-center">
-                Progression
-            </div>
-            <div class="w-100 d-flex align-items-center justify-content-center no-mobile">
-                Consulté le
-            </div>
-        </div>
-        <div class="d-flex align-items-center">
-            <ul class="seminar-list w-100 list-group list-group-flush">
-                {% for seminar in seminars|filter(s => s.consultByUser(app.user).isFinished == false and s.consultByUser(app.user).finishedChapters|length > 0) %}
-                {% set consult = seminar.consultByUser(app.user) %}
-                {% set percentDone = (consult.finishedChapters|length / seminar.chapters|length * 100)|round %}
+            <div class="d-flex align-items-center px-3">
+                <ul class="seminar-list w-100 list-group list-group-flush">
+                    {% for seminar in seminars|filter(s => s.consultByUser(app.user).isFinished|default == false and s.consultByUser(app.user).finishedChapters|default|length > 0) %}
+                    {% set consult = seminar.consultByUser(app.user) %}
+                    {% set percentDone = (consult.finishedChapters|length / seminar.chapters|length * 100)|round %}
 
-                {% if percentDone == 0 %}
-                    {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
-                {% else %}
-                    {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|sort|last + 1}) %}
-                {% endif %}
+                    {% if percentDone == 0 %}
+                        {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
+                    {% else %}
+                        {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|sort|last + 1}) %}
+                    {% endif %}
 
-                    <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
-                        <div style="min-width: 60%;" class="h6 m-0"><a href="{{semLink}}">{{seminar}}</a></div>
-                        <div class="w-100 text-success d-flex flex-column align-items-center justify-content-center">
-                            {{percentDone}}%
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar" style="width:{{percentDone}}%;"></div>
+                        <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
+                            <div style="min-width: 60%;" class="h6 m-0 d-flex flex-column justify-content-center align-items-start">
+                                <p class="m-0 d-flex gap-2"><i class="fa-regular fa-file-lines text-dark opacity-50"></i><a href="{{semLink}}">{{seminar}}</a></p>
+                                <div class="mt-1 mb-0 d-flex gap-2 align-items-center">
+                                    <i class="fa-solid fa-tags text-dark opacity-50"></i>
+                                    {% for tag in seminar.tags %}
+                                    <div class="badge border border-dark text-dark opacity-25">{{tag}}</div>
+                                    {% endfor %}
+                                </div>
                             </div>
-                        </div>
-                        <div class="w-100 d-flex align-items-center justify-content-center legend no-mobile">{{consult.lastConsultedAt|date('d/m/Y à h:m')}}</div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+                            <div class="w-100 text-success d-flex flex-column align-items-center justify-content-center small">
+                                {{consult.finishedChapters|length}} / {{seminar.chapters|length}} chapitres lus
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar" style="width:{{percentDone}}%;"></div>
+                                </div>
+                            </div>
+                            <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult.lastConsultedAt|date('d/m/Y à h:i','Europe/Paris')}}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </li>
         {% endif %}
 
-        {% if seminars|filter(s => s.consultByUser(app.user).isFinished == true)|length > 0 %}
-        <li class="list-group-item p-3">
-            <div class="d-flex justify-content-between align-items-center gap-1 small">
-            <div class="m-0" style="min-width: 60%" >
-                {% if seminars|filter(s => s.consultByUser(app.user).isFinished == true)|length > 1 %}
-                Terminés
-                {% else %}
-                Terminé
-                {% endif %}
+        {% if seminars|filter(s => s.consultByUser(app.user).isFinished|default == true)|length > 0 %}
+        <li class="list-group-item p-0 mt-1">
+            <div class="d-flex justify-content-between align-items-center gap-1 small bg-light p-2 strong">
+                <div class="m-0" style="min-width: 60%" >
+                    {% if seminars|filter(s => s.consultByUser(app.user).isFinished|default == true)|length > 1 %}
+                    Terminés
+                    {% else %}
+                    Terminé
+                    {% endif %}
+                </div>
+                <!-- <div class="w-100 d-flex align-items-center justify-content-center">
+                    Progression
+                </div>
+                <div class="w-100 d-flex align-items-center justify-content-center no-mobile">
+                    Consulté le
+                </div> -->
             </div>
-            <div class="w-100 d-flex align-items-center justify-content-center">
-                Progression
-            </div>
-            <div class="w-100 d-flex align-items-center justify-content-center no-mobile">
-                Consulté le
-            </div>
-        </div>
-        <div class="d-flex align-items-center">
-            <ul class="seminar-list w-100 list-group list-group-flush">
-                {% for seminar in seminars|filter(s => s.consultByUser(app.user).isFinished == true) %}
-                {% set consult = seminar.consultByUser(app.user) %}
-                {% set percentDone = consult.finishedChapters|length / seminar.chapters|length * 100 %}
+            <div class="d-flex align-items-center px-3">
+                <ul class="seminar-list w-100 list-group list-group-flush">
+                    {% for seminar in seminars|filter(s => s.consultByUser(app.user).isFinished|default == true) %}
+                    {% set consult = seminar.consultByUser(app.user) %}
+                    {% set percentDone = consult.finishedChapters|default|length / seminar.chapters|length * 100 %}
 
-                {% if percentDone == 0 %}
-                    {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
-                {% else %}
-                    {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|sort|last + 1}) %}
-                {% endif %}
+                    {% if percentDone == 0 %}
+                        {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
+                    {% else %}
+                        {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|default|sort|last + 1}) %}
+                    {% endif %}
 
-                    <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
-                        <div style="min-width: 60%" class="fst-italic h6 small m-0"><a href="{{path('app_seminar_index',{id:seminar.id})}}">{{seminar}}</a></div>
-                        <div class="w-100 text-primary fst-italic small d-flex flex-column align-items-center justify-content-center">
-                            {{percentDone}}%
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar complete" style="width:{{percentDone}}%;"></div>
+                        <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
+                            <div style="min-width: 60%" class="fst-italic h6 small m-0">
+                                <p class="p-0"><a href="{{path('app_seminar_index',{id:seminar.id})}}">{{seminar}}</a></p>
                             </div>
-                        </div>
-                        <div class="w-100 d-flex align-items-center justify-content-center legend no-mobile">{{consult.lastConsultedAt|date('d/m/Y à h:m')}}</div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+                            <div class="w-100 text-primary fst-italic small d-flex flex-column align-items-center justify-content-center">
+                                {{percentDone}}%
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar complete" style="width:{{percentDone}}%;"></div>
+                                </div>
+                            </div>
+                            <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult.lastConsultedAt|date('d/m/Y à h:i','Europe/Paris')}}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </li>
 
         {% endif %}
