@@ -1,0 +1,9 @@
+{% set media = entity.instance.avatar ?? null %}
+{% if media is null or media.url is empty or media.type|lower != 'image'%}
+    <p class="m-0 badge badge-secondary p-3 rounded-circle fs-3"><i class="fa-regular fa-user text-secondary"></i></p>
+{% else %}
+    {% set url = "/uploads/"~media.url %}
+        <div>
+            <img style="max-width:96px; max-height:96px" class="mw-100" alt="Avatar de {{entity.instance}}" src={{url}}>
+        </div>
+{% endif %}
