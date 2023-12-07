@@ -233,7 +233,6 @@ legend,
 	margin-top: 2rem;
 	align-self: center;
 	justify-content: center;
-	// align-items: center;
 	.highlight {
 		margin: 0;
 		font-weight: 600;
@@ -244,9 +243,27 @@ legend,
 		display: flex;
 		gap: 2rem;
 	}
+
+	.presenceWebs .list-group-item > div,
+	.presenceWebs .list-group-item > fieldset > div,
+	.lieuxActivite .list-group-item > div,
+	.lieuxActivite .list-group-item > fieldset > div {
+		display: flex;
+		gap: 0.5rem;
+	}
+	.presenceWebs .list-group-item > div,
+	.presenceWebs .list-group-item > fieldset > div {
+		display: flex;
+		flex: auto;
+		:first-child {
+			flex: 1;
+		}
+		:last-child {
+			flex: 2;
+		}
+	}
 }
 .profile-card {
-	justify-content: center;
 	border-radius: $radius;
 	border: 1px solid var(--bs-primary-bg-subtle);
 	display: flex;
@@ -282,4 +299,15 @@ legend,
 .radio-2 {
 	display: flex;
 	gap: 1rem;
+}
+
+@media screen and (max-width: 575px) {
+	.profile-content {
+		.presenceWebs .list-group-item > div,
+		.lieuxActivite .list-group-item > div, 
+		.presenceWebs .list-group-item > fieldset > div, 
+		.lieuxActivite .list-group-item > fieldset > div {
+			flex-direction: column;
+		}
+	}
 }

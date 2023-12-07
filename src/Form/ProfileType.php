@@ -19,18 +19,33 @@ class ProfileType extends AbstractType
          ->add('nomNaissance')
          ->add('nomUsage')
          ->add('prenom')
-         ->add('dateNaissance', BirthdayType::class)
+         ->add('dateNaissance', BirthdayType::class, [
+            'input'  => 'datetime_immutable'
+         ])
          ->add('adressePostale', LocalisationType::class)
          ->add('phoneNumber')
-         ->add('email')
+         // ->add('email')
          ->add('nomStructure')
+         ->add('lieuxActivite', CollectionType::class, [
+            'entry_type' => LocalisationType::class,
+            'entry_options' => ['label' => false],
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+         ])
          ->add('presenceWebs', CollectionType::class, [
-            'entry_type' => presenceWebType::class
+            'entry_type' => presenceWebType::class,
+            'entry_options' => ['label' => false],
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
          ]);
+
       if (in_array("ROLE_STAGIAIRE", $options['user']->getRoles()) || in_array("ROLE_EX_STAGIAIRE", $options['user']->getRoles())) {
          $builder
             ->add('stagiaire', StagiaireProfileType::class);
       }
+
       $builder->add('submit', SubmitType::class);
    }
 

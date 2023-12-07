@@ -3,12 +3,16 @@
 {% block title %}Modifier son profil
 {% endblock %}
 
+{% block javascripts %}
+	{{ encore_entry_script_tags('symfony-collection') }}
+{% endblock %}
+
 {% block body %}
 
 	{{ form_start(form) }}
 	<h1>Modifier mon profil</h1>
 	<div class="profile-content">
-		<div class="profile-card col-lg-6 col-xxl-4">
+		<div class="profile-card col-12 col-sm-10 col-md-8 col-lg-6 col-xxl-5">
 			<div>
 				<div class="d-flex gap-2 flex-column flex-lg-row">
 					{{ form_row(form.prenom) }}
@@ -16,27 +20,48 @@
 					{{ form_row(form.nomUsage) }}
 				</div>
 				{{ form_row(form.dateNaissance) }}
-				<div class="d-flex gap-2 flex-column flex-lg-row">
+				<div class="d-flex gap-2 flex-column flex-sm-row">
 					{{ form_row(form.adressePostale.adresse) }}
 					{{ form_row(form.adressePostale.codePostal) }}
 					{{ form_row(form.adressePostale.ville) }}
 					{{ form_row(form.adressePostale.pays) }}
 				</div>
 				{{ form_row(form.phoneNumber) }}
-				{{ form_row(form.email) }}
+				{# {{ form_row(form.email) }} #}
 			</div>
 		</div>
 
-		<div class="profile-card col-lg-6 col-xxl-4">
+		<div class="profile-card col-12 col-sm-10 col-md-8 col-lg-6 col-xxl-5">
 			{{ form_row(form.nomStructure) }}
+			<div class="d-flex flex-column">
+				<label>{{form_label(form.lieuxActivite)}}</label>
+				<ul class="lieuxActivite list-group" data-index="{{ form.lieuxActivite|length > 0 ? form.lieuxActivite|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.lieuxActivite.vars.prototype)|e('html_attr') }}">
+					{% for lieuActivite in form.lieuxActivite %}
+						<li class="list-group-item d-flex flex-column flex-sm-row">{{ form_row(lieuActivite) }}</li>
+					{% endfor %}
+				</ul>
+				<button type="button" class="add_item_link btn align-self-end" data-collection-holder-class="lieuxActivite">
+					<i class="fa fa-add"></i>
+				</button>
+			</div>
+
 		</div>
 
-      <div class="profile-card col-lg-6 col-xxl-4">
-			{{ form_row(form.presenceWebs) }}
+		<div class="profile-card col-12 col-sm-10 col-md-8 col-lg-6 col-xxl-5">
+			<label>{{form_label(form.presenceWebs)}}</label>
+			<ul class="presenceWebs list-group" data-index="{{ form.presenceWebs|length > 0 ? form.presenceWebs|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.presenceWebs.vars.prototype)|e('html_attr') }}">
+				{% for presenceWeb in form.presenceWebs %}
+					<li class="list-group-item d-flex flex-column flex-sm-row">{{ form_row(presenceWeb) }}</li>
+				{% endfor %}
+			</ul>
+			<button type="button" class="add_item_link btn align-self-end" data-collection-holder-class="presenceWebs">
+				<i class="fa fa-add"></i>
+			</button>
+
 		</div>
 
 		{% if is_granted("ROLE_STAGIAIRE") %}
-			<div class="profile-card col-lg-6 col-xxl-4">
+			<div class="profile-card col-12 col-sm-10 col-md-8 col-lg-6 col-xxl-5">
 				{{ form_row(form.stagiaire.idDossierCpf) }}
 				{{ form_row(form.stagiaire.identifiantsFinanceurs) }}
 				{{ form_row(form.stagiaire.sexe) }}

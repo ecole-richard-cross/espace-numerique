@@ -4,11 +4,12 @@
 {% endblock %}
 
 {% block body %}
-	{% set infoPers = [app.user, app.user.dateNaissance, app.user.adressePostale, app.user.phoneNumber, app.user.email] %}
+	{% set infoPers = [app.user, app.user.dateNaissance, app.user.adressePostale, app.user.phoneNumber] %}
 	{% set infoPro = [app.user.nomStructure, app.user.lieuxActivite] %}
 
 	<h1>Mon Profil
-		<a href="{{path('app_user_edit')}}"><i class="fa fa-edit" aria-label="edit profile"></i>
+		<a href="{{path('app_user_edit')}}">
+			<i class="fa fa-edit" aria-label="edit profile"></i>
 		</a>
 	</h1>
 
@@ -16,9 +17,7 @@
 		<div class="wrapper">
 			<div class="profile-card flex-grow-1">
 				<div class="d-flex gap-3 align-items-center mt-auto">
-					<div
-						class="d-flex">
-						{# {{ include('user/avatar_small.html.twig') }} #}
+					<div class="d-flex">
 						{% if app.user.avatar != null %}
 							<img class="rounded-circle" src="uploads/{{ app.user.avatar.url }}" height="44" width="44">
 						{% else %}
@@ -32,7 +31,10 @@
 							</svg>
 						</button>
 					</div>
-					<p class="highlight">{{ app.user }}</p>
+					<div>
+						<p class="highlight">{{ app.user }}</p>
+						<p class="p-0 m-0">{{ app.user.email }}</p>
+					</div>
 				</div>
 				<a class="small-cta" href="">Changer de mot de passe</a>
 			</div>
@@ -52,11 +54,11 @@
 						</button>
 					</h2>
 					<div id="infoGen" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-						<div class="accordion-body d-flex justify-content-between">
+						<div class="accordion-body d-flex justify-content-between gap-2">
 							<div class="flex-grow-1">
 								{% for info in infoPers%}
 									{% if info is not empty %}
-										<p>{{info}}</p>
+										<p>{{ info.timestamp is defined ? info|date("m/d/Y") : info }}</p>
 									{% endif %}
 								{% endfor %}
 							</div>
@@ -79,6 +81,7 @@
 			</div>
 
 			{% if app.user.stagiaire is not empty %}
+				{% set stagiaireInfo = [app.user.stagiaire.sexe, app.user.stagiaire.idDossierCpf, app.user.stagiaire.identifiantsFinanceurs] %}
 				<div class="profile-card accordion">
 					<div class="accordion-item">
 						<h2 class="accordion-header" id="formationIdsT">
@@ -88,7 +91,7 @@
 						</h2>
 						<div id="formationIds" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 							<div class="accordion-body">
-								{% for info in app.user.stagiaire%}
+								{% for info in stagiaireInfo%}
 									{% if info is not empty %}
 										{% if info is iterable %}
 											{% for sub in info%}

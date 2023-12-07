@@ -21,6 +21,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/scripts/app.js')
+    .addEntry('symfony-collection', './assets/scripts/symfony-collection.js')
 
     .addEntry('ea-block-form', './assets/scripts/admin/ea-block-form.js')
     .addEntry('ea-consultation-no-duplicates', './assets/scripts/admin/ea-consultation-no-duplicates.js')
@@ -30,6 +31,7 @@ Encore
     .addEntry('remove-xml-batch-popup', './assets/scripts/admin/remove-xml-batch-popup.js')
 
     .addStyleEntry('fontawesome', '/assets/styles/fontawesome/css/all.css')
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
