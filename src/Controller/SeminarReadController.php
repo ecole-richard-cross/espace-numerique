@@ -109,6 +109,11 @@ class SeminarReadController extends AbstractController
             ->setIsToRead(false)
             ->setIsFinished(true);
 
+        $this->addFlash(
+            'success',
+            '"' . $consult->getSeminar() . '" terminé !'
+        );
+
         $entityManager->persist($consult);
         $entityManager->flush();
         // Redirect to seminars list
@@ -128,6 +133,8 @@ class SeminarReadController extends AbstractController
 
         $em->persist($c);
         $em->flush();
+
+        $this->addFlash('success', 'Votre progression dans "' . $c->getSeminar() . '" a été réinitialisée.');
 
         return $this->redirectToRoute('app_seminar_index', ['id' => $id]);
     }

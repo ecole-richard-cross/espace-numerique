@@ -40,7 +40,7 @@ class UserController extends AbstractController
         });
         $discuRepo = $em->getRepository(Discussion::class);
         $userQs = $discuRepo->findBy(['user' => $this->getUser()]);
-        $last3 = $discuRepo->getLastThree();
+        $last3 = $discuRepo->findBy([], ['createdAt' => 'DESC'], 3);
 
         return $this->render('user_dashboard/index.html.twig', [
             'currentReads' => $filteredCurrentReads,

@@ -18,10 +18,27 @@
     <body>
         <div class="container d-flex flex-column mw-100 vh-100">
             {{ include('imports/header.html.twig') }}
+            {% set icons = {
+                'success':'fa-regular fa-square-check',
+                'info':'fa-solid fa-circle-info',
+                'warning':'fa-solid fa-triangle-exclamation',
+                'success':'fa-regular fa-circle-check',
+                'danger':'fa-regular fa-circle-xmark'
+                } %}
             <main class="flex-grow-1 py-5 d-flex flex-column">
                 {% block body %}{% endblock %}
-            </main>
-            {{ include('imports/footer.html.twig') }}
+            </main>  
+            {% for key, messages in app.flashes() %}
+                {% for message in messages %}
+                    <div class="mx-auto" style="width: min(100%, 600px)">
+                        <div class="alert alert-dismissible alert-{{key}}">
+                            <p class="m-0 d-flex gap-2 align-items-center"><i class="fs-5 {{icons[key]|default('fa-regular fa-bell')}}"></i>{{ message }}</p>
+                            <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {{ include('imports/footer.html.twig') }}      
         </div>
     </body>
 </html>

@@ -1,0 +1,19 @@
+.mobile {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+    .no-mobile {
+        display: none !important;
+    }
+
+    .mobile {
+        &:not(.d-flex) {
+            display: block !important;
+        }
+
+        &.d-flex {
+            display: flex !important;
+        }
+    }
+}

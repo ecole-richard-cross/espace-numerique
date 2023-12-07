@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace Discussion | {{parent()}}{% endblock %}
+
+{% set pages = (discussions|length / 5)|round(0, 'ceil') %}
+{% set myPages = (discussions|filter(d => d.user == app.user)|length / 5)|round(0, 'ceil') %}
+
+{% block body %}
+<h1>Espace discussion</h1>
+<div class="container-md">
+    <div class="row justify-content-center">
+        <div class="col-6 d-flex flex-column gap-3 align-items-center">
+            <h2 class="m-0">Mes questions</h2>
+            {% for discussion in myLast5 %}
+                {{ include('discussion/preview.html.twig', {question: discussion, content: true}) }}
+            {% endfor %}
+            <p>
+                {% if myPage != 1 %}
+                    <a href="{{path('app_discussion',{page:page, myPage: myPage - 1})}}">←</a>
+                {% endif %}
+                {% for i in 1..myPages %}
+                    {% if myPage == i %}
+                        {{i}}
+                    {% else %}
+                        <a href="{{path('app_discussion',{page:page, myPage:i})}}">{{i}}</a>
+                    {% endif %}
+                    {% if not loop.last %}, {% endif %}
+                {% endfor %}
+                {% if myPage < myPages %}
+                    <a href="{{path('app_discussion',{page:page, myPage: myPage + 1})}}">→</a>
+                {% endif %}
+            </p>
+
+        </div>
+        <div class="col-6 d-flex flex-column gap-3 align-items-center">
+            <h2 class="m-0">Sujets récents</h2>
+            {% for discussion in last5 %}
+                {{ include('discussion/preview.html.twig', {question: discussion, content: false}) }}
+            {% endfor %}
+
+            <p>
+                {% if page != 1 %}
+                    <a href="{{path('app_discussion',{myPage:myPage, page: page - 1})}}">←</a>
+                {% endif %}
+                {% for i in 1..pages %}
+                    {% if page == i %}
+                        {{i}}
+                    {% else %}
+                        <a href="{{path('app_discussion',{myPage:myPage, page:i})}}">{{i}}</a>
+                    {% endif %}
+                    {% if not loop.last %}, {% endif %}
+                {% endfor %}
+                {% if page < pages %}
+                    <a href="{{path('app_discussion',{myPage:myPage, page: page + 1})}}">→</a>
+                {% endif %}
+            </p>
+
+            <a href="#" class="btn btn-outline-primary">Poser une question</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

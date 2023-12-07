@@ -22,14 +22,6 @@ class DiscussionRepository extends ServiceEntityRepository
         parent::__construct($registry, Discussion::class);
     }
 
-    public function getLastThree(): array
-    {
-        return $this->createQueryBuilder('d')
-            ->orderBy('d.createdAt')
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult();
-    }
     //    /**
     //     * @return Discussion[] Returns an array of Discussion objects
     //     */
