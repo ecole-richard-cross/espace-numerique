@@ -19,8 +19,11 @@ function addFormToCollection(e) {
 
   const item = document.createElement('li');
   item.classList = 'list-group-item d-flex flex-column flex-sm-row';
+  const fieldset = document.createElement('fieldset');
+  fieldset.classList = "mb3";
+  item.appendChild(fieldset);
 
-  item.innerHTML = collectionHolder
+  fieldset.innerHTML = collectionHolder
     .dataset
     .prototype
     .replace(

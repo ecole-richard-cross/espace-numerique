@@ -246,14 +246,11 @@ legend,
 		gap: 2rem;
 	}
 
-	.presenceWebs .list-group-item > div,
 	.presenceWebs .list-group-item > fieldset > div,
-	.lieuxActivite .list-group-item > div,
 	.lieuxActivite .list-group-item > fieldset > div {
 		display: flex;
 		gap: 0.5rem;
 	}
-	.presenceWebs .list-group-item > div,
 	.presenceWebs .list-group-item > fieldset > div {
 		display: flex;
 		flex: auto;
@@ -305,8 +302,6 @@ legend,
 
 @media screen and (max-width: 575px) {
 	.profile-content {
-		.presenceWebs .list-group-item > div,
-		.lieuxActivite .list-group-item > div, 
 		.presenceWebs .list-group-item > fieldset > div, 
 		.lieuxActivite .list-group-item > fieldset > div {
 			flex-direction: column;
