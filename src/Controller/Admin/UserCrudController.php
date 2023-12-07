@@ -63,10 +63,10 @@ class UserCrudController extends AbstractCrudController
         yield FormField::addColumn(6);
         yield AssociationField::new('avatar')
             ->onlyOnDetail()
-            ->setTemplatePath('user/avatar_small.html.twig');
+            ->setTemplatePath('admin/avatar_small.html.twig');
         yield AssociationField::new('avatar')
             ->onlyOnIndex()
-            ->setTemplatePath('user/avatar_tiny.html.twig');
+            ->setTemplatePath('admin/avatar_tiny.html.twig');
 
         yield AssociationField::new('avatar')
             ->addWebpackEncoreEntries('ea-force-media-type-value')
