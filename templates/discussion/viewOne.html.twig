@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>{{question.title|e}}</h1>
+{% for comment in question.comments %}
+    
+    <div class="d-flex {% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}flex-row-reverse{%endif%} align-items-center {% if loop.first %}border border-1 border-tertiary-subtle {%endif%}p-3 rounded-3">
+        <div class="col-3 d-flex flex-column gap-1 justify-content-center align-items-center">
+            {{ include('user/avatar_circle.html.twig', {user:comment.user, size: 96}) }}
+            <p class="m-0 strong text-center">{{comment.user}}</p>
+            {% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}
+                <p class="m-0 small text-primary text-center">Équipe pédagogique ERC</p>
+            {%endif%}
+            {% if comment.user.stagiaire is not null %}
+                <p class="m-0 small legend text-secondary text-center">Promo {{comment.user.stagiaire.promotion|last|default('')}}</p>
+            {% endif %}
+        </div>
+        <div class="col-9 flex-grow-1 d-flex flex-column justify-content-center">
+            <div class="legend">le {{comment.createdAt|date('d/m/Y à H:i')}}</div>
+            <div class="{% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}bg-light{%else%}bg-primary-light{%endif%} rounded-3 p-2 mb-3">{{comment|raw}}</div>
+        </div>
+    </div>
+
+{% endfor %}
+{% endblock %}

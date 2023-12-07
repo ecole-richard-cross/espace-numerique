@@ -163,6 +163,10 @@ legend,
     border-radius: $border-radius-lg;
 }
 
+.bg-primary-light {
+    background-color: $primary-bg-light;
+}
+
 .btn {
     &[class*="outline"] {
         border-width: 2px;

@@ -11,6 +11,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DiscussionController extends AbstractController
 {
+    #[Route('/discussion/{id}', name: 'app_discussion_read')]
+    public function readOne(int $id, EntityManagerInterface $em): Response
+    {
+        $discussion = $em->getRepository(Discussion::class)->findOneBy(['id' => $id]);
+
+        return $this->render('discussion/viewOne.html.twig', [
+            'question' => $discussion
+        ]);
+    }
+
     #[Route('/discussion', name: 'app_discussion')]
     public function index(EntityManagerInterface $em, Request $req): Response
     {
@@ -35,13 +45,5 @@ class DiscussionController extends AbstractController
             "page" => $page,
             "myPage" => $myPage
         ]);
-    }
-
-    #[Route('/discussion/{id}', name: 'app_discussion_read')]
-    public function readOne(int $id, EntityManagerInterface $em): Response
-    {
-        $discussion = $em->getRepository(Discussion::class)->findOneBy(['id' => $id]);
-
-        return $this->redirectToRoute('app_discussion');
     }
 }
