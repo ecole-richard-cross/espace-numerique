@@ -1,0 +1,6 @@
+{% block trix_editor_widget %}
+<div class="mb-3">
+    {{form_widget(form)}}
+    <trix-editor id="comment_editor" input="comment_content" required placeholder="{{placeholder}}"></trix-editor>
+</div>
+{% endblock %}

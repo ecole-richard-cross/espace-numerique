@@ -1,0 +1,23 @@
+    {{ form_start(form) }}
+<div class="accordion" id="commentCollapse">
+    <div class="accordion-item border-0 rounded-3">
+        <div class="accordion-header" >
+            <label class="accordion-button editor-collapse collapsed"
+            for="comment_editor"
+            data-bs-toggle="collapse"
+            data-bs-target="#comment_collapse_body"
+            aria-expanded="true"
+            aria-controls="comment_collapse_body"
+            >{{ form_label(form.editor)|striptags }}</label>
+        </div>
+        <div class="accordion-collapse collapse" id="comment_collapse_body" data-bs-parent="#commentCollapse">
+            <div class="accordion-body bg-light-subtle ">
+                {{ form_widget(form.content) }}
+                {{ form_widget(form.editor) }}
+                {{ form_row(form.submit) }}
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}

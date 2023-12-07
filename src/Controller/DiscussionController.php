@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Discussion;
+use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,12 +14,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class DiscussionController extends AbstractController
 {
     #[Route('/discussion/{id}', name: 'app_discussion_read')]
-    public function readOne(int $id, EntityManagerInterface $em): Response
+    public function readOne(int $id, EntityManagerInterface $em, Request $request): Response
     {
         $discussion = $em->getRepository(Discussion::class)->findOneBy(['id' => $id]);
 
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setDiscussion($discussion);
+            $comment->setUser($this->getUser());
+            $em->persist($comment);
+            $em->flush();
+            return $this->redirectToRoute('app_discussion_read', ['id' => $id]);
+        } else
+            dump($form);
+
         return $this->render('discussion/viewOne.html.twig', [
-            'question' => $discussion
+            'question' => $discussion,
+            'commentForm' => $form
         ]);
     }
 
