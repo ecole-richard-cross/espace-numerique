@@ -4,17 +4,16 @@
 
 {% block body %}
 <h1>Espace apprenant</h1>
-<div class="container-sm">
-    <div style="width: fit-content" class="mx-auto my-5 d-flex shadow rounded-3 px-4 py-3 flex-row justify-content-evenly align-items-center flex-no-wrap gap-5">
-        <img class="rounded-circle" width="128" height="128" src="/uploads/{{app.user.avatar.url}}" alt="Avatar de {{app.user}}">
+    <div style="width: fit-content" class="mx-auto my-5 d-flex flex-wrap shadow rounded-3 px-3 py-2 justify-content-center align-items-center">
+        <img class="m-3 rounded-circle" width="128" height="128" src="/uploads/{{app.user.avatar.url}}" alt="Avatar de {{app.user}}">
         <div>
             <h2>{{app.user}}</h2>
             <p>{{app.user.stagiaire ? "Promo " ~ app.user.stagiaire.promotion|last : "Utilisateur non-stagiaire"}}</p>
             <p class="smaller legend m-0"><a href="#">Modifier mes informations</a></p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-6">
+    <div class="row justify-content-center">
+        <div style="width: min(500px, 100%)">
             <h2 class="m-3 text-center">Mes lectures en cours</h2>
             {% for read in currentReads %}
                 {% set semLink = path('app_seminar_read',{id:read.seminar.id, chapterId: read.finishedChapters|default|sort|last + 1}) %}
@@ -36,7 +35,7 @@
 
             {% endfor %}
         </div>
-        <div class="col-6">
+        <div style="width: min(500px, 100%)">
             <div>
                 <h2 class="m-3 text-center">Mes questions</h2>
                 {% for question in userQs %}
@@ -64,5 +63,4 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
