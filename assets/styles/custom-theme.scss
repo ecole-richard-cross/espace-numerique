@@ -83,11 +83,11 @@ h1 {
 	color: $primary;
 	text-align: center;
 
-    font-weight: 600;
-    font-variant: small-caps;
-    letter-spacing: 0.1125rem;
+	font-weight: 600;
+	font-variant: small-caps;
+	letter-spacing: 0.1125rem;
 
-    margin-bottom: 2.5rem;
+	margin-bottom: 2.5rem;
 }
 
 h2 {
@@ -232,7 +232,6 @@ legend,
 	display: flex;
 	flex-wrap: wrap;
 	gap: 2rem;
-	margin-top: 2rem;
 	align-self: center;
 	justify-content: center;
 	.highlight {
@@ -280,13 +279,12 @@ legend,
 	}
 }
 .status-badge {
-	min-width: 200px;
 	justify-content: center;
 	align-items: center;
 	background-color: $beige-dark;
 	color: white;
 	.status {
-		font-size: 2rem;
+		font-size: 1.5rem;
 		font-weight: 700;
 	}
 }
@@ -302,9 +300,23 @@ legend,
 
 @media screen and (max-width: 575px) {
 	.profile-content {
-		.presenceWebs .list-group-item > fieldset > div, 
+		.presenceWebs .list-group-item > fieldset > div,
 		.lieuxActivite .list-group-item > fieldset > div {
 			flex-direction: column;
+		}
+	}
+}
+@media screen and (max-width: 675px) {
+	.profile-content {
+		.wrapper {
+			flex-wrap: wrap;
+		}
+	}
+}
+@media screen and (max-width: 375px) {
+	.profile-content {
+		.wrapper :nth-child(2) {
+			flex-wrap: wrap;
 		}
 	}
 }

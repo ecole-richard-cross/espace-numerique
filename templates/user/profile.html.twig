@@ -19,9 +19,9 @@
 				<div class="d-flex gap-3 align-items-center mt-auto">
 					<div class="d-flex">
 						{% if app.user.avatar != null %}
-							<img class="rounded-circle" src="uploads/{{ app.user.avatar.url }}" height="44" width="44">
+							<img class="rounded-circle" src="uploads/{{ app.user.avatar.url }}" height="64" width="64">
 						{% else %}
-							<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="#FFF" class="bi bi-person-fill rounded-circle bg-secondary p-2" viewbox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#FFF" class="bi bi-person-fill rounded-circle bg-secondary p-2" viewbox="0 0 16 16">
 								<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
 							</svg>
 						{% endif %}
@@ -38,11 +38,39 @@
 				</div>
 				<a class="small-cta" href="">Changer de mot de passe</a>
 			</div>
-			<div class="profile-card status-badge">
-				<div class="status">Stagiaire</div>
-				<div>Centre de Formation</div>
-				<div class="strong">2023</div>
+
+			<div class="d-flex flex-grow-1 gap-2">
+				{% if ("ROLE_FORMATEUR_ERC" in app.user.roles) or ("ROLE_FORMATEUR_EXT" in app.user.roles) %}
+					<div class="profile-card status-badge .status-f flex-grow-1">
+						<div class="status">Formateur</div>
+					</div>
+				{% endif %}
+
+				{% if ("ROLE_STAGIAIRE" in app.user.roles) or ("ROLE_EX_STAGIAIRE" in app.user.roles) %}
+					<div class="profile-card status-badge .status-s flex-grow-1">
+						<div class="status mb-2">Stagiaire</div>
+						{% if app.user.stagiaire is not empty %}
+							{{app.user.stagiaire.promotion|length > 1 ? "<div class='d-flex'>" : ""}}
+							{% for promotion in app.user.stagiaire.promotion%}
+								<div class="d-flex flex-column align-items-center
+															{{promotion == app.user.stagiaire.promotion|first ? " pe-2" : (promotion == app.user.stagiaire.promotion|last ? 'ps-2' : 'p-2')}}
+															{{app.user.stagiaire.promotion|length > 1 and promotion != app.user.stagiaire.promotion|last ? " border-end"}}">
+									<div class="text-center">{{promotion.centreFormation }}</div>
+									<div class="strong">{{promotion.startDate|date('Y') }}</div>
+								</div>
+							{% endfor %}
+							{{app.user.stagiaire.promotion|length > 1 ? "</div>" : ""}}
+						{% endif %}
+					</div>
+				{% endif %}
+
+				{% if ("ROLE_USER" in app.user.roles) and (app.user.roles|length == 1) %}
+					<div class="profile-card status-badge .status-i flex-grow-1">
+						<div class="status">Invité</div>
+					</div>
+				{% endif %}
 			</div>
+
 		</div>
 
 		<div class="d-flex flex-column gap-2">
