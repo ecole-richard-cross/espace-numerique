@@ -41,13 +41,13 @@
 
 			<div class="d-flex flex-grow-1 gap-2">
 				{% if ("ROLE_FORMATEUR_ERC" in app.user.roles) or ("ROLE_FORMATEUR_EXT" in app.user.roles) %}
-					<div class="profile-card status-badge .status-f flex-grow-1">
+					<div class="profile-card status-badge status-badge-f flex-grow-1">
 						<div class="status">Formateur</div>
 					</div>
 				{% endif %}
 
 				{% if ("ROLE_STAGIAIRE" in app.user.roles) or ("ROLE_EX_STAGIAIRE" in app.user.roles) %}
-					<div class="profile-card status-badge .status-s flex-grow-1">
+					<div class="profile-card status-badge status-badge-s flex-grow-1">
 						<div class="status mb-2">Stagiaire</div>
 						{% if app.user.stagiaire is not empty %}
 							{{app.user.stagiaire.promotion|length > 1 ? "<div class='d-flex'>" : ""}}
@@ -65,7 +65,7 @@
 				{% endif %}
 
 				{% if ("ROLE_USER" in app.user.roles) and (app.user.roles|length == 1) %}
-					<div class="profile-card status-badge .status-i flex-grow-1">
+					<div class="profile-card status-badge status-badge-i flex-grow-1">
 						<div class="status">Invité</div>
 					</div>
 				{% endif %}
