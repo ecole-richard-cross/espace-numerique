@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LocalisationRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use PostalCodeTools;
@@ -194,5 +195,11 @@ class Localisation
         $this->lieuxActiviteOfUser = $lieuxActiviteOfUser;
 
         return $this;
+    }
+
+    #[Assert\IsTrue(message: 'Une addresse en France doit comporter au moins un code postal. Une adresse à l\'étranger, une ville et un pays.')]
+    public function hasMinimumInfo(): bool
+    {
+        return isset($this->codePostal) || (isset($this->ville) && isset($this->pays) && trim(strtolower($this->pays)) != "france");
     }
 }

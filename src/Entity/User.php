@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+// #[Assert\Cascade]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -40,12 +41,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
     private ?string $nomNaissance = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nomUsage = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
@@ -65,9 +68,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $statut = null;
 
+    #[Assert\Valid]
     #[ORM\OneToOne(inversedBy: 'adressePostaleOfUser', cascade: ['persist', 'remove'])]
     private ?Localisation $adressePostale = null;
 
+    #[Assert\Valid]
     #[ORM\OneToMany(mappedBy: 'lieuxActiviteOfUser', targetEntity: Localisation::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $lieuxActivite;
 
@@ -186,7 +191,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->nomNaissance;
     }
 
-    public function setNomNaissance(string $nomNaissance): static
+    public function setNomNaissance(?string $nomNaissance): static
     {
         $this->nomNaissance = $nomNaissance;
 
@@ -210,7 +215,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): static
+    public function setPrenom(?string $prenom): static
     {
         $this->prenom = $prenom;
 

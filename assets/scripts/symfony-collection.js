@@ -18,7 +18,7 @@ function addFormToCollection(e) {
   const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
   const item = document.createElement('li');
-  item.classList = 'list-group-item d-flex flex-column flex-sm-row';
+  item.classList = 'list-group-item d-flex flex-column flex-md-row p-0 border-0';
   const fieldset = document.createElement('fieldset');
   fieldset.classList = "mb3";
   item.appendChild(fieldset);
@@ -39,9 +39,9 @@ function addFormToCollection(e) {
 
 function addFormDeleteLink(item) {
   const removeFormButton = document.createElement('button');
-  removeFormButton.classList = 'btn align-self-end align-self-sm-center';
+  removeFormButton.classList = 'btn align-self-end align-self-md-center';
   const deleteIcon = document.createElement('i');
-  deleteIcon.classList = 'fa fa-trash mt-3 ms-2';
+  deleteIcon.classList = 'fa fa-trash';
   removeFormButton.appendChild(deleteIcon);
 
   item.append(removeFormButton);

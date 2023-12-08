@@ -144,7 +144,7 @@ legend,
 }
 
 .bg-primary-light {
-    background-color: $primary-bg-light;
+	background-color: $primary-bg-light;
 }
 
 .btn {
@@ -254,8 +254,13 @@ legend,
 		display: flex;
 		gap: 0.5rem;
 	}
+	.presenceWebs .list-group-item > fieldset{
+		display: flex;
+		flex: auto;
+	}
 	.presenceWebs .list-group-item > fieldset > div {
 		display: flex;
+		width: 100%;
 		flex: auto;
 		:first-child {
 			flex: 1;
@@ -297,12 +302,8 @@ legend,
 	align-self: flex-end;
 	margin-top: auto;
 }
-.radio-2 {
-	display: flex;
-	gap: 1rem;
-}
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 758px) {
 	.profile-content {
 		.presenceWebs .list-group-item > fieldset > div,
 		.lieuxActivite .list-group-item > fieldset > div {
