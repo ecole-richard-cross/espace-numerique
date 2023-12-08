@@ -1,0 +1,35 @@
+    {{ form_start(form) }}
+<div class="accordion" id="commentCollapse">
+    <div class="accordion-item border-0 rounded-3">
+        <div class="accordion-header" >
+            <label class="btn accordion-button editor-collapse {% if app.session.flashbag.peekAll() is empty -%}
+            collapsed
+            {%- endif %}"
+            for="comment_editor"
+            data-bs-toggle="collapse"
+            data-bs-target="#comment_collapse_body"
+            aria-expanded="true"
+            aria-controls="comment_collapse_body"
+            >{{ form_label(form.editor)|striptags }}</label>
+        </div>
+        <div class="accordion-collapse collapse {% if app.session.flashbag.peekAll() is not empty -%}
+            show
+        {%- endif %}" id="comment_collapse_body" data-bs-parent="#commentCollapse">
+            <div class="accordion-body bg-light-subtle pt-3">
+                <div id="reply_box" class="position-relative p-3 text-dark rounded-3 bg-info-subtle legend fst-italic smaller d-none">
+                    <div class="h6">En réponse à</div>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-reply fa-flip-horizontal text-tertiary fs-6"></i>
+                        <div id="content" class="flex-grow-1"></div>
+                    </div>
+                    <button type="button" class="mx-3 position-absolute top-50 end-0 translate-middle-y btn btn-close fa-solid fa-xmark"></button>
+                </div>
+                {{ form_widget(form.content) }}
+                {{ form_widget(form.editor) }}
+                {{ form_row(form.submit) }}
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}

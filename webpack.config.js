@@ -23,6 +23,8 @@ Encore
     .addEntry('app', './assets/scripts/app.js')
     .addEntry('symfony-collection', './assets/scripts/symfony-collection.js')
 
+    .addEntry('comment_reply', './assets/scripts/comment_reply.js')
+
     .addEntry('ea-block-form', './assets/scripts/admin/ea-block-form.js')
     .addEntry('ea-consultation-no-duplicates', './assets/scripts/admin/ea-consultation-no-duplicates.js')
     .addEntry('ea-force-media-type-value', './assets/scripts/admin/ea-force-media-type-value.js')
@@ -54,7 +56,7 @@ Encore
 
     // configure Babel
     // .configureBabel((config) => {
-    //     config.plugins.push('@babel/a-babel-plugin');
+    //     config.plugins.push("@babel/plugin-syntax-jsx");
     // })
 
     // enables and configure @babel/preset-env polyfills
@@ -70,7 +72,7 @@ Encore
     //.enableTypeScriptLoader()
 
     // uncomment if you use React
-    //.enableReactPreset()
+    // .enableReactPreset()
 
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher

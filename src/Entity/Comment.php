@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,6 +18,9 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(['message' => 'Votre réponse ne peut pas être vide.'])]
+    // Assert value needs to be +11 as we're wrapping our content in html tags
+    #[Assert\Length(["min" => 21, 'minMessage' => "Votre réponse doit comporter au moins 10 caractères."])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 

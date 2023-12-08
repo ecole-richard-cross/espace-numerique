@@ -1,25 +1,54 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+    {{ encore_entry_script_tags('comment_reply') }}
+{% endblock %}
+
 {% block body %}
 <h1>{{question.title|e}}</h1>
+<ul class="list-group list-group-flush mb-4">
 {% for comment in question.comments %}
     
-    <div class="d-flex {% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}flex-row-reverse{%endif%} align-items-center {% if loop.first %}border border-1 border-tertiary-subtle {%endif%}p-3 rounded-3">
+    <li class="list-group-item d-flex {% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}flex-row-reverse{%endif%} align-items-center p-3 {% if loop.first %}rounded-3 border border-1 border-tertiary-subtle {%endif%}">
         <div class="col-3 d-flex flex-column gap-1 justify-content-center align-items-center">
             {{ include('user/avatar_circle.html.twig', {user:comment.user, size: 96}) }}
             <p class="m-0 strong text-center">{{comment.user}}</p>
-            {% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}
+            {% if 'ROLE_FORMATEUR_ERC' in comment.user.roles -%}
                 <p class="m-0 small text-primary text-center">Équipe pédagogique ERC</p>
-            {%endif%}
+            {%- endif%}
             {% if comment.user.stagiaire is not null %}
                 <p class="m-0 small legend text-secondary text-center">Promo {{comment.user.stagiaire.promotion|last|default('')}}</p>
             {% endif %}
         </div>
         <div class="col-9 flex-grow-1 d-flex flex-column justify-content-center">
             <div class="legend">le {{comment.createdAt|date('d/m/Y à H:i')}}</div>
-            <div class="{% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}bg-light{%else%}bg-primary-light{%endif%} rounded-3 p-2 mb-3">{{comment|raw}}</div>
+            <div class="position-relative {% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}bg-light{%else%}bg-primary-light{%endif%} rounded-3 ps-3 pe-5 py-2 mb-3">
+                {%- if comment.replyingTo is not null -%}
+                    <div>
+                        <div class="smaller fst-italic text-secondary">{%
+                        if 'ROLE_FORMATEUR_ERC' in comment.replyingTo.user.roles -%} 
+                        <span class="text-primary fst-normal strong">{{comment.replyingTo.user.prenom}}</span>{% else %} {{comment.replyingTo.user.prenom}}
+                        {%- endif %} a dit, le {{comment.replyingTo.createdAt|date('d/m/Y à H:i')}} : </div>
+                        <blockquote class="shadow smaller text-secondary rounded-3 p-2 mx-2 {%
+                        if 'ROLE_FORMATEUR_ERC' in comment.replyingTo.user.roles -%} 
+                        bg-light {% else %} bg-info-light
+                        {%- endif %}">{{comment.replyingTo.content|striptags}}</blockquote>
+                    </div>
+                {%- endif -%}
+                {{comment|raw}}
+                <a href="#comment_editor" data-reply-to="{{comment.id}}" data-reply-to-comment="{{comment.content|striptags}}" class="btn position-absolute bottom-0 end-0" aria-controls="reply"><i class="fa-solid fa-reply text-secondary"></i></a>
+                </div>
         </div>
-    </div>
+    </li>
 
 {% endfor %}
+</ul>
+{{ include('comment/form.html.twig', { form:commentForm, discussion:question }) }}
 {% endblock %}
