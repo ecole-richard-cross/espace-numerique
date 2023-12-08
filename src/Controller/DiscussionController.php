@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Discussion;
+use App\Entity\Tag;
 use App\Form\CommentType;
+use App\Form\DiscussionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +15,44 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DiscussionController extends AbstractController
 {
+    #[Route('/discussion/new', name: 'app_discussion_new')]
+    public function new(Request $req, EntityManagerInterface $em): Response
+    {
+        $discussion = new Discussion();
+        $form = $this->createForm(DiscussionType::class, $discussion);
+
+        $form->handleRequest($req);
+        if ($form->isSubmitted())
+            if ($form->isValid()) {
+
+                foreach ($_POST['discussion']['tags'] as $id => $tag) {
+                    $discussion
+                        ->addTag($em->getRepository(Tag::class)->findOneBy(['name' => $tag]));
+                }
+
+                $comment = new Comment();
+                $comment
+                    ->setUser($this->getUser())
+                    ->setContent($_POST['discussion']['content'])
+                    ->setDiscussion($discussion);
+
+                $discussion->setUser($this->getUser())
+                    ->addComment($comment);
+
+                $em->persist($discussion);
+                $em->flush();
+
+                return $this->redirectToRoute('app_discussion_read', ['id' => $discussion->getId()]);
+            } else {
+                $this->addFlash(
+                    'danger',
+                    $form->getErrors()
+                );
+            }
+
+        return $this->render('discussion/new.html.twig', ['form' => $form]);
+    }
+
     #[Route('/discussion/{id}', name: 'app_discussion_read')]
     public function readOne(int $id, EntityManagerInterface $em, Request $request): Response
     {

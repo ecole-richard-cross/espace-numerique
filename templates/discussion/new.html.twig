@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' -%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    {{encore_entry_link_tags('new_discussion_form')}}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>Poser une question</h1>
+    {{ form(form) }}
+{% endblock %}

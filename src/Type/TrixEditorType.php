@@ -16,15 +16,17 @@ class TrixEditorType extends AbstractType
     function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'editorId' => 'trix_editor',
+            'editor_id' => 'trix_editor',
             'placeholder' => 'Tapez votre message ici',
-            'inherit_data' => true
+            'inherit_data' => true,
+            'input_id' => 'trix-content'
         ]);
     }
 
     function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['editorId'] = $options['editorId'];
+        $view->vars['editor_id'] = $options['editor_id'];
         $view->vars['placeholder'] = $options['placeholder'];
+        $view->vars['input_id'] = $options['input_id'];
     }
 }

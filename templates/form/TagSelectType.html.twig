@@ -1,0 +1,15 @@
+{% block tag_select_widget %}
+<div class="dropend d-flex align-items-center gap-1" style="min-height: 2rem">
+    <button class="btn btn-outline-tertiary border-1 p-2 smaller dropdown-toggle" type="button" data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+        {{label}}
+    </button>
+    <ul class="dropdown-menu p-1 border-0">
+    {% for item in data %}
+        <li class="d-inline-block">
+            <input type="checkbox" name="{{full_name}}[{{loop.index0}}]" value="{{item}}" id="{{item}}">
+            <label class="btn rounded-3 badge text-secondary border dropdown-item" for="{{item}}">{{item}}</label>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

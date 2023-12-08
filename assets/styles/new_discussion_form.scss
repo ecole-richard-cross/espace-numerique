@@ -1,0 +1,14 @@
+input {
+    display: none;
+
+    &:checked~label {
+        background: var(--bs-cyan) !important;
+        color: var(--bs-white) !important;
+    }
+}
+
+label {
+    &:active {
+        background: inherit !important;
+    }
+}
