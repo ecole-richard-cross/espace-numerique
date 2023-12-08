@@ -29,8 +29,9 @@ class DiscussionController extends AbstractController
             $em->persist($comment);
             $em->flush();
             return $this->redirectToRoute('app_discussion_read', ['id' => $id]);
-        } else
-            dump($form);
+        } else {
+            $form->isSubmitted() && !$form->isValid() && $this->addFlash('danger', $form->getErrors());
+        }
 
         return $this->render('discussion/viewOne.html.twig', [
             'question' => $discussion,
