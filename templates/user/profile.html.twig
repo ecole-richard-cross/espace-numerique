@@ -7,11 +7,14 @@
 	{% set infoPers = [app.user, app.user.dateNaissance, app.user.adressePostale, app.user.phoneNumber] %}
 	{% set infoPro = [app.user.nomStructure, app.user.lieuxActivite] %}
 
-	<h1>Mon Profil
-		<a href="{{path('app_user_edit')}}">
-			<i class="fa fa-edit" aria-label="edit profile"></i>
-		</a>
-	</h1>
+	<div class="d-flex gap-3 align-self-center">
+		<h1>Mon Profil</h1>
+		<div class=" align-self-end mb-5">
+			<a href="{{path('app_user_edit')}}">
+				<i class="fa fa-edit fa-lg" aria-label="edit profile"></i>
+			</a>
+		</div>
+	</div>
 
 	<div class="profile-content flex-column">
 		<div class="wrapper">
@@ -53,8 +56,8 @@
 							{{app.user.stagiaire.promotion|length > 1 ? "<div class='d-flex'>" : ""}}
 							{% for promotion in app.user.stagiaire.promotion%}
 								<div class="d-flex flex-column align-items-center
-															{{promotion == app.user.stagiaire.promotion|first ? " pe-2" : (promotion == app.user.stagiaire.promotion|last ? 'ps-2' : 'p-2')}}
-															{{app.user.stagiaire.promotion|length > 1 and promotion != app.user.stagiaire.promotion|last ? " border-end"}}">
+																																	{{promotion == app.user.stagiaire.promotion|first ? " pe-2" : (promotion == app.user.stagiaire.promotion|last ? 'ps-2' : 'p-2')}}
+																																	{{app.user.stagiaire.promotion|length > 1 and promotion != app.user.stagiaire.promotion|last ? " border-end"}}">
 									<div class="text-center">{{promotion.centreFormation }}</div>
 									<div class="strong">{{promotion.startDate|date('Y') }}</div>
 								</div>
@@ -83,26 +86,26 @@
 					</h2>
 					<div id="infoGen" class="accordion-collapse collapse" aria-labelledby="general">
 						<div class="accordion-body">
-								{% for info in infoPers%}
-									{% if info is not empty %}
-										<p>{{ info.timestamp is defined ? info|date("m/d/Y") : info }}</p>
-									{% endif %}
-								{% endfor %}
+							{% for info in infoPers%}
+								{% if info is not empty %}
+									<p>{{ info.timestamp is defined ? info|date("m/d/Y") : info }}</p>
+								{% endif %}
+							{% endfor %}
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="d-flex flex-column gap-2 flex-grow-1">
-			<div class="profile-card accordion">
-				<div class="accordion-item">
-					<h2 class="accordion-header" id="infoProT">
-						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#infoPro" aria-expanded="true" aria-controls="professionnel">
-							Professionnel
-						</button>
-					</h2>
-					<div id="infoPro" class="accordion-collapse collapse" aria-labelledby="professionnel">
-						<div class="accordion-body">
+				<div class="profile-card accordion">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="infoProT">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#infoPro" aria-expanded="true" aria-controls="professionnel">
+								Professionnel
+							</button>
+						</h2>
+						<div id="infoPro" class="accordion-collapse collapse" aria-labelledby="professionnel">
+							<div class="accordion-body">
 								{% for info in infoPro%}
 									{% if info is not empty %}
 										{% if info is iterable %}
@@ -114,62 +117,62 @@
 										{% endif %}
 									{% endif %}
 								{% endfor %}
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			{% if app.user.stagiaire is not empty %}
-				{% set stagiaireInfo = [app.user.stagiaire.sexe, app.user.stagiaire.idDossierCpf, app.user.stagiaire.identifiantsFinanceurs] %}
-				<div class="profile-card accordion flex-grow-1">
-					<div class="accordion-item">
-						<h2 class="accordion-header" id="formationT">
-							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#formation" aria-expanded="true" aria-controls="formation">
-								Formation
-							</button>
-						</h2>
-						<div id="formation" class="accordion-collapse collapse" aria-labelledby="formation">
-							<div class="accordion-body">
-								{% for info in stagiaireInfo%}
-									{% if info is not empty %}
-										{% if info is iterable %}
-											{% for sub in info%}
-												<p>{{sub}}</p>
-											{% endfor %}
-										{% else %}
-											<p>{{info}}</p>
+				{% if app.user.stagiaire is not empty %}
+					{% set stagiaireInfo = [app.user.stagiaire.sexe, app.user.stagiaire.idDossierCpf, app.user.stagiaire.identifiantsFinanceurs] %}
+					<div class="profile-card accordion flex-grow-1">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="formationT">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#formation" aria-expanded="true" aria-controls="formation">
+									Formation
+								</button>
+							</h2>
+							<div id="formation" class="accordion-collapse collapse" aria-labelledby="formation">
+								<div class="accordion-body">
+									{% for info in stagiaireInfo%}
+										{% if info is not empty %}
+											{% if info is iterable %}
+												{% for sub in info%}
+													<p>{{sub}}</p>
+												{% endfor %}
+											{% else %}
+												<p>{{info}}</p>
+											{% endif %}
 										{% endif %}
-									{% endif %}
-								{% endfor %}
+									{% endfor %}
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			{% endif %}
+				{% endif %}
 
-			{% if app.user.presenceWebs is not empty %}
-				<div class="profile-card accordion flex-grow-1">
-					<div class="accordion-item">
-						<h2 class="accordion-header" id="reseauxT">
-							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#reseaux" aria-expanded="true" aria-controls="reseaux">
-								Réseaux et sites
-							</button>
-						</h2>
-						<div id="reseaux" class="accordion-collapse collapse" aria-labelledby="reseaux">
-							<div class="accordion-body">
-								{% for reseau in app.user.presenceWebs%}
-									{% if reseau is not empty %}
-										<p>
-											<a href="{{reseau.url}}">{{reseau.url}}</a>
-										</p>
-									{% endif %}
-								{% endfor %}
+				{% if app.user.presenceWebs is not empty %}
+					<div class="profile-card accordion flex-grow-1">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="reseauxT">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#reseaux" aria-expanded="true" aria-controls="reseaux">
+									Réseaux et sites
+								</button>
+							</h2>
+							<div id="reseaux" class="accordion-collapse collapse" aria-labelledby="reseaux">
+								<div class="accordion-body">
+									{% for reseau in app.user.presenceWebs%}
+										{% if reseau is not empty %}
+											<p>
+												<a href="{{reseau.url}}">{{reseau.url}}</a>
+											</p>
+										{% endif %}
+									{% endfor %}
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			{% endif %}
+				{% endif %}
 
+			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}
