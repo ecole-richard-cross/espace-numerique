@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{tag}} | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1><i class="fa-solid fa-tag"></i> {{tag}}</h1>
+    <div class="row justify-content-center gap-3">
+        <div style="width: min(100%, 500px);">
+            <h2 class="text-center my-4">Séminaires</h2>
+            <ul class="list-group gap-2">
+                {% for item in tag.seminars %}
+                    <div class="card py-1 px-3 list-group-flush">{{ include('seminar/preview_short.html.twig', {seminar:item}) }}</div>
+                {% endfor %}
+            </ul>
+        </div>
+        <div style="width: min(100%, 500px);">
+            <h2 class="text-center my-4">Discussions</h2>
+            <ul class="list-group list-group-flush">
+                {% for item in tag.discussions %}
+                {{ include('discussion/preview.html.twig', {question: item, content: true}) }}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
