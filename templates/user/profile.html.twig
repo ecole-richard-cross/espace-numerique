@@ -5,7 +5,7 @@
 
 {% block body %}
 	{% set infoPers = [app.user, app.user.dateNaissance, app.user.adressePostale, app.user.phoneNumber]|filter(el => el != null) %}
-	{% set infoPro = [app.user.nomStructure, app.user.lieuxActivite|length < 0 ? app.user.lieuxActivite : null]|filter(el => el != null) %}
+	{% set infoPro = [app.user.nomStructure, app.user.lieuxActivite|length > 0 ? app.user.lieuxActivite : null]|filter(el => el != null) %}
 
 	<div class="d-flex gap-3 align-self-center">
 		<h1>Mon Profil</h1>
@@ -43,21 +43,21 @@
 			</div>
 
 			<div class="d-flex flex-grow-1 gap-2">
-				{% if ("ROLE_FORMATEUR_ERC" in app.user.roles) or ("ROLE_FORMATEUR_EXT" in app.user.roles) %}
+				{% if is_granted("ROLE_FORMATEUR_ERC") or is_granted("ROLE_FORMATEUR_EXT") %}
 					<div class="profile-card status-badge status-badge-f flex-grow-1">
 						<div class="status">Formateur</div>
 					</div>
 				{% endif %}
 
-				{% if ("ROLE_STAGIAIRE" in app.user.roles) or ("ROLE_EX_STAGIAIRE" in app.user.roles) %}
+				{% if is_granted("ROLE_STAGIAIRE") or is_granted("ROLE_EX_STAGIAIRE") %}
 					<div class="profile-card status-badge status-badge-s flex-grow-1">
 						<div class="status mb-2">Stagiaire</div>
 						{% if app.user.stagiaire is not empty %}
 							{{app.user.stagiaire.promotion|length > 1 ? "<div class='d-flex'>" : ""}}
 							{% for promotion in app.user.stagiaire.promotion%}
 								<div class="d-flex flex-column align-items-center
-																																																												{{promotion == app.user.stagiaire.promotion|first ? " pe-2" : (promotion == app.user.stagiaire.promotion|last ? 'ps-2' : 'p-2')}}
-																																																												{{app.user.stagiaire.promotion|length > 1 and promotion != app.user.stagiaire.promotion|last ? " border-end"}}">
+																																																																														{{promotion == app.user.stagiaire.promotion|first ? " pe-2" : (promotion == app.user.stagiaire.promotion|last ? 'ps-2' : 'p-2')}}
+																																																																														{{app.user.stagiaire.promotion|length > 1 and promotion != app.user.stagiaire.promotion|last ? " border-end"}}">
 									<div class="text-center">{{promotion.centreFormation }}</div>
 									<div class="strong">{{promotion.startDate|date('Y') }}</div>
 								</div>
@@ -67,7 +67,7 @@
 					</div>
 				{% endif %}
 
-				{% if ("ROLE_USER" in app.user.roles) and (app.user.roles|length == 1) %}
+				{% if is_granted("ROLE_USER") and (app.user.roles|length == 1) %}
 					<div class="profile-card status-badge status-badge-i flex-grow-1">
 						<div class="status">Invité</div>
 					</div>
@@ -120,7 +120,7 @@
 					</div>
 				{% endif %}
 
-				{% if app.user.stagiaire is not empty %}
+				{% if (is_granted("ROLE_STAGIAIRE") or is_granted("ROLE_EX_STAGIAIRE")) and app.user.stagiaire is not empty %}
 					{% set stagiaireInfo = [app.user.stagiaire.idDossierCpf, app.user.stagiaire.identifiantsFinanceurs]|filter(el => el != null) %}
 					<div class="profile-card accordion flex-grow-1">
 						<div class="accordion-item">

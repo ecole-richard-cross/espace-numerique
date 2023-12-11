@@ -81,6 +81,10 @@
 			{{ form_row(form.submit, { 'label': 'Confirmer'}) }}
 		</div>
 	</div>
+
+	{% do form.lieuxActivite.setRendered %}
+	{% do form.presenceWebs.setRendered %}
+	
 	{{ form_end(form) }}
 
 {% endblock %}
