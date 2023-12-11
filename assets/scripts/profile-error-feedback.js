@@ -4,13 +4,14 @@ const adresses = document.querySelectorAll('fieldset > [id^="profile_lieuxActivi
 
 inputs.forEach(input => {
    if (!input.validity.valid) {
+      const errorMessage = input.parentElement.querySelector('.invalid-feedback');
       input.addEventListener("input", (e) => {
          if (input.validity.valid) {
             input.classList.remove('is-invalid');
-            input.parentElement.querySelector('.invalid-feedback').classList.add('d-none');
+            errorMessage && errorMessage.classList.add('d-none');
          } else {
             input.classList.add('is-invalid');
-            input.parentElement.querySelector('.invalid-feedback').classList.remove('d-none');
+            errorMessage && errorMessage.classList.remove('d-none');
          }
       })
    }
@@ -28,18 +29,19 @@ adresses.forEach(adresse => {
       });
    }
 
+
+   const errorMessage = adresse == document.getElementById('profile_adressePostale') ?
+      adresse.parentElement.querySelector('.invalid-feedback') :
+      adresse.closest('ul').parentElement.querySelector('.invalid-feedback');
+
+   const deleteButton = adresse != document.getElementById('profile_adressePostale') ? adresse.closest('li').querySelector('button') : null;
+   deleteButton && deleteButton.addEventListener('click', (e) => {
+      if (!codePostal.validity.valid || (!ville.validity.valid && !pays.validity.valid)) {
+         errorMessage.classList.add("d-none");
+      }
+   })
+
    inputsToValidate.forEach(input => {
-      const errorMessage = adresse == document.getElementById('profile_adressePostale') ?
-         adresse.parentElement.querySelector('.invalid-feedback') :
-         adresse.closest('ul').parentElement.querySelector('.invalid-feedback');
-
-      const deleteButton = adresse != document.getElementById('profile_adressePostale') ? input.closest('li').querySelector('button') : null;
-      deleteButton && deleteButton.addEventListener('click', (e) => {
-         if (!codePostal.validity.valid || (!ville.validity.valid && !pays.validity.valid)) {
-            errorMessage.classList.add("d-none");
-         }
-      })
-
       input.addEventListener('input', (e) => {
          if (codePostal.validity.valid || (ville.validity.valid && pays.validity.valid)) {
             inputsToValidate.forEach(input => input.classList.remove('is-invalid'));
