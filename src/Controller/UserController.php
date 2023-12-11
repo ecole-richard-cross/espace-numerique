@@ -42,7 +42,7 @@ class UserController extends AbstractController
         $userQs = $discuRepo->findBy(['user' => $this->getUser()]);
         $last3 = $discuRepo->findBy([], ['createdAt' => 'DESC'], 3);
 
-        return $this->render('user_dashboard/index.html.twig', [
+        return $this->render('user/dashboard.html.twig', [
             'currentReads' => $filteredCurrentReads,
             'userQs' => $userQs,
             'last3' => $last3

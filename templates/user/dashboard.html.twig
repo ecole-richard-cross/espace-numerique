@@ -24,7 +24,7 @@
                     </div>
                     <div class="w-100 text-success fst-italic small d-flex flex-column align-items-center justify-content-center">
                         {{ read.finishedChapters|length }} / {{ read.seminar.chapters|length }} chapitres lus
-                        {{ include('seminars/progressBar.html.twig', {percentDone:(read.finishedChapters|length / read.seminar.chapters|length * 100)|round }) }}
+                        {{ include('seminar/progressBar.html.twig', {percentDone:(read.finishedChapters|length / read.seminar.chapters|length * 100)|round }) }}
                     </div>
                 </div>
             {% else %}

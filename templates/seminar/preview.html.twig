@@ -2,7 +2,7 @@
 {% set percentDone = (consult.finishedChapters|length / seminar.chapters|length * 100)|round %}
 
 {% if percentDone == 0 %}
-    {% set semLink = path('app_seminar_index',{id:seminar.id}) %}
+    {% set semLink = path('app_seminar_intro',{id:seminar.id}) %}
 {% else %}
     {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|sort|last + 1}) %}
 {% endif %}
@@ -30,7 +30,7 @@
         {% if consult.finishedChapters|length > 0 %}
             <div class="w-100 text-success d-flex flex-column align-items-center justify-content-center small">
                 {{consult.finishedChapters|length}} sur {{seminar.chapters|length}} chap. lu{{consult.finishedChapters|length > 1 ?? "s"}}
-                {{ include('seminars/progressBar.html.twig', {percentDone:percentDone}) }}
+                {{ include('seminar/progressBar.html.twig', {percentDone:percentDone}) }}
             </div>
         {% else %}
             <div class="w-100 text-secondary fst-italic d-flex flex-column align-items-center justify-content-center small">
@@ -44,7 +44,7 @@
 
     <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
         <div style="min-width: 60%" class="fst-italic h6 small m-0">
-            <p class="m-0"><a href="{{path('app_seminar_index',{id:seminar.id})}}">{{seminar}}</a></p>
+            <p class="m-0"><a href="{{path('app_seminar_intro',{id:seminar.id})}}">{{seminar}}</a></p>
             <div class="mt-1 mb-0 d-flex gap-2 align-items-center no-mobile">
                 <i class="fa-solid fa-tags text-dark opacity-50"></i>
                 {% for tag in seminar.tags %}
@@ -54,7 +54,7 @@
         </div>
         <div class="w-100 text-primary fst-italic small d-flex flex-column align-items-center justify-content-center">
             Terminé
-            {{ include('seminars/progressBar.html.twig', {percentDone:percentDone}) }}
+            {{ include('seminar/progressBar.html.twig', {percentDone:percentDone}) }}
         </div>
         <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult.lastConsultedAt|date('d/m/Y à H:i','Europe/Paris')}}</div>
     </li>

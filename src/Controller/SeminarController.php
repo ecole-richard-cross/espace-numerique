@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Seminar;
 use App\Entity\SeminarConsultation;
+use App\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SeminarReadController extends AbstractController
+class SeminarController extends AbstractController
 {
     public function GetAllSeminars(EntityManagerInterface $em): Response
     {
@@ -23,6 +24,14 @@ class SeminarReadController extends AbstractController
     #[Route('/seminar-read/{id}/{chapterId}/{sectionId}', name: 'app_seminar_read_toSection')]
     public function section(Seminar $seminar, int $chapterId, int $sectionId, EntityManagerInterface $entityManager): Response
     {
+        if (!$seminar->isIsPublished()) {
+            $this->addFlash(
+                'warning',
+                'Ce séminaire n\'est plus accessible.'
+            );
+            return $this->redirectToRoute('app_seminars_index');
+        }
+
         $consult = $entityManager
             ->getRepository(SeminarConsultation::class)
             ->findOneBy(['seminar' => $seminar, 'user' => $this->getUser()]);
@@ -31,7 +40,7 @@ class SeminarReadController extends AbstractController
         $entityManager->persist($consult);
         $entityManager->flush();
 
-        return $this->render('seminar/index.html.twig', [
+        return $this->render('seminar/read.html.twig', [
             'seminar' => $seminar,
             'chapterId' => $chapterId,
             'sectionId' => $sectionId,
@@ -42,6 +51,13 @@ class SeminarReadController extends AbstractController
     #[Route('/seminar-read/{id}/{chapterId}', name: 'app_seminar_read')]
     public function chapter(Seminar $seminar, int $chapterId, EntityManagerInterface $entityManager): Response
     {
+        if (!$seminar->isIsPublished()) {
+            $this->addFlash(
+                'warning',
+                'Ce séminaire n\'est plus accessible.'
+            );
+            return $this->redirectToRoute('app_seminars_index');
+        }
         $consult = $entityManager
             ->getRepository(SeminarConsultation::class)
             ->findOneBy(['seminar' => $seminar, 'user' => $this->getUser()]);
@@ -50,16 +66,23 @@ class SeminarReadController extends AbstractController
         $entityManager->persist($consult);
         $entityManager->flush();
 
-        return $this->render('seminar/index.html.twig', [
+        return $this->render('seminar/read.html.twig', [
             'seminar' => $seminar,
             'chapterId' => $chapterId,
             'finishedChapters' => $consult->getFinishedChapters()
         ]);
     }
 
-    #[Route('/seminar-read/{id}', name: 'app_seminar_index')]
-    public function index(Seminar $seminar, EntityManagerInterface $entityManager): Response
+    #[Route('/seminar-read/{id}', name: 'app_seminar_intro')]
+    public function read(Seminar $seminar, EntityManagerInterface $entityManager): Response
     {
+        if (!$seminar->isIsPublished()) {
+            $this->addFlash(
+                'warning',
+                'Ce séminaire n\'est plus accessible.'
+            );
+            return $this->redirectToRoute('app_seminars_index');
+        }
         $consult = $entityManager
             ->getRepository(SeminarConsultation::class)
             ->findOneBy(['seminar' => $seminar, 'user' => $this->getUser()]);
@@ -74,7 +97,7 @@ class SeminarReadController extends AbstractController
         $entityManager->persist($consult);
         $entityManager->flush();
 
-        return $this->render('seminar/index.html.twig', [
+        return $this->render('seminar/read.html.twig', [
             'seminar' => $seminar,
             'finishedChapters' => $consult->getFinishedChapters()
         ]);
@@ -130,6 +153,19 @@ class SeminarReadController extends AbstractController
 
         $this->addFlash('success', 'Votre progression dans "' . $c->getSeminar() . '" a été réinitialisée.');
 
-        return $this->redirectToRoute('app_seminar_index', ['id' => $seminar->getId()]);
+        return $this->redirectToRoute('app_seminar_intro', ['id' => $seminar->getId()]);
+    }
+
+    #[Route('/seminaires', name: 'app_seminars_index')]
+    public function index(EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        $seminars = $em->getRepository(Seminar::class)->findPublishedByRoles($user->getRoles());
+        $tags = $em->getRepository(Tag::class)->findAll();
+        // Get all seminars
+        return $this->render('seminar/index.html.twig', [
+            'seminars' => $seminars,
+            'tags' => $tags
+        ]);
     }
 }
