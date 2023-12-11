@@ -247,6 +247,11 @@ legend,
 		display: flex;
 		gap: 2rem;
 	}
+	.form-section-title {
+		font-size: 1.25rem;
+		color: var(--bs-primary);
+		margin-bottom: 1rem;
+	}
 
 	.presenceWebs .list-group-item > fieldset > div,
 	.lieuxActivite .list-group-item > fieldset > div {

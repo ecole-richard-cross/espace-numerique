@@ -79,6 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'User', cascade: ['persist', 'remove'])]
     private ?Stagiaire $stagiaire = null;
 
+    #[Assert\Valid]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: PresenceWeb::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $presenceWebs;
 

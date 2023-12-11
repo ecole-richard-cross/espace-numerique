@@ -22,6 +22,7 @@ Encore
      */
     .addEntry('app', './assets/scripts/app.js')
     .addEntry('symfony-collection', './assets/scripts/symfony-collection.js')
+    .addEntry('profile-error-feedback', './assets/scripts/profile-error-feedback.js')
 
     .addEntry('comment_reply', './assets/scripts/comment_reply.js')
 
