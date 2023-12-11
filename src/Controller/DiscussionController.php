@@ -72,10 +72,8 @@ class DiscussionController extends AbstractController
     }
 
     #[Route('/discussion/{id}', name: 'app_discussion_read')]
-    public function readOne(int $id, EntityManagerInterface $em, Request $request): Response
+    public function readOne(Discussion $discussion, EntityManagerInterface $em, Request $request): Response
     {
-        $discussion = $em->getRepository(Discussion::class)->findOneBy(['id' => $id]);
-
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
@@ -86,7 +84,7 @@ class DiscussionController extends AbstractController
             $comment->setUser($this->getUser());
             $em->persist($comment);
             $em->flush();
-            return $this->redirectToRoute('app_discussion_read', ['id' => $id]);
+            return $this->redirectToRoute('app_discussion_read', ['id' => $discussion->getId()]);
         } else {
             $form->isSubmitted() && !$form->isValid() && $this->addFlash('danger', $form->getErrors());
         }
