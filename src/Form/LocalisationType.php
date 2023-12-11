@@ -16,7 +16,8 @@ class LocalisationType extends AbstractType
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'attr' => ['placeholder' => 'Adresse'],
-                'row_attr' => ['class' => 'form-floating']
+                'row_attr' => ['class' => 'form-floating'],
+                'required' => false
             ])
             ->add('codePostal', TextType::class, [
                 'label' => 'Code postal',

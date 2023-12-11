@@ -24,7 +24,8 @@ class ProfileType extends AbstractType
          ->add('nomUsage', TextType::class, [
             'label' => 'Nom d\'usage',
             'attr' => ['placeholder' => 'Nom d\'usage'],
-            'row_attr' => ['class' => 'form-floating']
+            'row_attr' => ['class' => 'form-floating'],
+            'required' => false
         ])
          ->add('prenom', TextType::class, [
             'label' => 'Prénom',
@@ -33,7 +34,8 @@ class ProfileType extends AbstractType
         ])
          ->add('dateNaissance', BirthdayType::class, [
             'label' => 'Date de naissance',
-            'input'  => 'datetime_immutable'
+            'input'  => 'datetime_immutable',
+            'required' => false
          ])
          ->add('adressePostale', LocalisationType::class, [
             'error_bubbling' => false
@@ -41,12 +43,14 @@ class ProfileType extends AbstractType
          ->add('phoneNumber', TextType::class, [
             'label' => 'Téléphone',
             'attr' => ['placeholder' => 'Téléphone'],
-            'row_attr' => ['class' => 'form-floating mb-3']
+            'row_attr' => ['class' => 'form-floating mb-3'],
+            'required' => false
         ])
          ->add('nomStructure', TextType::class, [
             'label' => 'Nom de l\'entreprise',
             'attr' => ['placeholder' => 'Nom de l\'entreprise'],
-            'row_attr' => ['class' => 'form-floating mb-3']
+            'row_attr' => ['class' => 'form-floating mb-3'],
+            'required' => false
         ])
          ->add('lieuxActivite', CollectionType::class, [
             'label' => 'Lieux d\'activité',
@@ -55,7 +59,7 @@ class ProfileType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,
-            'error_bubbling' => false
+            'error_bubbling' => false,
          ])
          ->add('presenceWebs', CollectionType::class, [
             'label' => 'Réseaux et sites',
@@ -68,7 +72,7 @@ class ProfileType extends AbstractType
 
       if (in_array("ROLE_STAGIAIRE", $options['user']->getRoles()) || in_array("ROLE_EX_STAGIAIRE", $options['user']->getRoles())) {
          $builder
-            ->add('stagiaire', StagiaireProfileType::class);
+            ->add('stagiaire', StagiaireProfileType::class, ['required'=> false]);
       }
 
       $builder->add('submit', SubmitType::class);
