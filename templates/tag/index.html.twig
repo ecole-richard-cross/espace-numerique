@@ -8,8 +8,10 @@
         <div style="width: min(100%, 500px);">
             <h2 class="text-center my-4">Séminaires</h2>
             <ul class="list-group gap-2">
-                {% for item in tag.seminars %}
+                {% for item in filteredSeminars %}
                     <div class="card py-1 px-3 list-group-flush">{{ include('seminar/preview_short.html.twig', {seminar:item}) }}</div>
+                {% else %}
+                    <p class="card p-3 list-group-flush legend">Aucun séminaire ne correspond.</p>
                 {% endfor %}
             </ul>
         </div>
@@ -17,7 +19,9 @@
             <h2 class="text-center my-4">Discussions</h2>
             <ul class="list-group list-group-flush">
                 {% for item in tag.discussions %}
-                {{ include('discussion/preview.html.twig', {question: item, content: true}) }}
+                    {{ include('discussion/preview.html.twig', {question: item, content: true}) }}
+                {% else %}
+                    <p class="card p-3 list-group-flush legend">Aucune discussion ne correspond.</p>
                 {% endfor %}
             </ul>
         </div>

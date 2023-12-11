@@ -15,7 +15,7 @@ class SeminarsController extends AbstractController
     public function index(EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        $seminars = $em->getRepository(Seminar::class)->findByRoles($user->getRoles());
+        $seminars = $em->getRepository(Seminar::class)->findPublishedByRoles($user->getRoles());
         $tags = $em->getRepository(Tag::class)->findAll();
         // Get all seminars
         return $this->render('seminars/index.html.twig', [

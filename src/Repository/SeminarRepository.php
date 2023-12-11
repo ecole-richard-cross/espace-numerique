@@ -21,9 +21,9 @@ class SeminarRepository extends ServiceEntityRepository
         parent::__construct($registry, Seminar::class);
     }
 
-    public function findByRoles(array $roles)
+    public function findPublishedByRoles(array $roles)
     {
-        $seminars = $this->findAll();
+        $seminars = $this->findBy(['isPublished' => true]);
         $allowedSeminars = array_map(function ($seminar) use ($roles) {
             $inter = array_intersect($seminar->getRoles(), $roles);
             if (empty($inter))
