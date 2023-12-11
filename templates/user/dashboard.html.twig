@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div style="width: min(500px, 100%)">
+        <div class="col-sm-12 col-md-9 col-lg-6 mb-4">
             <h2 class="m-3 text-center">Mes lectures en cours</h2>
             {% for read in currentReads %}
                 {% set semLink = path('app_seminar_read',{id:read.seminar.id, chapterId: read.finishedChapters|default|sort|last + 1}) %}
@@ -35,8 +35,8 @@
 
             {% endfor %}
         </div>
-        <div style="width: min(500px, 100%)">
-            <div>
+        <div class="col-sm-12 col-md-9 col-lg-6">
+            <div class="mb-5">
                 <h2 class="m-3 text-center">Mes questions</h2>
                 {% for question in userQs %}
                     {{ include('discussion/preview.html.twig', {question:question, content: true}) }}

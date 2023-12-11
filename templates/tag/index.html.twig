@@ -4,8 +4,8 @@
 
 {% block body %}
     <h1><i class="fa-solid fa-tag"></i> {{tag}}</h1>
-    <div class="row justify-content-center gap-3">
-        <div style="width: min(100%, 500px);">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-9 col-lg-6">
             <h2 class="text-center my-4">Séminaires</h2>
             <ul class="list-group gap-2">
                 {% for item in filteredSeminars %}
@@ -15,7 +15,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <div style="width: min(100%, 500px);">
+        <div class="col-sm-12 col-md-9 col-lg-6">
             <h2 class="text-center my-4">Discussions</h2>
             <ul class="list-group list-group-flush">
                 {% for item in tag.discussions %}

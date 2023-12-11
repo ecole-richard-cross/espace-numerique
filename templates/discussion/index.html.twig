@@ -9,7 +9,7 @@
 <h1>Espace discussion</h1>
 <div class="container-lg">
     <div class="row justify-content-center">
-        <div style="width: min(500px, 100%)" class="mb-4 d-flex flex-column gap-3 align-items-center">
+        <div class="col-sm-12 col-md-9 col-lg-6 mb-4 d-flex flex-column gap-3 align-items-center">
             <h2 class="m-0">Mes questions</h2>
             {%- for discussion in myLast5 %}
                 {{ include('discussion/preview.html.twig', {question: discussion, content: true}) }}
@@ -38,7 +38,7 @@
 
 
         </div>
-        <div style="width: min(500px, 100%)" class="mb-4 d-flex flex-column gap-3 align-items-center">
+        <div class="col-sm-12 col-md-9 col-lg-6 mb-4 d-flex flex-column gap-3 align-items-center">
             <h2 class="m-0">Sujets récents</h2>
             {% for discussion in last5 %}
                 {{ include('discussion/preview.html.twig', {question: discussion, content: false}) }}
