@@ -31,7 +31,7 @@ class UserController extends AbstractController
         return $this->render('user/lastReadLink.html.twig', ['lastRead' => $result]);;
     }
 
-    #[Route('/user/dashboard', name: 'app_user_dashboard')]
+    #[Route('/espace-apprenant', name: 'app_user_dashboard')]
     public function index(EntityManagerInterface $em): Response
     {
         $currentReads = $em->getRepository(SeminarConsultation::class)->findBy(['user' => $this->getUser(), 'isFinished' => false]);
