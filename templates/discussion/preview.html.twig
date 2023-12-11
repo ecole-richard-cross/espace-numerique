@@ -1,13 +1,13 @@
 {% set lastComment = question.comments|last %}
 
 {% if content is same as (true) %}
-    <div class="card px-4 py-2">
+    <div class="w-100 card px-4 py-2">
         <h3 class="my-0 h4"><a href="{{path('app_discussion_read', {id:question.id})}}">{{question.title}}</a></h3>
         <p class="m-0 smaller">Réponse de {{lastComment.user.prenom}} le {{lastComment.createdAt|date('d/m/Y à H:i','Europe/Paris')}} :</p>
         <p class="small m-0">{{lastComment.content|striptags|u.truncate(50, '...')}}</p>
     </div>
 {% else %}
-    <div class="card px-4 py-2">
+    <div class="w-100 card px-4 py-2">
         <h3 class="mb-1 h6"><a href="{{path('app_discussion_read', {id:question.id})}}">{{question.title}}</a></h3>
         <p class="m-0 smaller">Réponse de {{lastComment.user.prenom}} le {{lastComment.createdAt|date('d/m/Y à H:i','Europe/Paris')}}</p>
     </div>

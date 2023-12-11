@@ -46,7 +46,12 @@
             </div> 
         {% else %}
             <div class="p-0 my-0 mx-auto seminar-content d-flex flex-column gap-4 align-items-center">
-                <h1>{{seminar}}</h1>
+                <h1 class="mb-1">{{seminar}}</h1>
+                <div class="d-flex justify-content-center gap-1 mb-5">
+                    {% for tag in seminar.tags %}
+                        {{ include('tag/_badge.html.twig', {tag:tag}) }}
+                    {% endfor %}
+                </div>
                 
                 <img class="rounded-3 mw-100" style="max-height:450px;" src="/uploads/{{seminar.image.url}}" alt="{{seminar.image}}">
 

@@ -20,7 +20,6 @@
             <i class="fa-solid fa-tags text-dark opacity-50"></i>
             <select multiple
                 id="hashtags-select">
-            {% for tag in tags %}<option>{{tag}}</option>{% if not loop.last %}, {%endif%}{% endfor %}
             </select>
             <script>
                 const selector = new TomSelect('#hashtags-select',{
@@ -28,6 +27,9 @@
                     placeholder:'Filtrer par thème',
                     selectOnTab: true,
                     hidePlaceholder: true,
+                    options: [
+                        {%- for tag in tags %}{value:"{{tag.id}}", text:"{{tag}}"},{% endfor -%}
+                    ],
                     render: {
                         dropdown: () => {
                             return '<div class="border-1 border-secondary-subtle"></div>'
@@ -61,7 +63,6 @@
                         })
                     }
                 })
-                selector.clear()
             </script>
         </div>
     <ul class="rounded-4 shadow px-0 pb-1">
@@ -102,12 +103,6 @@
                     Démarré
                     {% endif %}
                 </div>
-                <!-- <div class="w-100 d-flex align-items-center justify-content-center">
-                    Progression
-                </div>
-                <div class="w-100 d-flex align-items-center justify-content-center no-mobile">
-                    Consulté le
-                </div> -->
             </div>
             <div class="d-flex align-items-center px-3">
                 <ul class="seminar-list w-100 list-group list-group-flush">
@@ -131,12 +126,6 @@
                     Terminé
                     {% endif %}
                 </div>
-                <!-- <div class="w-100 d-flex align-items-center justify-content-center">
-                    Progression
-                </div>
-                <div class="w-100 d-flex align-items-center justify-content-center no-mobile">
-                    Consulté le
-                </div> -->
             </div>
             <div class="d-flex align-items-center px-3">
                 <ul class="seminar-list w-100 list-group list-group-flush">

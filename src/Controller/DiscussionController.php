@@ -22,18 +22,23 @@ class DiscussionController extends AbstractController
         $form = $this->createForm(DiscussionType::class, $discussion);
 
         $form->handleRequest($req);
-        if ($form->isSubmitted())
-            if ($form->isValid()) {
+        if ($form->isSubmitted()) {
 
-                foreach ($_POST['discussion']['tags'] as $id => $tag) {
+            $content = preg_replace('/<\/?script.*>?/', '', $_POST['discussion']['content']);
+            $tagsStr = $_POST['discussion']['tags']['tags'] ?? null;
+            $tags = $tagsStr ? explode(',', $tagsStr) : [];
+
+            if ($form->isValid() && strlen(strip_tags($content)) > 31) {
+
+                foreach ($tags as $tag) {
                     $discussion
-                        ->addTag($em->getRepository(Tag::class)->findOneBy(['name' => $tag]));
+                        ->addTag($em->getRepository(Tag::class)->findOneBy(['id' => $tag]));
                 }
 
                 $comment = new Comment();
                 $comment
                     ->setUser($this->getUser())
-                    ->setContent($_POST['discussion']['content'])
+                    ->setContent($content)
                     ->setDiscussion($discussion);
 
                 $discussion->setUser($this->getUser())
@@ -44,11 +49,24 @@ class DiscussionController extends AbstractController
 
                 return $this->redirectToRoute('app_discussion_read', ['id' => $discussion->getId()]);
             } else {
-                $this->addFlash(
-                    'danger',
-                    $form->getErrors()
-                );
+                if (empty($content)) {
+                    $this->addFlash(
+                        'warning',
+                        'Votre commentaire ne peut pas être vide.'
+                    );
+                } elseif (strlen(strip_tags($content)) <= 31) {
+                    $this->addFlash(
+                        'warning',
+                        'Votre commentaire est trop court, il doit être au minimum long d\'une vingtaine de caractères.'
+                    );
+                } else {
+                    $this->addFlash(
+                        'danger',
+                        'Erreur inconnue, veuillez contacter le propriétaire du site.'
+                    );
+                }
             }
+        }
 
         return $this->render('discussion/new.html.twig', ['form' => $form]);
     }

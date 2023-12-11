@@ -32,20 +32,20 @@ class DiscussionType extends AbstractType
             }
         );
         $builder
-            ->add('title', TextType::class, ['label' => 'Votre question'])
-            ->add('content', HiddenType::class, ['mapped' => false])
-            ->add('comments', TrixEditorType::class, [
-                'label_attr' => ['class' => 'd-none'],
-                'placeholder' => 'Précisez votre question ici.',
-                'input_id' => 'discussion_content'
-            ])
+            ->add('title', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'Votre question']])
             ->add('tags', TagSelectType::class, [
                 'data' => $tags,
                 'mapped' => false,
                 'allow_extra_fields' => true,
                 'data_class' => null,
-                'label' => 'Hashtags',
-                'label_attr' => ['class' => 'd-none']
+                'label' => false,
+                'placeholder' => 'Les thèmes de votre question'
+            ])
+            ->add('content', HiddenType::class, ['mapped' => false])
+            ->add('comments', TrixEditorType::class, [
+                'label_attr' => ['class' => 'd-none'],
+                'placeholder' => 'Précisez votre question ici.',
+                'input_id' => 'discussion_content'
             ])
             ->add('submit', SubmitType::class, ['label' => "Envoyer"]);
     }

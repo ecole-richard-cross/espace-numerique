@@ -1,15 +1,25 @@
 {% block tag_select_widget %}
-<div class="dropend d-flex align-items-center gap-1" style="min-height: 2rem">
-    <button class="btn btn-outline-tertiary border-1 p-2 smaller dropdown-toggle" type="button" data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-        {{label}}
-    </button>
-    <ul class="dropdown-menu p-1 border-0">
-    {% for item in data %}
-        <li class="d-inline-block">
-            <input type="checkbox" name="{{full_name}}[{{loop.index0}}]" value="{{item}}" id="{{item}}">
-            <label class="btn rounded-3 badge text-secondary border dropdown-item" for="{{item}}">{{item}}</label>
-        </li>
-    {% endfor %}
-    </ul>
-</div>
+    <input multiple name="{{full_name}}[tags]" id="hashtags-select">
+    </input>
+    <script>
+        const selector = new TomSelect('#hashtags-select',{
+            plugins:['remove_button','input_autogrow'],
+            placeholder:'{{placeholder}}',
+            selectOnTab: true,
+            hidePlaceholder: true,
+            options: [
+                {%- for tag in data %}
+                {value:{{tag.id}}, text:"{{tag}}"},
+                {% endfor -%}
+            ],
+            render: {
+                dropdown: () => {
+                    return '<div class="shadow border-1 border-secondary-subtle mb-3"></div>'
+                },
+                item: (data, escape) => {
+                    return '<div class="badge legend tall">' + escape(data.text.trim()) + '</div>'
+                }
+            }
+        })
+    </script>
 {% endblock %}
