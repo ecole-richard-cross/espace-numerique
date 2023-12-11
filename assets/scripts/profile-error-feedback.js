@@ -23,13 +23,6 @@ adresses.forEach(adresse => {
    const pays = adresse.querySelector("input[name$='[pays]']");
    const inputsToValidate = [codePostal, ville, pays];
 
-   if (!codePostal.validity.valid && (!ville.validity.valid || !pays.validity.valid)) {
-      inputsToValidate.forEach(input => {
-         !input.validity.valid && input.classList.add('is-invalid');
-      });
-   }
-
-
    const errorMessage = adresse == document.getElementById('profile_adressePostale') ?
       adresse.parentElement.querySelector('.invalid-feedback') :
       adresse.closest('ul').parentElement.querySelector('.invalid-feedback');
@@ -40,6 +33,12 @@ adresses.forEach(adresse => {
          errorMessage.classList.add("d-none");
       }
    })
+
+   if (!codePostal.validity.valid && (!ville.validity.valid || !pays.validity.valid)) {
+      inputsToValidate.forEach(input => {
+         !input.validity.valid && input.classList.add('is-invalid');
+      });
+   }
 
    inputsToValidate.forEach(input => {
       input.addEventListener('input', (e) => {
