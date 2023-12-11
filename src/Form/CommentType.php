@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Comment;
 use App\Form\Type\TrixEditorType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,11 +16,12 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content', HiddenType::class, [
-                'required' => true,
-                'invalid_message' => 'Votre commentaire ne peut pas être vide.'
+            ->add('content', HiddenType::class)
+            ->add('editor', TrixEditorType::class, [
+                'mapped' => false,
+                'label' => "Répondre",
+                'input_id' => 'comment_content'
             ])
-            ->add('editor', TrixEditorType::class, ['mapped' => false, 'label' => "Répondre"])
             ->add('replyingTo', EntityType::class, ['class' => Comment::class, 'row_attr' => ['class' => 'd-none']])
             ->add('submit', SubmitType::class, ['label' => 'Envoyer']);
     }

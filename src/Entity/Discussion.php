@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\DiscussionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\HasLifecycleCallbacks]
@@ -16,6 +17,7 @@ class Discussion
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(['min' => '15', 'minMessage' => 'Votre question doit contenir au moins 15 caractères.'])]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
@@ -47,7 +49,7 @@ class Discussion
 
     public function __toString()
     {
-        return $this->title.' (modifiée le '.$this->updatedAt->format('d M Y').')';
+        return $this->title . ' (modifiée le ' . $this->updatedAt->format('d M Y') . ')';
     }
 
     public function getId(): ?int

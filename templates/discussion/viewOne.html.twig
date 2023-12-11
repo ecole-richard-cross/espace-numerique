@@ -12,7 +12,12 @@
 {% endblock %}
 
 {% block body %}
-<h1>{{question.title|e}}</h1>
+<h1 class="mb-1">{{question.title|e}}</h1>
+<div class="d-flex justify-content-center gap-1 mb-5">
+    {% for tag in question.tags %}
+        {{ include('tag/_badge.html.twig', {tag:tag}) }}
+    {% endfor %}
+</div>
 <ul class="list-group list-group-flush mb-4">
 {% for comment in question.comments %}
     
@@ -29,7 +34,7 @@
         </div>
         <div class="col-9 flex-grow-1 d-flex flex-column justify-content-center">
             <div class="legend">le {{comment.createdAt|date('d/m/Y à H:i')}}</div>
-            <div class="position-relative {% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}bg-light{%else%}bg-primary-light{%endif%} rounded-3 ps-3 pe-5 py-2 mb-3">
+            <div style="word-break:break-all;" class="position-relative {% if 'ROLE_FORMATEUR_ERC' in comment.user.roles %}bg-light{%else%}bg-primary-light{%endif%} rounded-3 ps-3 pe-5 py-2 mb-3">
                 {%- if comment.replyingTo is not null -%}
                     <div>
                         <div class="smaller fst-italic text-secondary">{%

@@ -11,9 +11,13 @@
     <div class="row justify-content-center">
         <div class="col-6 d-flex flex-column gap-3 align-items-center">
             <h2 class="m-0">Mes questions</h2>
-            {% for discussion in myLast5 %}
+            {%- for discussion in myLast5 %}
                 {{ include('discussion/preview.html.twig', {question: discussion, content: true}) }}
-            {% endfor %}
+            {% else %}
+                <div class="card col-6 w-100 p-4 legend text-center">Vous n'avez posé aucune question.</div>
+            {%- endfor -%}
+            
+            {%- if myPages > 1 -%}
             <p>
                 {% if myPage != 1 %}
                     <a href="{{path('app_discussion',{page:page, myPage: myPage - 1})}}">←</a>
@@ -30,14 +34,19 @@
                     <a href="{{path('app_discussion',{page:page, myPage: myPage + 1})}}">→</a>
                 {% endif %}
             </p>
+            {%- endif %}
+
 
         </div>
         <div class="col-6 d-flex flex-column gap-3 align-items-center">
             <h2 class="m-0">Sujets récents</h2>
             {% for discussion in last5 %}
                 {{ include('discussion/preview.html.twig', {question: discussion, content: false}) }}
+            {% else %}
+                <div class="card col-6 w-100 p-4 legend text-center">Aucune discussion récente</div>
             {% endfor %}
 
+            {%- if pages > 1 -%}
             <p>
                 {% if page != 1 %}
                     <a href="{{path('app_discussion',{myPage:myPage, page: page - 1})}}">←</a>
@@ -54,9 +63,11 @@
                     <a href="{{path('app_discussion',{myPage:myPage, page: page + 1})}}">→</a>
                 {% endif %}
             </p>
-
-            <a href="#" class="btn btn-outline-primary">Poser une question</a>
+            {%- endif %}
         </div>
+            <p class="text-center mt-5">
+                <a href="{{path('app_discussion_new')}}" class="btn btn-outline-primary">Poser une question</a>
+            </p>
     </div>
 </div>
 {% endblock %}

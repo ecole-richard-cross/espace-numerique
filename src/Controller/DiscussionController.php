@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Discussion;
+use App\Entity\Tag;
 use App\Form\CommentType;
+use App\Form\DiscussionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +15,62 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DiscussionController extends AbstractController
 {
+    #[Route('/discussion/new', name: 'app_discussion_new')]
+    public function new(Request $req, EntityManagerInterface $em): Response
+    {
+        $discussion = new Discussion();
+        $form = $this->createForm(DiscussionType::class, $discussion);
+
+        $form->handleRequest($req);
+        if ($form->isSubmitted()) {
+
+            $content = preg_replace('/<\/?script.*>?/', '', $_POST['discussion']['content']);
+            $tagsStr = $_POST['discussion']['tags']['tags'] ?? null;
+            $tags = $tagsStr ? explode(',', $tagsStr) : [];
+
+            if ($form->isValid() && strlen(strip_tags($content)) > 31) {
+
+                foreach ($tags as $tag) {
+                    $discussion
+                        ->addTag($em->getRepository(Tag::class)->findOneBy(['id' => $tag]));
+                }
+
+                $comment = new Comment();
+                $comment
+                    ->setUser($this->getUser())
+                    ->setContent($content)
+                    ->setDiscussion($discussion);
+
+                $discussion->setUser($this->getUser())
+                    ->addComment($comment);
+
+                $em->persist($discussion);
+                $em->flush();
+
+                return $this->redirectToRoute('app_discussion_read', ['id' => $discussion->getId()]);
+            } else {
+                if (empty($content)) {
+                    $this->addFlash(
+                        'warning',
+                        'Votre commentaire ne peut pas être vide.'
+                    );
+                } elseif (strlen(strip_tags($content)) <= 31) {
+                    $this->addFlash(
+                        'warning',
+                        'Votre commentaire est trop court, il doit être au minimum long d\'une vingtaine de caractères.'
+                    );
+                } else {
+                    $this->addFlash(
+                        'danger',
+                        'Erreur inconnue, veuillez contacter le propriétaire du site.'
+                    );
+                }
+            }
+        }
+
+        return $this->render('discussion/new.html.twig', ['form' => $form]);
+    }
+
     #[Route('/discussion/{id}', name: 'app_discussion_read')]
     public function readOne(int $id, EntityManagerInterface $em, Request $request): Response
     {

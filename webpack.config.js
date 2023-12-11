@@ -25,6 +25,7 @@ Encore
     .addEntry('profile-error-feedback', './assets/scripts/profile-error-feedback.js')
 
     .addEntry('comment_reply', './assets/scripts/comment_reply.js')
+    .addStyleEntry('new_discussion_form', './assets/styles/new_discussion_form.scss')
 
     .addEntry('ea-block-form', './assets/scripts/admin/ea-block-form.js')
     .addEntry('ea-consultation-no-duplicates', './assets/scripts/admin/ea-consultation-no-duplicates.js')

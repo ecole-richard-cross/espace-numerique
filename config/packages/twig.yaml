@@ -3,6 +3,7 @@ twig:
     form_themes: 
         - "bootstrap_5_layout.html.twig"
         - 'form/TrixEditorType.html.twig'
+        - 'form/TagSelectType.html.twig'
     globals:
         socials:
             instagram:
