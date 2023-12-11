@@ -24,16 +24,7 @@ class StagiaireProfileType extends AbstractType
             'label' => 'Identifiants financeurs',
             'attr' => ['placeholder' => 'Identifiants financeurs'],
             'row_attr' => ['class' => 'form-floating mb-3']
-        ])
-         ->add(
-            'sexe',
-            ChoiceType::class,
-            [
-               "choices" => ["M" => "M", "F" => "F"],
-               "expanded" => true,
-               'label_attr' => ['class' => 'radio-inline']
-            ]
-         );
+        ]);
    }
 
    public function configureOptions(OptionsResolver $resolver)
