@@ -59,7 +59,7 @@ class UserController extends AbstractController
         return $this->render('user/profile.html.twig');
     }
 
-    #[Route('/profil/edit', name: 'app_user_edit')]
+    #[Route('/mon-profil/editer', name: 'app_user_edit')]
     public function edit(Request $request, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
@@ -76,7 +76,7 @@ class UserController extends AbstractController
         return $this->render('user/profile_edit.html.twig', ['form' => $form]);
     }
 
-    #[Route('/profil/change-avatar', name: 'app_user_change_avatar')]
+    #[Route('/mon-profil/changer-avatar', name: 'app_user_change_avatar')]
     public function changeAvatar(Request $request, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
