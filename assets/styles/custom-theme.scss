@@ -66,9 +66,26 @@ footer {
 }
 
 a {
-	font-weight: 500;
-	text-decoration: none;
-	color: $secondary;
+    font-weight: 500;
+    text-decoration: none;
+    color: $dark;
+
+    &:hover {
+        color: $primary;
+    }
+
+    &:active {
+        color: $accent;
+    }
+
+    &.badge {
+        transition: all 100ms;
+
+        &:hover {
+            box-shadow: $box-shadow;
+            color: $primary !important;
+        }
+    }
 }
 
 #seminar_navbar {

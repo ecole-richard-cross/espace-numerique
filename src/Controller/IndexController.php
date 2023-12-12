@@ -12,8 +12,14 @@ class IndexController extends AbstractController
     public function index(): Response
     {
         if ($this->getUser() == null)
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_welcome');
 
         return $this->redirectToRoute('app_user_dashboard');
+    }
+
+    #[Route('/bienvenue', name: 'app_welcome')]
+    public function welcome(): Response
+    {
+        return $this->render('index/welcome.html.twig');
     }
 }

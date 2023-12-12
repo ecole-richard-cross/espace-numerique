@@ -7,9 +7,9 @@
 
 {% block body %}
 <h1>Espace discussion</h1>
-<div class="container-md">
+<div class="container-lg">
     <div class="row justify-content-center">
-        <div class="col-6 d-flex flex-column gap-3 align-items-center">
+        <div class="col-sm-12 col-md-9 col-lg-6 mb-4 d-flex flex-column gap-3 align-items-center">
             <h2 class="m-0">Mes questions</h2>
             {%- for discussion in myLast5 %}
                 {{ include('discussion/preview.html.twig', {question: discussion, content: true}) }}
@@ -38,7 +38,7 @@
 
 
         </div>
-        <div class="col-6 d-flex flex-column gap-3 align-items-center">
+        <div class="col-sm-12 col-md-9 col-lg-6 mb-4 d-flex flex-column gap-3 align-items-center">
             <h2 class="m-0">Sujets récents</h2>
             {% for discussion in last5 %}
                 {{ include('discussion/preview.html.twig', {question: discussion, content: false}) }}
@@ -65,9 +65,9 @@
             </p>
             {%- endif %}
         </div>
-            <p class="text-center mt-5">
-                <a href="{{path('app_discussion_new')}}" class="btn btn-outline-primary">Poser une question</a>
-            </p>
+        <p class="text-center mt-4">
+            <a href="{{path('app_discussion_new')}}" class="btn btn-outline-primary">Poser une question</a>
+        </p>
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{tag}} | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1><i class="fa-solid fa-tag"></i> {{tag}}</h1>
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-9 col-lg-6">
+            <h2 class="text-center my-4">Séminaires</h2>
+            <ul class="list-group gap-2">
+                {% for item in filteredSeminars %}
+                    <div class="card py-1 px-3 list-group-flush">{{ include('seminar/preview_short.html.twig', {seminar:item}) }}</div>
+                {% else %}
+                    <p class="card p-3 list-group-flush legend">Aucun séminaire ne correspond.</p>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-12 col-md-9 col-lg-6">
+            <h2 class="text-center my-4">Discussions</h2>
+            <ul class="list-group list-group-flush">
+                {% for item in tag.discussions %}
+                    {{ include('discussion/preview.html.twig', {question: item, content: true}) }}
+                {% else %}
+                    <p class="card p-3 list-group-flush legend">Aucune discussion ne correspond.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

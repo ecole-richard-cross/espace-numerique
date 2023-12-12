@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Form\Type\ProfileType;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserProfileController extends AbstractController
 {
-    #[Route('/profile', name: 'app_user_profile')]
+    #[Route('/profil', name: 'app_user_profile')]
     public function index(): Response
     {
         return $this->render('user/profile.html.twig', [
@@ -20,7 +19,7 @@ class UserProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/profile/edit', name: 'app_user_edit')]
+    #[Route('/profil/edit', name: 'app_user_edit')]
     public function edit(Request $request, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();

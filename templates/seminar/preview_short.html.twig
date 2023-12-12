@@ -30,14 +30,12 @@
         {% if consult.finishedChapters|length > 0 %}
             <div class="w-100 text-success d-flex flex-column align-items-center justify-content-center small">
                 {{consult.finishedChapters|length}} sur {{seminar.chapters|length}} chap. lu{{consult.finishedChapters|length > 1 ?? "s"}}
-                {{ include('seminar/progressBar.html.twig', {percentDone:percentDone}) }}
             </div>
         {% else %}
             <div class="w-100 text-secondary fst-italic d-flex flex-column align-items-center justify-content-center small">
                 Aucun chapitre lu
             </div>
         {% endif %}
-        <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult.lastConsultedAt|date('d/m/Y à H:i','Europe/Paris')}}</div>
     </li>
 
 {% else %}
@@ -54,9 +52,7 @@
         </div>
         <div class="w-100 text-primary fst-italic small d-flex flex-column align-items-center justify-content-center">
             Terminé
-            {{ include('seminar/progressBar.html.twig', {percentDone:percentDone}) }}
         </div>
-        <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult.lastConsultedAt|date('d/m/Y à H:i','Europe/Paris')}}</div>
     </li>
 
 {% endif %}
