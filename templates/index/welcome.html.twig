@@ -5,4 +5,32 @@
 {% block body %}
 <h1 class="mb-0">Espace d'apprentissage en ligne</h1>
 <p class="text-center legend">de l'Ecole Richard Cross</p>
+<div class="row flex-row-reverse justify-content-evenly">
+    <figure class="col-md-3 col-sm-6 text-center">
+        <img style="width: min(100%, 60vw); aspect-ratio: 1/1; object-fit: cover" src="https://www.ecole-richard-cross.com/img/photos/richard-blanc.png" class="rounded-circle shadow" alt="Portrait de Richard Cross">
+        <figcaption class="mt-2 legend small">Richard vous souhaite la bienvenue !</figcaption>
+    </figure>
+    <div class="col-md-9 col-sm-12">
+        <h2>Où suis-je ?</h2>
+        <p>Cette plateforme est la section e-learning de l'Ecole Richard Cross à Paris.
+            Son principal usage est de complémenter l'enseignement dispensé pendant la formation tout au long de l'année.
+        </p>
+        <p>Au programme, des séminaires rédigés par Richard spécialement pour l'apprentissage en ligne,
+            et un contact direct avec les autres stagiaires et l'équipe pédagogique pour rester connectés
+            en dehors des périodes de formation.</p>
+        <h2>Déjà stagiaire de la formation ?</h2>
+        <p><a href="{{path('app_register')}}">Créez simplement votre compte</a>, l'équipe de l'Ecole vous donnera rapidement accès au contenu réservé aux stagiaires !</p>
+        <h2>Et pour les autres...</h2>
+        <p>Pas d'inquiétude ! Afin de présenter l'Ecole, l'équipe pédagogique vous a préparé des séminaires d'introduction à la formation et à la pédagogie Richard Cross.</p>
+        <p><a href="{{path('app_register')}}">Inscrivez-vous ici</a> et vous y aurez directement accès !</p>
+        <h3>En savoir plus sur la formation</h3>
+        <p>Tous les renseignements sont disponibles sur le site de l'Ecole : <a href="ecole-richard-cross.com">www.ecole-richard-cross.com</a>.</p>
+    </div>
+    <div class="col-12">
+        <h2 class="col-lg-12 col-xl-9 mx-auto text-center text-primary mt-5 mb-4 p-4">Comme eux en 2023, devenez coach vocal !</h2>
+        <figure class="col-xl-6 col-lg-9 mx-auto text-center">
+            <img class="rounded-5" style="width: 100%;" src="https://www.ecole-richard-cross.com/img/photos/promo-2023-80.jpg" alt="La promotion 2023 de l'Ecole Richard Cross">
+        </figure>
+    </div>
+</div>
 {% endblock %}

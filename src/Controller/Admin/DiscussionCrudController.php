@@ -26,8 +26,8 @@ class DiscussionCrudController extends AbstractCrudController
         return [
             TextField::new('title', 'Titre'),
             AssociationField::new('user', 'Auteur')->setRequired(true),
-            AssociationField::new('categories', 'Catégorie')
-                ->setTemplatePath('admin/hashtagsList.html.twig'),
+            // AssociationField::new('categories', 'Catégorie')
+                // ->setTemplatePath('admin/hashtagsList.html.twig'),
             AssociationField::new('tags', 'Hashtags')
                 ->setTemplatePath('admin/hashtagsList.html.twig'),
             AssociationField::new('comments')

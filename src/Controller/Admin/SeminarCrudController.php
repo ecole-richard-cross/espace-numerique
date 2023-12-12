@@ -47,9 +47,9 @@ class SeminarCrudController extends AbstractCrudController
             ->hideOnDetail();
         yield TextEditorField::new('description')
             ->setTemplatePath('admin/textEditorDisplay.html.twig');
-        yield AssociationField::new('categories', 'Catégories')
-            ->setTemplatePath('admin/collectionList.html.twig')
-            ->setColumns(6);
+        // yield AssociationField::new('categories', 'Catégories')
+        //     ->setTemplatePath('admin/collectionList.html.twig')
+        //     ->setColumns(6);
         yield AssociationField::new('tags', 'Hashtags')
             ->setTemplatePath('admin/hashtagsList.html.twig')
             ->setColumns(6);
@@ -81,17 +81,17 @@ class SeminarCrudController extends AbstractCrudController
         yield CollectionField::new('chapters', "Aperçu")
             ->setTemplatePath('admin/seminarDisplay.html.twig')
             ->onlyOnDetail();
-        yield FormField::addTab('Consulté par');
-        yield FormField::addColumn(8);
-        yield FormField::addFieldset('');
+        // yield FormField::addTab('Consulté par');
+        // yield FormField::addColumn(8);
+        // yield FormField::addFieldset('');
 
-        ($pageName === Crud::PAGE_NEW ||
-            $pageName === Crud::PAGE_EDIT) &&
-            yield CollectionField::new('seminarConsultations', false)
-            ->addWebpackEncoreEntries('ea-consultation-no-duplicates')
-            ->setTemplatePath('admin/consultationDisplay.html.twig')
-            ->useEntryCrudForm()
-            ->hideOnIndex();
+        // ($pageName === Crud::PAGE_NEW ||
+        //     $pageName === Crud::PAGE_EDIT) &&
+        //     yield CollectionField::new('seminarConsultations', false)
+        //     ->addWebpackEncoreEntries('ea-consultation-no-duplicates')
+        //     ->setTemplatePath('admin/consultationDisplay.html.twig')
+        //     ->useEntryCrudForm()
+        //     ->hideOnIndex();
     }
 
 
