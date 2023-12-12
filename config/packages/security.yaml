@@ -39,7 +39,7 @@ security:
         - { path: ^/se-connecter, role: PUBLIC_ACCESS }
         - { path: ^/s-inscrire, role: PUBLIC_ACCESS }
         - { path: ^/bienvenue, role: PUBLIC_ACCESS }
-        - { path: ^/, role: ROLE_USER }
+        - { path: ^/, role: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
