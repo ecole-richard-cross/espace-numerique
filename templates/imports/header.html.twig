@@ -51,7 +51,7 @@
 
 				<ul class="navbar-nav ms-auto order-2 order-md-3 align-items-center gap-1">
 					{% if app.user %}
-						<li class="strong d-none d-lg-block">{{ app.user }}</li>
+						<li class="strong d-none d-lg-block"><a href="{{path('app_user_profile')}}">{{ app.user }}</a></li>
 						<li class="nav-item dropdown">
 							<button class="nav-link" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 								{{ include('user/avatar_circle.html.twig', {'user' : app.user, 'noCircle' : true, 'size' : 44, 'iconSize': 32}) }}
