@@ -1,9 +1,20 @@
 {% set media = user.avatar ?? null %}
 {% if media is null or media.url is empty or media.type|lower != 'image'%}
-    <p class="m-0 badge badge-secondary p-3 rounded-circle fs-3"><i class="fa-regular fa-user text-secondary"></i></p>
+	{# <p class="m-0 badge badge-secondary p-3 rounded-circle fs-3">
+										<i class="fa-regular fa-user text-secondary"></i>
+									</p> #}
+	{% if (noCircle|default(false)) %}
+		<svg xmlns="http://www.w3.org/2000/svg" width="{{iconSize|default(size|default(32))}}" height="{{iconSize|default(size|default(32))}}" fill="currentColor" class="{{classes|default('')}} bi bi-person-fill" viewbox="0 0 16 16">
+			<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+		</svg>
+	{% else %}
+		<svg xmlns="http://www.w3.org/2000/svg" width="{{iconSize|default(size|default(32))}}" height="{{iconSize|default(size|default(32))}}" fill="#FFF" class="{{classes|default('')}} bi bi-person-fill rounded-circle bg-secondary p-2" viewbox="0 0 16 16">
+			<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+		</svg>
+	{% endif %}
 {% else %}
-    {% set url = "/uploads/"~media.url|default('') %}
-        <div>
-            <img style="object-fit:cover; width:{{size}}px; height:{{size}}px" class="rounded-circle" alt="Avatar de {{user}}" src={{url}}>
-        </div>
+	{% set url = "/uploads/"~media.url|default('') %}
+	<div>
+		<img style="object-fit:cover; width:{{size}}px; height:{{size}}px" class="rounded-circle {{classes|default('')}}" alt="Avatar de {{user}}" src={{url}}>
+	</div>
 {% endif %}

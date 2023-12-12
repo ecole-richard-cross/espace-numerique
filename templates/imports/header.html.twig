@@ -8,42 +8,36 @@
 					</svg>
 				</button>
 				<a class="navbar-brand me-auto me-0--md" href="/"><img src="{{ asset('build/images/logo-erc.svg')}}" width="85" height="52"></a>
-				
-				{% if is_granted('ROLE_USER') %}	
-				<div class="collapse navbar-collapse order-3 order-md-2" id="navbarNav">
-					<div class="d-flex flex-column flex-md-row flex-grow-1 p-3 p-0--md">
-						<ul class="navbar-nav  order-3 order-md-2">
-							<li class="nav-item mx-2">
-								<a href="{{path('app_seminars_index')}}" class="nav-link">Séminaires</a>
-							</li>
-							<li class="nav-item mx-2">
-								<a href="{{path('app_discussion')}}" class="nav-link">Discussions</a>
-							</li>
-						</ul>
-						<form class="d-flex order-2 order-md-3 ms-md-auto me-2">
-							<input class="form-control form-control-sm ps-3 pe5" type="search" placeholder="Rechercher... " aria-label="Search">
-							<button class="btn ms-n5" type="submit" aria-label="Search Button">
-								<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewbox="0 0 16 16">
-									<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-								</svg>
-							</button>
-						</form>
+
+				{% if is_granted('ROLE_USER') %}
+					<div class="collapse navbar-collapse order-3 order-md-2" id="navbarNav">
+						<div class="d-flex flex-column flex-md-row flex-grow-1 p-3 p-0--md">
+							<ul class="navbar-nav  order-3 order-md-2">
+								<li class="nav-item mx-2">
+									<a href="{{path('app_seminars_index')}}" class="nav-link">Séminaires</a>
+								</li>
+								<li class="nav-item mx-2">
+									<a href="{{path('app_discussion')}}" class="nav-link">Discussions</a>
+								</li>
+							</ul>
+							<form class="d-flex order-2 order-md-3 ms-md-auto me-2">
+								<input class="form-control form-control-sm ps-3 pe5" type="search" placeholder="Rechercher... " aria-label="Search">
+								<button class="btn ms-n5" type="submit" aria-label="Search Button">
+									<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewbox="0 0 16 16">
+										<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+									</svg>
+								</button>
+							</form>
+						</div>
 					</div>
-				</div>
 				{% endif %}
-				
+
 				<ul class="navbar-nav ms-auto order-2 order-md-3 align-items-center gap-1">
 					{% if app.user %}
 						<li class="strong d-none d-lg-block">{{ app.user }}</li>
 						<li class="nav-item dropdown">
 							<button class="nav-link" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-								{% if app.user.avatar != null %}
-									<img class="rounded-circle" src="{{asset('uploads/'~ app.user.avatar.url) }}" height="44" width="44">
-								{% else %}
-									<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-fill" viewbox="0 0 16 16">
-										<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-									</svg>
-								{% endif %}
+								{{ include('user/avatar_circle.html.twig', {'user' : app.user, 'noCircle' : true, 'size' : 44, 'iconSize': 32}) }}
 							</button>
 							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
 								{% if is_granted("ROLE_ADMIN") %}
