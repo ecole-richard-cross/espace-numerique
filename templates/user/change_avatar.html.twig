@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Changer d'avatar
+{% endblock %}
+
+{% block body %}
+	<h1>Changer d'avatar</h1>
+	<div class="profile-content">
+		<div class="profile-card">
+			{{form_start(form)}}
+			<legend class="form-section-title">Avatar</legend>
+			{{form_row(form.image)}}
+			<div class="w-100 d-flex justify-content-between mt-2">
+				{{ form_row(form.submit, { 'label': 'Confirmer'}) }}
+
+				<a href="{{path('app_user_profile')}}">Annuler</a>
+			</div>
+			{{form_end(form)}}
+		</div>
+	</div>
+{% endblock %}

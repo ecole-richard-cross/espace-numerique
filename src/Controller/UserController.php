@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Discussion;
+use App\Entity\Media;
 use App\Entity\SeminarConsultation;
+use App\Form\Type\AvatarType;
 use App\Form\Type\ProfileType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,5 +74,40 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/profile_edit.html.twig', ['form' => $form]);
+    }
+
+    #[Route('/profil/change-avatar', name: 'app_user_change_avatar')]
+    public function changeAvatar(Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        $avatar = new Media();
+        $form = $this->createForm(AvatarType::class, $avatar);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $previousAvatar = $user->getAvatar();
+            $previousAvatar && $previousAvatar->getUsesAmount() == 1 && $em->remove($previousAvatar);
+
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = sha1($originalFilename) . '.' . $imageFile->guessExtension();
+                $imageFile->move('uploads', $newFilename);
+
+                $avatar->setUrl($newFilename);
+                $avatar->setName('Avatar de ' . $user->__toString());
+                $avatar->setUploadedBy($user);
+
+                $em->persist($avatar);
+                $user->setAvatar($avatar);
+            } else {
+                $user->setAvatar(null);
+            }
+            $em->flush();
+
+            return $this->redirectToRoute('app_user_profile');
+        }
+
+        return $this->render('user/change_avatar.html.twig', ['form' => $form]);
     }
 }

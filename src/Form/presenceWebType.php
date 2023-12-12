@@ -5,7 +5,7 @@ namespace App\Form\Type;
 use App\Entity\PresenceWeb;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,7 +20,7 @@ class presenceWebType extends AbstractType
             'attr' => ['placeholder' => 'Type'],
             'row_attr' => ['class' => 'form-floating']
         ])
-         ->add('url', TextType::class, [
+         ->add('url', UrlType::class, [
             'label' => 'Url',
             'attr' => ['placeholder' => 'Url'],
             'row_attr' => ['class' => 'form-floating']
