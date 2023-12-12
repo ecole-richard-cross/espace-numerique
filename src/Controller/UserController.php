@@ -9,6 +9,7 @@ use App\Form\Type\AvatarType;
 use App\Form\Type\ProfileType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -77,7 +78,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/profil/change-avatar', name: 'app_user_change_avatar')]
-    public function changeAvatar(Request $request, EntityManagerInterface $em): Response
+    public function changeAvatar(Request $request, EntityManagerInterface $em, Filesystem $filesystem): Response
     {
         $user = $this->getUser();
         $avatar = new Media();
@@ -86,7 +87,10 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $previousAvatar = $user->getAvatar();
-            $previousAvatar && $previousAvatar->getUsesAmount() == 1 && $em->remove($previousAvatar);
+            if ($previousAvatar && $previousAvatar->getUsesAmount() == 1) {
+                $em->remove($previousAvatar);
+                $filesystem->remove('uploads/'.$previousAvatar->getUrl());
+            }
 
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
