@@ -35,32 +35,41 @@
 
             {% endfor %}
         </div>
-        <div class="col-sm-12 col-md-9 col-lg-6">
-            <div class="mb-5">
-                <h2 class="m-3 text-center">Mes questions</h2>
-                {% for question in userQs %}
-                    {{ include('discussion/preview.html.twig', {question:question, content: true}) }}
-                {% else %}
-                    <div class="card px-4 py-3 d-grid place-content-center">
-                        <p class="text-center legend mb-0">Aucune question posée.</p>
-                        <p class="text-center m-3"><a class="btn btn-outline-primary" href="#">Aller à l'espace discussion</a></p>
-                    </div>
-                {% endfor %}
-            </div>
-            <div>
-                <h2 class="m-3 text-center">Discussions récentes</h2>
-                {% for question in last3 %}
-                    {% set ressourceLink = '#' %}
-                    {% set lastComment = question.comments|sort((a,b) => a.createdAt - b.createdAt)|last %}
-                    {{ include('discussion/preview.html.twig', {lastComment:lastComment, content:false}) }}
-                {% else %}
-                    <div class="card px-4 py-3 d-grid place-content-center">
-                        <p class="text-center legend mb-0">Aucune question posée.</p>
-                        <p class="text-center m-3"><a class="btn btn-outline-primary" href="#">Aller à l'espace discussion</a></p>
-                    </div>
+        
+        {%- if is_granted('ROLE_STAGIAIRE') or
+        is_granted('ROLE_EX_STAGIAIRE') or 
+        is_granted('ROLE_FORMATEUR_EXT') or 
+        is_granted('ROLE_FORMATEUR_ERC') or 
+        is_granted('ROLE_ADMIN') -%}
 
-                {% endfor %}
+            <div class="col-sm-12 col-md-9 col-lg-6">
+                <div class="mb-5">
+                    <h2 class="m-3 text-center">Mes questions</h2>
+                    {% for question in userQs %}
+                        {{ include('discussion/preview.html.twig', {question:question, content: true}) }}
+                    {% else %}
+                        <div class="card px-4 py-3 d-grid place-content-center">
+                            <p class="text-center legend mb-0">Aucune question posée.</p>
+                            <p class="text-center m-3"><a class="btn btn-outline-primary" href="{{path('app_discussion')}}">Aller à l'espace discussion</a></p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    <h2 class="m-3 text-center">Discussions récentes</h2>
+                    {%- for question in last3 -%}
+                        {% set ressourceLink = '#' %}
+                        {% set lastComment = question.comments|sort((a,b) => a.createdAt|date('U') - b.createdAt|date('U'))|last %}
+                        {{ include('discussion/preview.html.twig', {lastComment:lastComment, content:false}) }}
+                    {% else %}
+                        <div class="card px-4 py-3 d-grid place-content-center">
+                            <p class="text-center legend mb-0">Aucune question récente.</p>
+                            <p class="text-center m-3"><a class="btn btn-outline-primary" href="{{path('app_discussion')}}">Aller à l'espace discussion</a></p>
+                        </div>
+
+                    {%- endfor -%}
+                </div>
             </div>
-        </div>
+
+        {%- endif -%}
     </div>
 {% endblock %}

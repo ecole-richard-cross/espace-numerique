@@ -13,14 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SeminarController extends AbstractController
 {
-    public function GetAllSeminars(EntityManagerInterface $em): Response
-    {
-        $seminars = $em->getRepository(Seminar::class)->findAll();
-        return $this->render('seminar/_menu_all_seminars.html.twig', [
-            'seminars' => $seminars
-        ]);
-    }
-
     #[Route('/lire-un-seminaire/{id}/{chapterId}/{sectionId}', name: 'app_seminar_read_toSection')]
     public function section(Seminar $seminar, int $chapterId, int $sectionId, EntityManagerInterface $entityManager): Response
     {

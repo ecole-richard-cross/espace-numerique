@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class CommentType extends AbstractType
 {
@@ -22,7 +23,12 @@ class CommentType extends AbstractType
                 'label' => "Répondre",
                 'input_id' => 'comment_content'
             ])
-            ->add('replyingTo', EntityType::class, ['class' => Comment::class, 'row_attr' => ['class' => 'd-none']])
+            ->add('replyingTo', EntityType::class, [
+                'class' => Comment::class,
+                'row_attr' => ['class' => 'd-none'],
+                'required' => false,
+                'placeholder' => ''
+            ])
             ->add('submit', SubmitType::class, ['label' => 'Envoyer']);
     }
 

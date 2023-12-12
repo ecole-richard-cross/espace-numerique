@@ -1,4 +1,4 @@
-{% if not lastRead.isFinished %}
+{% if not lastRead.isFinished ?? true %}
     
     {% set lastChap = lastRead.finishedChapters|sort|last %}
     {% if lastChap is same as(false) %}

@@ -24,12 +24,12 @@ class SeminarRepository extends ServiceEntityRepository
     public function findPublishedByRoles(array $roles)
     {
         $seminars = $this->findBy(['isPublished' => true]);
-        $allowedSeminars = array_map(function ($seminar) use ($roles) {
+        $allowedSeminars = array_filter($seminars, function ($seminar) use ($roles) {
             $inter = array_intersect($seminar->getRoles(), $roles);
             if (empty($inter))
-                return;
-            return $seminar;
-        }, $seminars);
+                return false;
+            return true;
+        });
         return $allowedSeminars;
     }
     //    /**
