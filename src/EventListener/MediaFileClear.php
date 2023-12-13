@@ -19,10 +19,6 @@ class MediaFileClear
         $this->projectDir = $projectDir;
     }
 
-    public function postUpdate(Media $media): void
-    {
-        $this->delete($media);
-    }
     public function postRemove(Media $media): void
     {
         $this->delete($media);
