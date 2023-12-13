@@ -11,6 +11,7 @@
     {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+    {{ encore_entry_script_tags('trix_toolbar_handler') }}
 {% endblock %}
 
 {% block body %}

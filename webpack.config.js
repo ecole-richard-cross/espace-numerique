@@ -26,6 +26,7 @@ Encore
     .addEntry('profile-error-feedback', './assets/scripts/profile-error-feedback.js')
     .addEntry('new_avatar_preview', './assets/scripts/new_avatar_preview.js')
 
+    .addEntry('trix_toolbar_handler', './assets/scripts/trix_toolbar_handler.js')
     .addEntry('comment_reply', './assets/scripts/comment_reply.js')
     .addStyleEntry('new_discussion_form', './assets/styles/new_discussion_form.scss')
 

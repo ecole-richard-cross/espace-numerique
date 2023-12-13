@@ -17,3 +17,35 @@
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .profile-content {
+
+        .presenceWebs .list-group-item>fieldset>div,
+        .lieuxActivite .list-group-item>fieldset>div {
+            flex-direction: column;
+        }
+    }
+
+    form[name="avatar"] {
+        width: 50vw;
+    }
+
+    .profile-content {
+        .wrapper {
+            flex-wrap: wrap;
+        }
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .profile-content {
+        .wrapper :nth-child(2) {
+            flex-wrap: wrap;
+        }
+    }
+
+    form[name="avatar"] {
+        width: auto;
+    }
+}
