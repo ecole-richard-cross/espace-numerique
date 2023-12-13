@@ -18,13 +18,13 @@ class AvatarType extends AbstractType
       $builder
          ->add('image', FileType::class, [
             'label' => false,
-            'help'=> 'La taille maximale de l\'image est de 3000k.',
+            'help'=> 'La taille maximale de l\'image est de 3MB.',
             'mapped' => false,
             'required'=> false,
             'constraints' => [
                new Image([
                   'maxSize' => '3000k',
-                  'maxSizeMessage' => 'Le fichier est trop large ({{ size }} {{ suffix }}). Taille maximale {{ limit }} {{ suffix }}.',
+                  'maxSizeMessage' => 'Le fichier est trop large ({{ size }} {{ suffix }}). Taille maximale {{ limit }}{{ suffix }}.',
                   'mimeTypesMessage' => 'Ce fichier n\'est pas une image.',
                ])
             ],
