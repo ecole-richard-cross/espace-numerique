@@ -4,7 +4,7 @@
 
 {% block body %}
 <h1>Espace apprenant</h1>
-    <div style="width: fit-content" class="mx-auto my-5 d-flex flex-wrap shadow rounded-3 px-3 py-2 justify-content-center align-items-center">
+    <div style="width: fit-content" class="mx-auto mb-5 mt-1 d-flex flex-wrap shadow rounded-3 px-3 py-2 justify-content-center align-items-center">
         {{ include('user/avatar_circle.html.twig', {'size': '128','user' : app.user, 'classes':'m-3'}) }}
         <div>
             <h2>{{app.user}}</h2>

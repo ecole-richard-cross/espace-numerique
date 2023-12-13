@@ -21,8 +21,10 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/scripts/app.js')
+
     .addEntry('symfony-collection', './assets/scripts/symfony-collection.js')
     .addEntry('profile-error-feedback', './assets/scripts/profile-error-feedback.js')
+    .addEntry('new_avatar_preview', './assets/scripts/new_avatar_preview.js')
 
     .addEntry('comment_reply', './assets/scripts/comment_reply.js')
     .addStyleEntry('new_discussion_form', './assets/styles/new_discussion_form.scss')
