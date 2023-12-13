@@ -249,6 +249,7 @@ legend,
 
 //profile specific
 .profile-content {
+	min-width: 40vw;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 2rem;
@@ -355,7 +356,7 @@ form[name="avatar"] {
 	width: 30vw;
 }
 
-@media screen and (max-width: 758px) {
+@media screen and (max-width: 768px) {
 	.profile-content {
 		.presenceWebs .list-group-item > fieldset > div,
 		.lieuxActivite .list-group-item > fieldset > div {
@@ -365,15 +366,13 @@ form[name="avatar"] {
 	form[name="avatar"] {
 		width: 50vw;
 	}
-}
-@media screen and (max-width: 675px) {
 	.profile-content {
 		.wrapper {
 			flex-wrap: wrap;
 		}
 	}
 }
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 550px) {
 	.profile-content {
 		.wrapper :nth-child(2) {
 			flex-wrap: wrap;
