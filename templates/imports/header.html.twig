@@ -37,6 +37,8 @@
 
 								{%- endif -%}
 							</ul>
+							{# Search feature won't be shipped in v1, this form can serve as template
+							
 							<form class="d-flex order-2 order-md-3 ms-md-auto">
 								<input class="form-control form-control-sm ps-3 pe5" type="search" placeholder="Rechercher... " aria-label="Search">
 								<button class="btn ms-n5" type="submit" aria-label="Search Button">
@@ -45,6 +47,7 @@
 									</svg>
 								</button>
 							</form>
+							#}
 						</div>
 					</div>
 				{% endif %}
@@ -71,8 +74,10 @@
 								<li>
 									<a class="dropdown-item" href="{{path('app_user_profile')}}">Mon profil</a>
 								</li>
-								<!-- Renders "Reprendre ma lecture" if applicable -->
-								{# {{render(controller('App\\Controller\\UserController::getLastReadLink'))}}  #}
+
+								{# Renders "Reprendre ma lecture" if applicable #}
+								{{render(controller('App\\Controller\\UserController::getLastReadLink'))}}
+
 								<li><hr class="dropdown-divider"></li>
 								<li>
 									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
