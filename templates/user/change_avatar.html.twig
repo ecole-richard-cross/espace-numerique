@@ -21,10 +21,9 @@
 			{{form_start(form)}}
 			<legend class="form-section-title">Avatar</legend>
 			{{form_row(form.image)}}
-			<div class="w-100 d-flex justify-content-between mt-2">
+			<div class="w-100 d-flex justify-content-end  align-items-center gap-4 mt-2">
+				<a class="mb-3" href="{{path('app_user_profile')}}">Annuler</a>
 				{{ form_row(form.submit) }}
-
-				<a href="{{path('app_user_profile')}}">Annuler</a>
 			</div>
 			{{form_end(form)}}
 		</div>

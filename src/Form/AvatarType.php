@@ -18,6 +18,7 @@ class AvatarType extends AbstractType
       $builder
          ->add('image', FileType::class, [
             'label' => false,
+            'help'=> 'La taille maximale de l\'image est de 3000k.',
             'mapped' => false,
             'required'=> false,
             'constraints' => [
