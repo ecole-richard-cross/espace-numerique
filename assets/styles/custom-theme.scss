@@ -317,6 +317,9 @@ legend,
 		font-size: 1.5rem;
 		font-weight: 700;
 	}
+	&-a {
+		background-image: radial-gradient(circle, rgba(34,46,80,1) 32%, rgba(255,249,237,1) 67%, rgba(206,181,167,1) 75%, rgba(34,46,80,1) 89%);
+	}
 	&-f {
 		background-image: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(148, 135, 129, 1) 64%, rgba(34, 46, 80, 1) 100%);
 	}
