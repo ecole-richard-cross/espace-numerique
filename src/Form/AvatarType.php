@@ -21,6 +21,7 @@ class AvatarType extends AbstractType
             'help'=> 'La taille maximale de l\'image est de 3MB.',
             'mapped' => false,
             'required'=> false,
+            'attr' => ['accept' => 'image/*'],
             'constraints' => [
                new Image([
                   'maxSize' => '3000k',

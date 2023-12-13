@@ -1,5 +1,5 @@
 {% set consult = seminar.consultByUser(app.user) %}
-{% set percentDone = (consult.finishedChapters|length / seminar.chapters|length * 100)|round %}
+{% set percentDone = (consult.finishedChapters|default({})|length / seminar.chapters|length * 100)|round %}
 
 {% if percentDone == 0 %}
     {% set semLink = path('app_seminar_intro',{id:seminar.id}) %}
@@ -7,7 +7,7 @@
     {% set semLink = path('app_seminar_read',{id:seminar.id, chapterId: consult.finishedChapters|sort|last + 1}) %}
 {% endif %}
 
-{% if consult.isFinished == false %}
+{% if consult.isFinished|default(false) == false %}
     
     <li class="px-0 list-group-item d-flex justify-content-between align-items-center gap-1" data-seminar-tags="{{seminar.tags|join(',')}}">
         <div style="min-width: 60%;" class="h6 m-0 d-flex flex-column justify-content-center align-items-start">
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        {% if consult.finishedChapters|length > 0 %}
+        {% if consult.finishedChapters|default({})|length > 0 %}
             <div class="w-100 text-success d-flex flex-column align-items-center justify-content-center small">
                 {{consult.finishedChapters|length}} sur {{seminar.chapters|length}} chap. lu{{consult.finishedChapters|length > 1 ?? "s"}}
                 {{ include('seminar/progressBar.html.twig', {percentDone:percentDone}) }}
@@ -37,7 +37,7 @@
                 Aucun chapitre lu
             </div>
         {% endif %}
-        <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult.lastConsultedAt|date('d/m/Y à H:i','Europe/Paris')}}</div>
+        <div class="w-100 d-flex align-items-center justify-content-center small text-secondary no-mobile">{{consult ? consult.lastConsultedAt|date('d/m/Y à H:i','Europe/Paris') : "-"}}</div>
     </li>
 
 {% else %}
