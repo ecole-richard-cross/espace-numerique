@@ -4,7 +4,6 @@
 {% endblock %}
 
 {% block body %}
-	{% set infoPers = [app.user, app.user.dateNaissance, app.user.adressePostale, app.user.phoneNumber]|filter(el => el != null) %}
 	{% set infoPro = [app.user.nomStructure, app.user.lieuxActivite|length > 0 ? app.user.lieuxActivite : null]|filter(el => el != null) %}
 
 	<div class="d-flex gap-3 align-self-center">
@@ -55,9 +54,7 @@
 						{% if app.user.stagiaire is not empty %}
 							{{app.user.stagiaire.promotion|length > 1 ? "<div class='d-flex'>" : ""}}
 							{% for promotion in app.user.stagiaire.promotion%}
-								<div class="d-flex flex-column align-items-center
-																																																																																							{{promotion == app.user.stagiaire.promotion|first ? " pe-2" : (promotion == app.user.stagiaire.promotion|last ? 'ps-2' : 'p-2')}}
-																																																																																							{{app.user.stagiaire.promotion|length > 1 and promotion != app.user.stagiaire.promotion|last ? " border-end"}}">
+								<div class="d-flex flex-column align-items-center {{promotion == app.user.stagiaire.promotion|first ? " pe-2" : (promotion == app.user.stagiaire.promotion|last ? 'ps-2' : 'p-2')}}{{app.user.stagiaire.promotion|length > 1 and promotion != app.user.stagiaire.promotion|last ? " border-end"}}">
 									<div class="text-center">{{promotion.centreFormation }}</div>
 									<div class="strong">{{promotion.startDate|date('Y') }}</div>
 								</div>
@@ -85,10 +82,27 @@
 						</button>
 					</h2>
 					<div id="infoGen" class="accordion-collapse collapse" aria-labelledby="general">
-						<div class="accordion-body">
-							{% for info in infoPers%}
-								<p>{{ info.timestamp is defined ? info|date("m/d/Y") : info }}</p>
-							{% endfor %}
+						<div class="accordion-body gap-1">
+							<div class="d-flex gap-3 align-items-center">
+								<i class="fa fa-id-badge"></i>
+								<p>{{app.user}}</p>
+							</div>
+							{% if app.user.dateNaissance %}
+								<div class="d-flex gap-3 align-items-center">
+									<i class="fa fa-birthday-cake"></i>
+									<p>{{app.user.dateNaissance|date("m/d/Y")}}</p>
+								</div>
+							{% endif %}
+							<div class="d-flex gap-3 align-items-center">
+								<i class="fa fa-map-marker"></i>
+								<p>{{app.user.adressePostale}}</p>
+							</div>
+							{% if app.user.phoneNumber %}
+								<div class="d-flex gap-3 align-items-center">
+									<i class="fa fa-phone"></i>
+									<p>{{app.user.phoneNumber}}</p>
+								</div>
+							{% endif %}
 						</div>
 					</div>
 				</div>
@@ -104,7 +118,7 @@
 								</button>
 							</h2>
 							<div id="infoPro" class="accordion-collapse collapse" aria-labelledby="professionnel">
-								<div class="accordion-body">
+								<div class="accordion-body gap-1">
 									{% for info in infoPro%}
 										{% if info is iterable %}
 											{% for sub in info%}
@@ -130,7 +144,7 @@
 								</button>
 							</h2>
 							<div id="formation" class="accordion-collapse collapse" aria-labelledby="formation">
-								<div class="accordion-body">
+								<div class="accordion-body gap-1">
 									{% if stagiaireInfo is not empty %}
 										{% for info in stagiaireInfo%}
 											{% if info is iterable %}
@@ -162,9 +176,12 @@
 								<div class="accordion-body">
 									{% for reseau in app.user.presenceWebs%}
 										{% if reseau is not empty %}
-											<p>
-												<a href="{{reseau.url}}">{{reseau.url}}</a>
-											</p>
+											<div class="d-flex gap-3 align-items-center">
+												<i class="fa{{'facebook' in reseau.url ? '-brands fa-facebook' : ('twitter' in reseau.url ? '-brands fa-twitter' : ('linkedin' in reseau.url ? '-brands fa-linkedin' : ('instagram' in reseau.url ? '-brands fa-instagram' : ('youtube' in reseau.url ? '-brands fa-youtube' : ('tiktok' in reseau.url ? '-brands fa-tiktok' : ' fa-link' ) ) ))) }}"></i>
+												<p>
+													<a href="{{reseau.url}}">{{reseau.url}}</a>
+												</p>
+											</div>
 										{% endif %}
 									{% endfor %}
 								</div>
