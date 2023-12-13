@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/espace-discussion')]
 class DiscussionController extends AbstractController
 {
     #[Route('/nouvelle-discussion', name: 'app_discussion_new')]
@@ -71,7 +72,7 @@ class DiscussionController extends AbstractController
         return $this->render('discussion/new.html.twig', ['form' => $form]);
     }
 
-    #[Route('/lire-une-discussion/{id}', name: 'app_discussion_read')]
+    #[Route('/lire/{id}', name: 'app_discussion_read')]
     public function readOne(Discussion $discussion, EntityManagerInterface $em, Request $request): Response
     {
         $comment = new Comment();
@@ -95,7 +96,7 @@ class DiscussionController extends AbstractController
         ]);
     }
 
-    #[Route('/espace-discussion', name: 'app_discussion')]
+    #[Route('', name: 'app_discussion')]
     public function index(EntityManagerInterface $em, Request $req): Response
     {
         $discussions = $em->getRepository(Discussion::class)->findAll();

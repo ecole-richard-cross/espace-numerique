@@ -11,9 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/espace-seminaire')]
 class SeminarController extends AbstractController
 {
-    #[Route('/lire-un-seminaire/{id}/{chapterId}/{sectionId}', name: 'app_seminar_read_toSection')]
+    #[Route('/lire/{id}/{chapterId}/{sectionId}', name: 'app_seminar_read_toSection')]
     public function section(Seminar $seminar, int $chapterId, int $sectionId, EntityManagerInterface $entityManager): Response
     {
         if (!$seminar->isIsPublished()) {
@@ -40,7 +41,7 @@ class SeminarController extends AbstractController
         ]);
     }
 
-    #[Route('/lire-un-seminaire/{id}/{chapterId}', name: 'app_seminar_read')]
+    #[Route('/lire/{id}/{chapterId}', name: 'app_seminar_read')]
     public function chapter(Seminar $seminar, int $chapterId, EntityManagerInterface $entityManager): Response
     {
         if (!$seminar->isIsPublished()) {
@@ -65,7 +66,7 @@ class SeminarController extends AbstractController
         ]);
     }
 
-    #[Route('/lire-un-seminaire/{id}', name: 'app_seminar_intro')]
+    #[Route('/lire/{id}', name: 'app_seminar_intro')]
     public function read(Seminar $seminar, EntityManagerInterface $entityManager): Response
     {
         if (!$seminar->isIsPublished()) {
@@ -95,7 +96,7 @@ class SeminarController extends AbstractController
         ]);
     }
 
-    #[Route('/seminaire-lu/{id}', 'app_seminar_mark')]
+    #[Route('/lu/{id}', 'app_seminar_mark')]
     public function userHasRead(Seminar $seminar, EntityManagerInterface $entityManager, Request $req): Response
     {
         $chapterId = $req->query->get('chapterId');
@@ -131,7 +132,7 @@ class SeminarController extends AbstractController
         return $this->redirectToRoute('app_seminars_index');
     }
 
-    #[Route('/seminaire-reinitialiser/{id}', 'app_seminar_reset')]
+    #[Route('/reinitialiser/{id}', 'app_seminar_reset')]
     public function resetProgression(Seminar $seminar, EntityManagerInterface $em): Response
     {
         $c = $seminar
@@ -148,7 +149,7 @@ class SeminarController extends AbstractController
         return $this->redirectToRoute('app_seminar_intro', ['id' => $seminar->getId()]);
     }
 
-    #[Route('/liste-des-seminaires', name: 'app_seminars_index')]
+    #[Route('/liste', name: 'app_seminars_index')]
     public function index(EntityManagerInterface $em): Response
     {
         $user = $this->getUser();

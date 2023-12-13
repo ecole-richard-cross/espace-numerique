@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/espace-apprenant')]
 class UserController extends AbstractController
 {
     public function getLastReadLink(): Response
@@ -35,7 +36,7 @@ class UserController extends AbstractController
         return $this->render('user/lastReadLink.html.twig', ['lastRead' => $result]);;
     }
 
-    #[Route('/espace-apprenant', name: 'app_user_dashboard')]
+    #[Route('', name: 'app_user_dashboard')]
     public function index(EntityManagerInterface $em): Response
     {
         $currentReads = $em->getRepository(SeminarConsultation::class)->findBy(['user' => $this->getUser(), 'isFinished' => false]);
