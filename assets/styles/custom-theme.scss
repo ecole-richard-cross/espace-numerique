@@ -31,13 +31,16 @@ header {
 		font-size: 1.25rem;
 		font-weight: 500;
 	}
+
 	.dropdown-item:hover {
 		background-color: var(--bs-primary-bg-subtle);
 	}
+
 	.navbar-toggler {
 		border: none;
 		padding: 0;
 		margin-right: 1.2rem;
+
 		&::after,
 		&:focus,
 		&-icon:focus,
@@ -45,14 +48,17 @@ header {
 			outline: none;
 			box-shadow: none;
 		}
+
 		&:hover,
 		&:focus:hover {
 			color: var(--bs-primary-bg-subtle);
 		}
+
 		&:focus {
 			color: var(--bs-primary);
 		}
 	}
+
 	.log-action {
 		font-size: 1rem;
 		font-style: italic;
@@ -177,7 +183,7 @@ legend,
 .seminar-content {
 	max-width: 800px;
 
-	input:checked ~ div {
+	input:checked~div {
 		overflow: hidden;
 		position: absolute;
 		z-index: 2;
@@ -255,43 +261,51 @@ legend,
 	gap: 2rem;
 	align-self: center;
 	justify-content: center;
+
 	.highlight {
 		margin: 0;
 		font-weight: 600;
 		font-size: 1.2rem;
 	}
+
 	.wrapper:first-child {
 		box-sizing: border-box;
 		display: flex;
 		gap: 2rem;
 	}
+
 	.form-section-title {
 		font-size: 1.25rem;
 		color: var(--bs-primary);
 		margin-bottom: 1rem;
 	}
 
-	.presenceWebs .list-group-item > fieldset > div,
-	.lieuxActivite .list-group-item > fieldset > div {
+	.presenceWebs .list-group-item>fieldset>div,
+	.lieuxActivite .list-group-item>fieldset>div {
 		display: flex;
 		gap: 0.5rem;
 	}
-	.presenceWebs .list-group-item > fieldset {
+
+	.presenceWebs .list-group-item>fieldset {
 		display: flex;
 		flex: auto;
 	}
-	.presenceWebs .list-group-item > fieldset > div {
+
+	.presenceWebs .list-group-item>fieldset>div {
 		display: flex;
 		width: 100%;
 		flex: auto;
+
 		:first-child {
 			flex: 1;
 		}
+
 		:last-child {
 			flex: 2;
 		}
 	}
 }
+
 .profile-card {
 	border-radius: $radius;
 	border: 1px solid var(--bs-primary-bg-subtle);
@@ -299,86 +313,69 @@ legend,
 	flex-direction: column;
 	padding: 1rem;
 	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+
 	&.accordion {
 		padding: 0;
+
 		h2 button {
 			background-color: inherit;
 		}
+
 		p {
 			margin: 0;
 		}
 	}
 }
+
 .status-badge {
 	justify-content: center;
 	align-items: center;
 	background-color: $beige-dark;
 	color: white;
+
 	.status {
 		font-size: 1.5rem;
 		font-weight: 700;
 	}
+
 	&-a {
-		background-image: radial-gradient(
-			circle,
-			rgba(34, 46, 80, 1) 32%,
-			rgba(255, 249, 237, 1) 67%,
-			rgba(206, 181, 167, 1) 75%,
-			rgba(34, 46, 80, 1) 89%
-		);
+		background-image: radial-gradient(circle,
+				rgba(34, 46, 80, 1) 32%,
+				rgba(255, 249, 237, 1) 67%,
+				rgba(206, 181, 167, 1) 75%,
+				rgba(34, 46, 80, 1) 89%);
 	}
+
 	&-f {
 		background-image: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(148, 135, 129, 1) 64%, rgba(34, 46, 80, 1) 100%);
 	}
+
 	&-s {
-		background-image: linear-gradient(
-			90deg,
-			rgba(184, 105, 199, 1) 15%,
-			rgba(145, 0, 178, 1) 66%,
-			rgba(175, 82, 194, 1) 100%
-		);
+		background-image: linear-gradient(90deg,
+				rgba(184, 105, 199, 1) 15%,
+				rgba(145, 0, 178, 1) 66%,
+				rgba(175, 82, 194, 1) 100%);
 	}
+
 	&-i {
-		background-image: radial-gradient(
-			circle,
-			rgba(145, 0, 178, 1) 32%,
-			rgba(255, 249, 237, 1) 58%,
-			rgba(145, 0, 178, 1) 80%
-		);
+		background-image: radial-gradient(circle,
+				rgba(145, 0, 178, 1) 32%,
+				rgba(255, 249, 237, 1) 58%,
+				rgba(145, 0, 178, 1) 80%);
 	}
 }
+
 .small-cta {
 	font-size: 0.85rem;
 	align-self: flex-end;
 	margin-top: auto;
 }
+
 form[name="avatar"] {
 	width: 30vw;
 }
 
-@media screen and (max-width: 768px) {
-	.profile-content {
-		.presenceWebs .list-group-item > fieldset > div,
-		.lieuxActivite .list-group-item > fieldset > div {
-			flex-direction: column;
-		}
-	}
-	form[name="avatar"] {
-		width: 50vw;
-	}
-	.profile-content {
-		.wrapper {
-			flex-wrap: wrap;
-		}
-	}
-}
-@media screen and (max-width: 550px) {
-	.profile-content {
-		.wrapper :nth-child(2) {
-			flex-wrap: wrap;
-		}
-	}
-	form[name="avatar"] {
-		width: auto;
-	}
+// Trix fix
+.trix-button-group--file-tools {
+	display: none !important;
 }
