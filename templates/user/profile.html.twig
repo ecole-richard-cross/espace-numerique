@@ -4,8 +4,6 @@
 {% endblock %}
 
 {% block body %}
-	{% set infoPro = [app.user.nomStructure, app.user.lieuxActivite|length > 0 ? app.user.lieuxActivite : null]|filter(el => el != null) %}
-
 	<div class="d-flex gap-3 align-self-center">
 		<h1>Mon Profil</h1>
 		<div class=" align-self-end mb-5">
@@ -108,7 +106,7 @@
 				</div>
 			</div>
 
-			{% if infoPro is not empty %}
+			{% if app.user.nomStructure or app.user.lieuxActivite is not empty %}
 				<div class="d-flex flex-column gap-2 flex-grow-1">
 					<div class="profile-card accordion">
 						<div class="accordion-item">
@@ -119,15 +117,20 @@
 							</h2>
 							<div id="infoPro" class="accordion-collapse collapse" aria-labelledby="professionnel">
 								<div class="accordion-body gap-1">
-									{% for info in infoPro%}
-										{% if info is iterable %}
-											{% for sub in info%}
-												<p>{{sub}}</p>
-											{% endfor %}
-										{% else %}
-											<p>{{info}}</p>
-										{% endif %}
-									{% endfor %}
+									{% if app.user.nomStructure %}
+										<div class="d-flex gap-3 align-items-center">
+											<i class="fa fa-briefcase"></i>
+											<p>{{app.user.nomStructure}}</p>
+										</div>
+									{% endif %}
+									{% if app.user.lieuxActivite|length > 0 %}
+										{% for lieuActivite in app.user.lieuxActivite %}
+											<div class="d-flex gap-3 align-items-center">
+												<i class="fa fa-map-marker"></i>
+												<p>{{lieuActivite}}</p>
+											</div>
+										{% endfor %}
+									{% endif %}
 								</div>
 							</div>
 						</div>
@@ -135,7 +138,6 @@
 				{% endif %}
 
 				{% if (is_granted("ROLE_STAGIAIRE") or is_granted("ROLE_EX_STAGIAIRE")) and app.user.stagiaire is not empty %}
-					{% set stagiaireInfo = [app.user.stagiaire.idDossierCpf, app.user.stagiaire.identifiantsFinanceurs]|filter(el => el != null) %}
 					<div class="profile-card accordion flex-grow-1">
 						<div class="accordion-item">
 							<h2 class="accordion-header" id="formationT">
@@ -145,16 +147,26 @@
 							</h2>
 							<div id="formation" class="accordion-collapse collapse" aria-labelledby="formation">
 								<div class="accordion-body gap-1">
-									{% if stagiaireInfo is not empty %}
-										{% for info in stagiaireInfo%}
-											{% if info is iterable %}
-												{% for sub in info%}
-													<p>{{sub}}</p>
-												{% endfor %}
-											{% else %}
-												<p>{{info}}</p>
-											{% endif %}
-										{% endfor %}
+									{% if app.user.stagiaire.idDossierCpf or app.user.stagiaire.identifiantsFinanceurs %}
+										{% if app.user.stagiaire.idDossierCpf %}
+											<div class="d-flex gap-2 align-items-center">
+												<i class="fa fa-bank"></i>
+												<p>
+													<span class="strong me-1">CPF :
+													</span>
+													{{app.user.stagiaire.idDossierCpf}}</p>
+											</div>
+										{% endif %}
+										{% if app.user.stagiaire.identifiantsFinanceurs %}
+											<div class="d-flex gap-2 align-items-center">
+												<i class="fa fa-bank"></i>
+												<p>
+													<span class="strong me-1">Autres identifiants financeurs :
+													</span>
+													{{app.user.stagiaire.identifiantsFinanceurs}}</p>
+											</div>
+										{% endif %}
+										
 									{% else %}
 										<p>Aucun identifiants financeurs déclarés</p>
 									{% endif %}
@@ -177,7 +189,7 @@
 									{% for reseau in app.user.presenceWebs%}
 										{% if reseau is not empty %}
 											<div class="d-flex gap-3 align-items-center">
-												<i class="fa{{'facebook' in reseau.url ? '-brands fa-facebook' : ('twitter' in reseau.url ? '-brands fa-twitter' : ('linkedin' in reseau.url ? '-brands fa-linkedin' : ('instagram' in reseau.url ? '-brands fa-instagram' : ('youtube' in reseau.url ? '-brands fa-youtube' : ('tiktok' in reseau.url ? '-brands fa-tiktok' : ' fa-link' ) ) ))) }}"></i>
+												<i class="fa{{'facebook' in reseau.url ? 'b fa-facebook' : ('twitter' in reseau.url ? 'b fa-twitter' : ('linkedin' in reseau.url ? 'b fa-linkedin' : ('instagram' in reseau.url ? 'b fa-instagram' : ('youtube' in reseau.url ? 'b fa-youtube' : ('tiktok' in reseau.url ? 'b fa-tiktok' : ' fa-link' ) ) ))) }}"></i>
 												<p>
 													<a href="{{reseau.url}}">{{reseau.url}}</a>
 												</p>
