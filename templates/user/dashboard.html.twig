@@ -1,75 +1,92 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Espace apprenant | {{ parent() }} {% endblock %}
+{% block title %}Espace apprenant |
+	{{ parent() }}
+{% endblock %}
 
 {% block body %}
-<h1>Espace apprenant</h1>
-    <div style="width: fit-content" class="mx-auto mb-5 mt-1 d-flex flex-wrap shadow rounded-3 px-3 py-2 justify-content-center align-items-center">
-        {{ include('user/avatar_circle.html.twig', {'size': '128','user' : app.user, 'classes':'m-3'}) }}
-        <div>
-            <h2>{{app.user}}</h2>
-            <p>{{app.user.stagiaire ? "Promo " ~ app.user.stagiaire.promotion|last : "Utilisateur non-stagiaire"}}</p>
-            <p class="smaller legend m-0"><a href="{{path('app_user_profile')}}">Modifier mes informations</a></p>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-9 col-lg-6 mb-4">
-            <h2 class="m-3 text-center">Mes lectures en cours</h2>
-            {% for read in currentReads %}
-                {% set semLink = path('app_seminar_read',{id:read.seminar.id, chapterId: read.finishedChapters|default|sort|last + 1}) %}
-                <div class="card px-4 py-3">
-                    <div class="d-flex gap-4 justify-content-between align-items-center mb-2">
-                        <h3 class="m-0"><a href="{{semLink}}">{{read.seminar}}</a></h3>
-                        <p class="m-0 small text-center no-mobile" style="max-width: 35%">Dernière lecture le {{read.lastConsultedAt|date('d/m/Y à H:i','Europe/Paris')}}</p>
-                    </div>
-                    <div class="w-100 text-success fst-italic small d-flex flex-column align-items-center justify-content-center">
-                        {{ read.finishedChapters|length }} / {{ read.seminar.chapters|length }} chapitres lus
-                        {{ include('seminar/progressBar.html.twig', {percentDone:(read.finishedChapters|length / read.seminar.chapters|length * 100)|round }) }}
-                    </div>
-                </div>
-            {% else %}
-                <div class="card px-4 py-3 d-grid place-content-center">
-                    <p class="text-center legend mb-0">Aucune lecture démarrée.</p>
-                    <p class="text-center m-3"><a class="btn btn-outline-primary" href="{{path('app_seminars_index')}}">Voir la liste des séminaires</a></p>
-                </div>
+	<h1>Espace apprenant</h1>
+	<div style="width: fit-content" class="mx-auto mb-5 mt-1 d-flex flex-wrap shadow rounded-3 px-3 py-2 justify-content-center align-items-center">
+		{{ include('user/avatar_circle.html.twig', {'size': '128','user' : app.user, 'classes':'m-3'}) }}
+		<div class="d-flex flex-column align-items-center align-items-sm-start">
+			<h2>{{app.user}}</h2>
+			<p>{{app.user.stagiaire ? "Promo " ~ app.user.stagiaire.promotion|last : "Utilisateur non-stagiaire"}}</p>
+			<p class="smaller legend m-0 text-center">
+				<a href="{{path('app_user_profile')}}">Modifier mes informations</a>
+			</p>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-sm-12 col-md-9 col-lg-6 mb-4">
+			<h2 class="m-3 text-center">Mes lectures en cours</h2>
+			{% for read in currentReads %}
+				{% set semLink = path('app_seminar_read',{id:read.seminar.id, chapterId: read.finishedChapters|default|sort|last + 1}) %}
+				<div class="card px-4 py-3">
+					<div class="d-flex justify-content-between align-items-center">
+						<h3 class="m-0">
+							<a href="{{semLink}}">{{read.seminar}}</a>
+						</h3>
 
-            {% endfor %}
-        </div>
-        
-        {%- if is_granted('ROLE_STAGIAIRE') or
+						<div class="w-100 text-success fst-italic small d-flex flex-column align-items-center justify-content-center">
+							{{ read.finishedChapters|length }}
+							/
+							{{ read.seminar.chapters|length }}
+							chapitres lus
+							{{ include('seminar/progressBar.html.twig', {percentDone:(read.finishedChapters|length / read.seminar.chapters|length * 100)|round }) }}
+						</div>
+						<p class="m-0 small text-center no-mobile" style="max-width: 35%">Dernière lecture le
+							{{read.lastConsultedAt|date('d/m/Y à H:i','Europe/Paris')}}</p>
+					</div>
+				</div>
+			{% else %}
+				<div class="card px-4 py-3 d-grid place-content-center">
+					<p class="text-center legend mb-0">Aucune lecture démarrée.</p>
+					<p class="text-center m-3">
+						<a class="btn btn-outline-primary" href="{{path('app_seminars_index')}}">Voir la liste des séminaires</a>
+					</p>
+				</div>
+
+			{% endfor %}
+		</div>
+
+		{%- if is_granted('ROLE_STAGIAIRE') or
         is_granted('ROLE_EX_STAGIAIRE') or 
         is_granted('ROLE_FORMATEUR_EXT') or 
         is_granted('ROLE_FORMATEUR_ERC') or 
         is_granted('ROLE_ADMIN') -%}
 
-            <div class="col-sm-12 col-md-9 col-lg-6">
-                <div class="mb-5">
-                    <h2 class="m-3 text-center">Mes questions</h2>
-                    {% for question in userQs %}
-                        {{ include('discussion/preview.html.twig', {question:question, content: true}) }}
-                    {% else %}
-                        <div class="card px-4 py-3 d-grid place-content-center">
-                            <p class="text-center legend mb-0">Aucune question posée.</p>
-                            <p class="text-center m-3"><a class="btn btn-outline-primary" href="{{path('app_discussion')}}">Aller à l'espace discussion</a></p>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div>
-                    <h2 class="m-3 text-center">Discussions récentes</h2>
-                    {%- for question in last3 -%}
-                        {% set ressourceLink = '#' %}
-                        {% set lastComment = question.comments|sort((a,b) => a.createdAt|date('U') - b.createdAt|date('U'))|last %}
-                        {{ include('discussion/preview.html.twig', {lastComment:lastComment, content:false}) }}
-                    {% else %}
-                        <div class="card px-4 py-3 d-grid place-content-center">
-                            <p class="text-center legend mb-0">Aucune question récente.</p>
-                            <p class="text-center m-3"><a class="btn btn-outline-primary" href="{{path('app_discussion')}}">Aller à l'espace discussion</a></p>
-                        </div>
+			<div class="col-sm-12 col-md-9 col-lg-6">
+				<div class="mb-5">
+					<h2 class="m-3 text-center">Mes questions</h2>
+					{% for question in userQs %}
+						{{ include('discussion/preview.html.twig', {question:question, content: true}) }}
+					{% else %}
+						<div class="card px-4 py-3 d-grid place-content-center">
+							<p class="text-center legend mb-0">Aucune question posée.</p>
+							<p class="text-center m-3">
+								<a class="btn btn-outline-primary" href="{{path('app_discussion')}}">Aller à l'espace discussion</a>
+							</p>
+						</div>
+					{% endfor %}
+				</div>
+				<div>
+					<h2 class="m-3 text-center">Discussions récentes</h2>
+					{%- for question in last3 -%}
+						{% set ressourceLink = '#' %}
+						{% set lastComment = question.comments|sort((a,b) => a.createdAt|date('U') - b.createdAt|date('U'))|last %}
+						{{ include('discussion/preview.html.twig', {lastComment:lastComment, content:false}) }}
+					{% else %}
+						<div class="card px-4 py-3 d-grid place-content-center">
+							<p class="text-center legend mb-0">Aucune question récente.</p>
+							<p class="text-center m-3">
+								<a class="btn btn-outline-primary" href="{{path('app_discussion')}}">Aller à l'espace discussion</a>
+							</p>
+						</div>
 
-                    {%- endfor -%}
-                </div>
-            </div>
+					{%- endfor -%}
+				</div>
+			</div>
 
-        {%- endif -%}
-    </div>
+		{%- endif -%}
+	</div>
 {% endblock %}
