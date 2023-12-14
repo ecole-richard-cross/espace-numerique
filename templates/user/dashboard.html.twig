@@ -10,7 +10,10 @@
 		{{ include('user/avatar_circle.html.twig', {'size': '128','user' : app.user, 'classes':'m-3'}) }}
 		<div class="d-flex flex-column align-items-center align-items-sm-start">
 			<h2>{{app.user}}</h2>
-			<p>{{app.user.stagiaire ? "Promo " ~ app.user.stagiaire.promotion|last : "Utilisateur non-stagiaire"}}</p>
+			{% set activeStatus = is_granted("ROLE_ADMIN") ? {status: "Admin", icon:"fa-computer"} : (is_granted("ROLE_FORMATEUR_ERC") or is_granted("ROLE_FORMATEUR_EXT") ? {status: "Formateur", icon:"fa-suitcase"} : (is_granted("ROLE_STAGIAIRE") or is_granted("ROLE_EX_STAGIAIRE") ? {status: "Stagiaire", icon:"fa-graduation-cap"} : {status: "Invité", icon:"fa-map"}))%}
+			<p class="">{{activeStatus.status != "Stagiaire" ? activeStatus.status : "Promo " ~ app.user.stagiaire.promotion|last}}
+            <i class="ms-2 text-secondary fa {{activeStatus.icon}}"></i>
+            </p>
 			<p class="smaller legend m-0 text-center">
 				<a href="{{path('app_user_profile')}}">Modifier mes informations</a>
 			</p>
@@ -26,7 +29,6 @@
 						<h3 class="m-0">
 							<a href="{{semLink}}">{{read.seminar}}</a>
 						</h3>
-
 						<div class="w-100 text-success fst-italic small d-flex flex-column align-items-center justify-content-center">
 							{{ read.finishedChapters|length }}
 							/
