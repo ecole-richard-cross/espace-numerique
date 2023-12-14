@@ -20,6 +20,12 @@ class Localisation
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse = null;
 
+    #[Assert\When(
+        expression: 'this.getPays() == "france" || this.getPays() == "France"|| this.getPays() == null',
+        constraints: [
+            new Assert\Regex(pattern: '/^(?:0[1-9]|[1-8]\d|9[0-8])\d{3}$/', message: 'Code postal invalide')
+        ],
+    )]
     #[ORM\Column(nullable: true)]
     private ?string $codePostal = null;
 
