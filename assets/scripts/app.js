@@ -10,3 +10,5 @@ import '../styles/app.scss';
 import 'bootstrap';
 
 import '../images/logo-erc.svg';
+import '../images/promo-2023.jpg';
+import '../images/richard-2023.jpg';
