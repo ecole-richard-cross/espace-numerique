@@ -59,7 +59,7 @@
 							<button class="nav-link" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
 								{{ include('user/avatar_circle.html.twig', {'user' : app.user, 'noCircle' : true, 'size' : 44, 'iconSize': 32}) }}
 							</button>
-							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+							<ul class="dropdown-menu dropdown-menu-end position-absolute" aria-labelledby="navbarDropdownMenuLink">
 								{% if is_granted("ROLE_ADMIN") %}
 									<li>
 										<a class="dropdown-item" href="{{path('admin')}}">Admin</a>

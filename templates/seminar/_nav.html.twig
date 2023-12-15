@@ -1,18 +1,18 @@
 {% if chapterId is not defined %}
     {% set chapterId = -1 %}
 {% endif %}
-<nav id="seminar_navbar" class="card bg-light rounded-3 p-3">
+<nav id="seminar_navbar" class="bg-light rounded-3 p-3">
     <h3>{{seminar}}</h3>
     <div class="accordion d-flex flex-column gap-2" id="accordion-menu">
     {% for chapter in seminar.chapters %}
-        <div class="accordion-item rounded-4 border-0">
+        <div class="accordion-item rounded-3 border-0">
             <h4 class="accordion-header">
-                <button class="accordion-button p-2 rounded-4 {%
+                <button class="accordion-button p-2 {%
                 if loop.index - 1 != chapterId or chapterId == -1%}collapsed{%
-                else %}text-primary fst-italic focus-outline{%
+                else %}fst-italic focus{%
                 endif %}{%
                 if loop.index - 1 in finishedChapters
-                %} bg-success text-white fst-italic{%
+                %} bg-success text-white fst-italic white-accordion-icon{%
                 endif %}"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapse-menu-{{loop.index}}"
@@ -20,12 +20,12 @@
                 {{chapter.title}}</button>
             </h4>
             <div id="collapse-menu-{{loop.index}}" 
-            class="accordion-collapse collapse bg-transparent border-0 {% if loop.index - 1 == chapterId or chapterId == -1 %}show{% endif %}"
+            class="accordion-collapse collapse border-0 {% if loop.index - 1 == chapterId or chapterId == -1 %}show{% endif %}"
             data-bs-parent="#accordion-menu">
                 <ul
                 class="list-group list-group-flush accordion-body py-1 my-0">
                 {% for section in chapter.sections %}
-                    <li class="list-group-item bg-transparent border-0 py-1">
+                    <li class="list-group-item border-0 py-1">
                         {% if chapterId == loop.parent.loop.index - 1 %}
                             <a href="#section-{{loop.index}}" 
                             data-bs-toggle="collapse" 
