@@ -11,7 +11,7 @@
 			</a>
 	</div>
 
-	<div class="profile-content flex-column">
+	<div class="profile-content flex-column col-xl-8 col-lg-9 col-md-12">
 		<div class="wrapper">
 			<div class="profile-card flex-grow-1">
 				<div class="d-flex gap-3 align-items-center mt-auto">
@@ -80,22 +80,22 @@
 					<div id="infoGen" class="accordion-collapse collapse" aria-labelledby="general">
 						<div class="accordion-body gap-1">
 							<div class="d-flex gap-3 align-items-center">
-								<i class="fa fa-id-badge"></i>
+								<i class="fa fa-id-badge text-info"></i>
 								<p>{{app.user}}</p>
 							</div>
 							{% if app.user.dateNaissance %}
 								<div class="d-flex gap-3 align-items-center">
-									<i class="fa fa-birthday-cake"></i>
+									<i class="fa fa-birthday-cake text-warning"></i>
 									<p>{{app.user.dateNaissance|date("m/d/Y")}}</p>
 								</div>
 							{% endif %}
 							<div class="d-flex gap-3 align-items-center">
-								<i class="fa fa-map-marker"></i>
+								<i class="fa fa-map-marker text-danger"></i>
 								<p>{{app.user.adressePostale}}</p>
 							</div>
 							{% if app.user.phoneNumber %}
 								<div class="d-flex gap-3 align-items-center">
-									<i class="fa fa-phone"></i>
+									<i class="fa fa-phone text-secondary"></i>
 									<p>{{app.user.phoneNumber}}</p>
 								</div>
 							{% endif %}
@@ -124,7 +124,7 @@
 									{% if app.user.lieuxActivite|length > 0 %}
 										{% for lieuActivite in app.user.lieuxActivite %}
 											<div class="d-flex gap-3 align-items-center">
-												<i class="fa fa-map-marker"></i>
+												<i class="fa fa-map-marker text-danger"></i>
 												<p>{{lieuActivite}}</p>
 											</div>
 										{% endfor %}
@@ -148,7 +148,7 @@
 									{% if app.user.stagiaire.idDossierCpf or app.user.stagiaire.identifiantsFinanceurs %}
 										{% if app.user.stagiaire.idDossierCpf %}
 											<div class="d-flex gap-2 align-items-center">
-												<i class="fa fa-bank"></i>
+												<i class="fa fa-bank text-tertiary"></i>
 												<p>
 													<span class="strong me-1">CPF :
 													</span>
@@ -157,7 +157,7 @@
 										{% endif %}
 										{% if app.user.stagiaire.identifiantsFinanceurs %}
 											<div class="d-flex gap-2 align-items-center">
-												<i class="fa fa-bank"></i>
+												<i class="fa fa-bank text-tertiary"></i>
 												<p>
 													<span class="strong me-1">Autres identifiants financeurs :
 													</span>
@@ -187,7 +187,7 @@
 									{% for reseau in app.user.presenceWebs%}
 										{% if reseau is not empty %}
 											<div class="d-flex gap-3 align-items-center">
-												<i class="fa{{'facebook' in reseau.url ? 'b fa-facebook' : ('twitter' in reseau.url ? 'b fa-twitter' : ('linkedin' in reseau.url ? 'b fa-linkedin' : ('instagram' in reseau.url ? 'b fa-instagram' : ('youtube' in reseau.url ? 'b fa-youtube' : ('tiktok' in reseau.url ? 'b fa-tiktok' : ' fa-link' ) ) ))) }}"></i>
+												<i class="fa{{'facebook' in reseau.url ? 'b fa-facebook text-info' : ('twitter' in reseau.url ? 'b fa-twitter text-info' : ('linkedin' in reseau.url ? 'b fa-linkedin text-info' : ('instagram' in reseau.url ? 'b fa-instagram text-accent' : ('youtube' in reseau.url ? 'b fa-youtube text-danger' : ('tiktok' in reseau.url ? 'b fa-tiktok' : ' fa-link' ) ) ))) }}"></i>
 												<p>
 													<a href="{{reseau.url}}">{{reseau.url}}</a>
 												</p>
