@@ -17,11 +17,11 @@
         </div>
         <div class="col-sm-12 col-md-9 col-lg-6">
             <h2 class="text-center my-4">Discussions</h2>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush gap-2">
                 {% for item in tag.discussions %}
                     {{ include('discussion/preview.html.twig', {question: item, content: true}) }}
                 {% else %}
-                    <p class="card p-3 list-group-flush legend">Aucune discussion ne correspond.</p>
+                    <li class="card p-3 list-group-flush legend">Aucune discussion ne correspond.</li>
                 {% endfor %}
             </ul>
         </div>

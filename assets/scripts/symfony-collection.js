@@ -20,7 +20,7 @@ function addFormToCollection(e) {
   const item = document.createElement('li');
   item.classList = 'list-group-item d-flex flex-column flex-md-row p-0 border-0';
   const fieldset = document.createElement('fieldset');
-  fieldset.classList = "mb3";
+  fieldset.classList = "mb-3";
   item.appendChild(fieldset);
 
   fieldset.innerHTML = collectionHolder
