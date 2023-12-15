@@ -77,11 +77,11 @@ a {
 	color: $dark;
 
 	&:hover {
-		color: $primary;
+		color: $accent !important;
 	}
 
 	&:active {
-		color: $accent;
+		color: $primary !important;
 	}
 
 	&.badge {
@@ -91,6 +91,14 @@ a {
 			box-shadow: $box-shadow;
 			color: $primary !important;
 		}
+	}
+}
+
+main a {
+	color: $blue-600;
+
+	&:visited {
+		color: $blue-700;
 	}
 }
 
