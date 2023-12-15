@@ -93,14 +93,15 @@ a {
 		}
 	}
 }
+#reseaux, #accordion-chapter {
+	a {
+		color: $blue-600;
 
-// main a {
-// 	color: $blue-600;
-
-// 	&:visited {
-// 		color: $blue-700;
-// 	}
-// }
+		&:visited {
+			color: $blue-700;
+		}
+	}
+}
 
 #seminar_navbar {
 	a {
