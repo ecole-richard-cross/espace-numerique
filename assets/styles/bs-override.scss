@@ -93,8 +93,12 @@ $box-shadow: 0.2rem 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
 
 $btn-font-weight: 600;
 
-$accordion-button-bg: $light;
-$accordion-button-active-bg: rgba($warning, 30%);
+// $accordion-button-bg: $light;
+// $accordion-button-active-bg: rgba($warning, 30%);
+$accordion-color: inherit;
+$accordion-bg : inherit;
+$accordion-button-focus-box-shadow: none;
+$list-group-bg: inherit;
 
 $primary-bg-light : rgba($primary, 8%);
 $primary-bg-medium : rgba($primary, 25%);
@@ -104,13 +108,17 @@ $primary-bg-strong : rgba($primary, 40%);
     font-weight: 500;
 
     &.editor-collapse {
-        background-color: transparent;
-        border: 1px solid rgba($accent, 0.1);
+        // background-color: transparent;
+        // border: 1px solid rgba($accent, 0.1);
         transition: border 200ms;
 
-        &:not(.collapsed) {
-            border: 1px solid rgba($accent, 0.5);
-            background-color: transparent;
-        }
+        // &:not(.collapsed) {
+        //     border: 1px solid rgba($accent, 0.5);
+        //     background-color: transparent;
+        // }
     }
+}
+
+.accordion-item .accordion-button:not(.collapsed) {
+    background-color: inherit;
 }

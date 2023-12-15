@@ -8,12 +8,12 @@
         {% if chapterId is defined %}
             {% set chapter = seminar.chapters[chapterId] %}
             <div class="p-0 my-0 mx-auto seminar-content" data-bs-spy="scroll" data-bs-target="#seminar_navbar" data-bs-smooth-scroll="true">
-                <h1>{{chapter}}</h1>
+                <h1 class="text-start">{{chapter}}</h1>
                 
                 <div class="accordion accordion-flush m-3" id="accordion-chapter">
                 {% for section in chapter.sections %}
                     <div class="accordion-item" id="chapter-{{chapterId + 1}}-section-{{loop.index}}">
-                        <button class="accordion-button rounded-3 {% if (sectionId is not null and loop.index != sectionId) or (sectionId is null and loop.index != 1) %}collapsed{% endif %}" 
+                        <button class="accordion-button {% if (sectionId is not null and loop.index != sectionId) or (sectionId is null and loop.index != 1) %}collapsed{% endif %}" 
                             data-bs-toggle="collapse" 
                             data-bs-target="#collapse{{loop.index}}" 
                             aria-controls="collapse{{loop.index}}">
