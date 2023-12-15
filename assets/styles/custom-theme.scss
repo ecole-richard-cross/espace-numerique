@@ -77,11 +77,11 @@ a {
 	color: $dark;
 
 	&:hover {
-		color: $accent !important;
+		color: $primary !important;
 	}
 
 	&:active {
-		color: $primary !important;
+		color: $accent !important;
 	}
 
 	&.badge {
@@ -93,7 +93,8 @@ a {
 		}
 	}
 }
-#reseaux, #accordion-chapter {
+#reseaux,
+#accordion-chapter {
 	a {
 		color: $blue-600;
 
@@ -273,19 +274,21 @@ legend,
 }
 
 #seminar_navbar {
-	.focus,
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+	.focus.accordion-button.collapsed,
 	.focus.accordion-button:not(.collapsed) {
 		background-color: $primary-bg-strong;
 	}
-	.accordion-item {
-		&:not(:first-child) {
-			border-top: 1px solid var(--bs-border-color);
-		}
-		&:not(:last-child) {
-			border-bottom: 1px solid var(--bs-border-color);
-		}
-	}
+	// .accordion-item {
+	// 	&:not(:first-child) {
+	// 		border-top: 1px solid var(--bs-border-color);
+	// 	}
+	// 	&:not(:last-child) {
+	// 		border-bottom: 1px solid var(--bs-border-color);
+	// 	}
+	// }
 	.accordion-button {
+		background-color: darken($light, 5%);
 		border-bottom: 1px solid var(--bs-border-color);
 		border-radius: $radius;
 		&:not(.collapsed) {
@@ -294,8 +297,13 @@ legend,
 			border-bottom-left-radius: 0;
 			border-bottom-right-radius: 0;
 
-			background-color: rgba($warning, 30%);
+			background-color: darken($light, 15%);
 		}
+	}
+	.accordion-collapse {
+		background-color: lighten($light, 5%);
+		border-bottom-left-radius: $radius;
+		border-bottom-right-radius: $radius;
 	}
 }
 

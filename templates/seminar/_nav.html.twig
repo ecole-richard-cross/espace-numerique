@@ -1,11 +1,11 @@
 {% if chapterId is not defined %}
     {% set chapterId = -1 %}
 {% endif %}
-<nav id="seminar_navbar" class="card bg-light rounded-3 p-3">
+<nav id="seminar_navbar" class="bg-light rounded-3 p-3">
     <h3>{{seminar}}</h3>
     <div class="accordion d-flex flex-column gap-2" id="accordion-menu">
     {% for chapter in seminar.chapters %}
-        <div class="accordion-item rounded-3">
+        <div class="accordion-item rounded-3 border-0">
             <h4 class="accordion-header">
                 <button class="accordion-button p-2 {%
                 if loop.index - 1 != chapterId or chapterId == -1%}collapsed{%
