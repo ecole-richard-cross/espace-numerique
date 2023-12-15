@@ -93,11 +93,10 @@ $box-shadow: 0.2rem 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
 
 $btn-font-weight: 600;
 
-// $accordion-button-bg: $light;
-// $accordion-button-active-bg: rgba($warning, 30%);
 $accordion-color: inherit;
 $accordion-bg : inherit;
 $accordion-button-focus-box-shadow: none;
+$accordion-border-width: 0;
 $list-group-bg: inherit;
 
 $primary-bg-light : rgba($primary, 8%);
