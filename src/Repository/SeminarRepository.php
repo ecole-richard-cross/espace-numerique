@@ -32,6 +32,16 @@ class SeminarRepository extends ServiceEntityRepository
         });
         return $allowedSeminars;
     }
+
+    public function searchFor(string $query)
+    {
+        return $this->createQueryBuilder('d')
+            ->orWhere('LOWER(d.title) LIKE LOWER(:q)')
+            ->orWhere('d.description LIKE :q')
+            ->setParameter('q', '%' . $query . '%', 'string')
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return Seminar[] Returns an array of Seminar objects
     //     */

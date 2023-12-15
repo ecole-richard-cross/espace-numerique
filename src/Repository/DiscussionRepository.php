@@ -22,6 +22,16 @@ class DiscussionRepository extends ServiceEntityRepository
         parent::__construct($registry, Discussion::class);
     }
 
+    public function searchFor(string $query)
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('LOWER(d.title) LIKE LOWER(:q)')
+            ->setParameter('q', '%' . $query . '%')
+            ->orderBy('d.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Discussion[] Returns an array of Discussion objects
     //     */

@@ -2,7 +2,13 @@
     {% set chapterId = -1 %}
 {% endif %}
 <nav id="seminar_navbar" class="bg-light rounded-3 p-3">
-    <h3>{{seminar}}</h3>
+    <h3>
+        {% if chapterId == -1 %}
+            {{seminar}}
+        {% else %}
+            <a href="{{path('app_seminar_intro',{id:seminar.id})}}">{{seminar}}</a>
+        {% endif %}
+    </h3>
     <div class="accordion d-flex flex-column gap-2" id="accordion-menu">
     {% for chapter in seminar.chapters %}
         <div class="accordion-item rounded-3 border-0">
