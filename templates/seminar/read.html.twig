@@ -4,7 +4,7 @@
 		{% set sectionId = null %}
 	{% endif %}
 	<div class="row justify-content-center">
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-md-8">
 			{% if chapterId is defined %}
 				{% set chapter = seminar.chapters[chapterId] %}
 				<div class="p-0 my-0 mx-auto seminar-content" data-bs-spy="scroll" data-bs-target="#seminar_navbar" data-bs-smooth-scroll="true">
@@ -74,7 +74,7 @@
 			{% endif %}
 		</div>
 
-		<div class="col-3 ps-4 pt-5 d-none d-md-block">
+		<div class="col-4 ps-4 pt-5 d-none d-md-block">
 			{{ include('seminar/_nav.html.twig', {seminar:seminar}) }}
 		</div>
 	</div>
