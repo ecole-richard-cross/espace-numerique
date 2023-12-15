@@ -1,30 +1,17 @@
-<footer class="row d-flex justify-content-between align-items-center justify-self-end py-3 px-4 bg-light no-mobile">
-    <div class="col">
-        <a href="/cgu">Conditions générales d'utilisation</a>
-    </div>
-    <div class="col">
+<footer class="row flex-row-reverse justify-content-between align-items-center justify-self-end py-3 px-4 bg-light">
+    <div class="col-sm-12 col-md-6 mb-4">
         <div class="d-flex justify-content-center align-items-center gap-3">
             {% for social in socials %}
                 <a href="{{social.url}}" target="_blank"><img width="36" height="36" src="{{social.iconUrl}}" alt="{{ social.altText }}"></a>
             {% endfor %}
         </div>
     </div>
-    <div class="col text-end">
-        <a href="/mentions">Mentions légales</a>
-    </div>
-</footer>
-<footer class="d-flex flex-column justify-content-between gap-2 align-items-center justify-self-end py-3 px-4 bg-light mobile">
-    <div class="col">
-        <div class="d-flex justify-content-center align-items-center gap-3">
-            {% for social in socials %}
-                <a href="{{social.url}}" target="_blank"><img width="36" height="36" src="{{social.iconUrl}}" alt="{{ social.altText }}"></a>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="col">
-        <a href="/cgu">Conditions générales d'utilisation</a>
-    </div>
-    <div class="col text-end">
-        <a href="/mentions">Mentions légales</a>
+
+    <div class="col-sm-12 col-md-6" >
+        <ul class="d-flex flex-column gap-2 small mx-auto p-0" style="list-style-type:none; width:fit-content">
+            <li class="bg-transparent" style="width: fit-content"><a href="https://www.ecole-richard-cross.com/">Site de l'Ecole</a></li>
+            <li class="bg-transparent" style="width: fit-content"><a href="https://www.ecole-richard-cross.com/mentions">Mentions légales</a></li>
+            <li class="bg-transparent" style="width: fit-content"><a href="https://www.ecole-richard-cross.com/cgu">Conditions générales d'utilisation</a></li>
+        </ul>
     </div>
 </footer>
