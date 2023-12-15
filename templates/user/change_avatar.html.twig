@@ -13,6 +13,9 @@
 	<div class="profile-content">
 		<div id="avatarPreview">
 			{{ include('user/avatar_circle.html.twig', {user:app.user, size:120}) }}
+			{% if app.user.avatar == null %}
+				<img style="object-fit:cover;" width="120" height="120" class="rounded-circle d-none" alt="Avatar Preview" src=''>
+			{% endif %}
 		</div>
 		<div class="profile-card">
 			{{form_start(form)}}
