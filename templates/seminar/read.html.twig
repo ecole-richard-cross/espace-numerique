@@ -1,79 +1,81 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-{% if sectionId is not defined %}
-{% set sectionId = null %}
-{% endif %}
-<div class="row justify-content-center">
-    <div class="col-6">
-        {% if chapterId is defined %}
-            {% set chapter = seminar.chapters[chapterId] %}
-            <div class="p-0 my-0 mx-auto seminar-content" data-bs-spy="scroll" data-bs-target="#seminar_navbar" data-bs-smooth-scroll="true">
-                <h1 class="text-start">{{chapter}}</h1>
-                
-                <div class="accordion accordion-flush m-3" id="accordion-chapter">
-                {% for section in chapter.sections %}
-                    <div class="accordion-item border-0" id="chapter-{{chapterId + 1}}-section-{{loop.index}}">
-                        <button class="accordion-button {% if (sectionId is not null and loop.index != sectionId) or (sectionId is null and loop.index != 1) %}collapsed{% endif %}" 
-                            data-bs-toggle="collapse" 
-                            data-bs-target="#collapse{{loop.index}}" 
-                            aria-controls="collapse{{loop.index}}">
-                                <h2 class="accordion-header">{{section}}</h2>
-                        </button>
-                        <div id="collapse{{loop.index}}"
-                        class="accordion-collapse collapse {% if (loop.index == 1 and sectionId is null) or loop.index == sectionId %}show{% endif %}"
-                        data-bs-parent="#accordion-chapter">
-                            <div class="accordion-body">
-                            {% for contentBlock in section.blocks %}
-                                {{ include('block/block_gate.html.twig', {block: contentBlock}) }}
-                            {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-                </div>
-                <div class="d-flex justify-content-center align-items-center mt-5">
-                    {% if chapterId + 1 == seminar.chapters|length %}
-                        <a href="{{path('app_seminar_mark',{'id':seminar.id})}}" class="btn btn-outline-primary">
-                            Marquer ce cours comme terminé
-                        </a>
-                    {% else %}
-                        <a href="{{path('app_seminar_mark',{'id':seminar.id, 'chapterId': chapterId})}}" 
-                            class="btn btn-outline-primary">
-                            J'ai terminé ce chapitre, passer au suivant
-                        </a>
-                    {% endif %}
-                </div>
-            </div> 
-        {% else %}
-            <div class="p-0 my-0 mx-auto seminar-content d-flex flex-column gap-4 align-items-center">
-                <h1 class="mb-1">{{seminar}}</h1>
-                <div class="d-flex justify-content-center gap-1 mb-5">
-                    {% for tag in seminar.tags %}
-                        {{ include('tag/_badge.html.twig', {tag:tag}) }}
-                    {% endfor %}
-                </div>
-                
-                <img class="rounded-3 mw-100" style="max-height:450px;" src="/uploads/{{seminar.image.url}}" alt="{{seminar.image}}">
+	{% if sectionId is not defined %}
+		{% set sectionId = null %}
+	{% endif %}
+	<div class="row justify-content-center">
+		<div class="col-12 col-md-6">
+			{% if chapterId is defined %}
+				{% set chapter = seminar.chapters[chapterId] %}
+				<div class="p-0 my-0 mx-auto seminar-content" data-bs-spy="scroll" data-bs-target="#seminar_navbar" data-bs-smooth-scroll="true">
+					<div class="d-flex gap-3">
+						<h1 class="text-start">{{chapter}}</h1>
+						<a href="#" role="button" class="d-md-none mt-1" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-bs-reference="parent" aria-expanded="false">
+							<i class="fa fa-caret-down fa-2x"></i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-end p-0 border-0 col-8 col-sm-6 mt-n4">
+							{{ include('seminar/_nav.html.twig', {seminar:seminar}) }}
+						</div>
+					</div>
 
-                <div>
-                    {{seminar.description|replace({"h1":"h4"})|raw}}
-                </div>
-                <div class="d-flex justify-content-center align-items-center">
-                    <a href="{{path('app_seminar_read',{'id':seminar.id, 'chapterId': 0})}}" class="btn btn-primary">Démarrer le cours</a>
-                </div>
-                {% if seminar.getConsultByUser(app.user).isFinished is same as (true) %}
-                    
-                <div class="d-flex justify-content-center align-items-center">
-                    <a href="{{path('app_seminar_reset',{'id':seminar.id})}}" class="btn btn-outline-danger" style="font-size:0.8rem">Réinitialiser ma progression</a>
-                </div>
-                    
-                {% endif %}
-            </div>
-        {% endif %}
-    </div>
-    
-    <div class="col-3 ps-4 pt-5">
-        {{ include('seminar/_nav.html.twig', {seminar:seminar}) }}
-    </div>
-</div>
+					<div class="accordion accordion-flush m-3" id="accordion-chapter">
+						{% for section in chapter.sections %}
+							<div class="accordion-item" id="chapter-{{chapterId + 1}}-section-{{loop.index}}">
+								<button class="accordion-button {% if (sectionId is not null and loop.index != sectionId) or (sectionId is null and loop.index != 1) %}collapsed{% endif %}" data-bs-toggle="collapse" data-bs-target="#collapse{{loop.index}}" aria-controls="collapse{{loop.index}}">
+									<h2 class="accordion-header">{{section}}</h2>
+								</button>
+								<div id="collapse{{loop.index}}" class="accordion-collapse collapse {% if (loop.index == 1 and sectionId is null) or loop.index == sectionId %}show{% endif %}" data-bs-parent="#accordion-chapter">
+									<div class="accordion-body">
+										{% for contentBlock in section.blocks %}
+											{{ include('block/block_gate.html.twig', {block: contentBlock}) }}
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+					<div class="d-flex justify-content-center align-items-center mt-5">
+						{% if chapterId + 1 == seminar.chapters|length %}
+							<a href="{{path('app_seminar_mark',{'id':seminar.id})}}" class="btn btn-outline-primary">
+								Marquer ce cours comme terminé
+							</a>
+						{% else %}
+							<a href="{{path('app_seminar_mark',{'id':seminar.id, 'chapterId': chapterId})}}" class="btn btn-outline-primary">
+								J'ai terminé ce chapitre, passer au suivant
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			{% else %}
+				<div class="p-0 my-0 mx-auto seminar-content d-flex flex-column gap-4 align-items-center">
+					<h1 class="mb-1">{{seminar}}</h1>
+					<div class="d-flex justify-content-center gap-1 mb-5">
+						{% for tag in seminar.tags %}
+							{{ include('tag/_badge.html.twig', {tag:tag}) }}
+						{% endfor %}
+					</div>
+
+					<img class="rounded-3 mw-100" style="max-height:450px;" src="/uploads/{{seminar.image.url}}" alt="{{seminar.image}}">
+
+					<div>
+						{{seminar.description|replace({"h1":"h4"})|raw}}
+					</div>
+					<div class="d-flex justify-content-center align-items-center">
+						<a href="{{path('app_seminar_read',{'id':seminar.id, 'chapterId': 0})}}" class="btn btn-primary">Démarrer le cours</a>
+					</div>
+					{% if seminar.getConsultByUser(app.user).isFinished is same as (true) %}
+
+						<div class="d-flex justify-content-center align-items-center">
+							<a href="{{path('app_seminar_reset',{'id':seminar.id})}}" class="btn btn-outline-danger" style="font-size:0.8rem">Réinitialiser ma progression</a>
+						</div>
+
+					{% endif %}
+				</div>
+			{% endif %}
+		</div>
+
+		<div class="col-3 ps-4 pt-5 d-none d-md-block">
+			{{ include('seminar/_nav.html.twig', {seminar:seminar}) }}
+		</div>
+	</div>
 {% endblock %}
