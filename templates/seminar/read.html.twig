@@ -8,9 +8,9 @@
 			{% if chapterId is defined %}
 				{% set chapter = seminar.chapters[chapterId] %}
 				<div class="p-0 my-0 mx-auto seminar-content" data-bs-spy="scroll" data-bs-target="#seminar_navbar" data-bs-smooth-scroll="true">
-					<div class="d-flex gap-3">
+					<div class="d-flex gap-3 justify-content-between">
 						<h1 class="text-start">{{chapter}}</h1>
-						<a href="#" role="button" class="d-md-none mt-1" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-bs-reference="parent" aria-expanded="false">
+						<a href="#" role="button" class="d-md-none mt-1 me-4" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-bs-reference="parent" aria-expanded="false">
 							<i class="fa fa-caret-down fa-2x"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-end p-0 border-0 col-8 col-sm-6 mt-n4">
@@ -18,7 +18,7 @@
 						</div>
 					</div>
 
-					<div class="accordion accordion-flush m-3" id="accordion-chapter">
+					<div class="accordion accordion-flush m-md-3" id="accordion-chapter">
 						{% for section in chapter.sections %}
 							<div class="accordion-item" id="chapter-{{chapterId + 1}}-section-{{loop.index}}">
 								<button class="accordion-button {% if (sectionId is not null and loop.index != sectionId) or (sectionId is null and loop.index != 1) %}collapsed{% endif %}" data-bs-toggle="collapse" data-bs-target="#collapse{{loop.index}}" aria-controls="collapse{{loop.index}}">
