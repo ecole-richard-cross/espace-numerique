@@ -21,7 +21,7 @@ class Localisation
     private ?string $adresse = null;
 
     #[Assert\When(
-        expression: 'this.getPays() == "france" || this.getPays() == "France"|| this.getPays() == null',
+        expression: 'this.getPays() == "france" || this.getPays() == "France" || this.getPays() == null',
         constraints: [
             new Assert\Regex(pattern: '/^(?:0[1-9]|[1-8]\d|9[0-8])\d{3}$/', message: 'Code postal invalide')
         ],
@@ -52,13 +52,30 @@ class Localisation
 
     public function __toString()
     {
-        if (isset($this->adresse) && isset($this->codePostal) && isset($this->ville)) {
-            return $this->adresse . ' ' . $this->codePostal . ' ' . $this->ville . ' (' . $this->departement . ', ' . $this->region . ')';
-        } else if (isset($this->ville) && isset($this->pays)) {
-            return  $this->ville . ' (' . $this->pays . ')';
+        if (isset($this->adresse))
+            $address = $this->adresse . ",";
+        else
+            $address = "";
+
+        if (isset($this->codePostal) && $this->codePostal != "n/a")
+            $cp = $this->codePostal;
+        else
+            $cp = "";
+
+        if (isset($this->ville))
+            $ville = $this->ville;
+        else
+            $ville = "";
+
+        if (isset($this->departement, $this->region)) {
+            $pays = "France";
+            $depreg = "(" . $this->departement . ", " . $this->region . ")";
         } else {
-            return ($this->codePostal != "n/a") ? $this->codePostal . ' (' . $this->departement . ', ' . $this->region . ')' : ($this->ville ? $this->ville : ($this->pays ? $this->pays : 'Localisation vide'));
+            $pays = $this->pays ?? "";
+            $depreg = "";
         }
+
+        return $address . " " . $cp . " " . $ville . " " . $depreg . " " . $pays;
     }
 
     public function getId(): ?int
@@ -95,10 +112,16 @@ class Localisation
     public function fetchFromCodePostal(): static
     {
         if (
-            trim(strtolower($this->pays)) !== "france" ||
+            (trim(strtolower($this->pays)) !== "france" &&
+                trim($this->pays) !== "" &&
+                $this->pays !== null) ||
             !preg_match("/^\d{5}$/", trim($this->codePostal))
-        )
+        ) {
+            $this->setDepartement(null);
+            $this->setRegion(null);
             return $this;
+        }
+
         try {
             $details = PostalCodeTools::fetchDetails($this->codePostal);
             $this->setDepartement($details['department']);
@@ -110,6 +133,7 @@ class Localisation
 
         return $this;
     }
+
     public function getDepartement(): ?string
     {
         return $this->departement;
