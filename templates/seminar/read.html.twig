@@ -10,7 +10,7 @@
 				<div class="p-0 my-0 mx-auto seminar-content" data-bs-spy="scroll" data-bs-target="#seminar_navbar" data-bs-smooth-scroll="true">
 					<div class="d-flex gap-3 justify-content-between">
 						<h1 class="text-start">{{chapter}}</h1>
-						<a href="#" role="button" class="d-md-none mt-1 me-4" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-bs-reference="parent" aria-expanded="false">
+						<a href="#" role="button" class="d-lg-none mt-1 me-4" data-bs-toggle="dropdown" data-bs-auto-close="outside" data-bs-reference="parent" aria-expanded="false">
 							<i class="fa fa-caret-down fa-2x"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-end p-0 border-0 col-8 col-sm-6 mt-n4">
@@ -74,7 +74,7 @@
 			{% endif %}
 		</div>
 
-		<div class="col-3 ps-4 pt-5 d-none d-md-block">
+		<div class="col-3 ps-4 pt-5 d-none d-lg-block">
 			{{ include('seminar/_nav.html.twig', {seminar:seminar, id:'mobileSeminarNav'}) }}
 		</div>
 	</div>
