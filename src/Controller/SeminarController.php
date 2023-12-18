@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Chapter;
 use App\Entity\Seminar;
 use App\Entity\SeminarConsultation;
 use App\Entity\Tag;
@@ -59,8 +60,11 @@ class SeminarController extends AbstractController
         $entityManager->persist($consult);
         $entityManager->flush();
 
+        $orderedChapters = $entityManager->getRepository(Chapter::class)->findBySeminarOrdered($seminar);
+
         return $this->render('seminar/read.html.twig', [
             'seminar' => $seminar,
+            'orderedChapters' => $orderedChapters,
             'chapterId' => $chapterId,
             'finishedChapters' => $consult->getFinishedChapters()
         ]);

@@ -10,7 +10,7 @@
         {% endif %}
     </h3>
     <div class="accordion d-flex flex-column gap-2" id="{{id}}">
-    {% for chapter in seminar.chapters %}
+    {% for chapter in seminar.chapters|sort((a, b) => a.number - b.number) %}
         <div class="accordion-item rounded-3 border-0">
             <h4 class="accordion-header">
                 <button class="accordion-button p-2 {%
@@ -30,7 +30,7 @@
             data-bs-parent="#{{id}}">
                 <ul
                 class="list-group list-group-flush accordion-body py-1 my-0">
-                {% for section in chapter.sections %}
+                {% for section in chapter.sections|sort((a, b) => a.number - b.number) %}
                     <li class="list-group-item border-0 py-1">
                         {% if chapterId == loop.parent.loop.index - 1 %}
                             <a href="#section-{{loop.index}}"

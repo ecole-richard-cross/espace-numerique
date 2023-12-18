@@ -6,7 +6,7 @@
 	<div class="row justify-content-center">
 		<div class="col-12 col-md-8">
 			{% if chapterId is defined %}
-				{% set chapter = seminar.chapters[chapterId] %}
+				{% set chapter = orderedChapters[chapterId] %}
 				<div class="p-0 my-0 mx-auto seminar-content" data-bs-spy="scroll" data-bs-target="#seminar_navbar" data-bs-smooth-scroll="true">
 					<div class="d-flex gap-3 justify-content-between">
 						<h1 class="text-start">{{chapter}}</h1>
@@ -19,14 +19,14 @@
 					</div>
 
 					<div class="accordion accordion-flush m-md-3" id="accordion-chapter">
-						{% for section in chapter.sections %}
+						{% for section in chapter.sections|sort((a, b) => a.number - b.number) %}
 							<div class="accordion-item" id="chapter-{{chapterId + 1}}-section-{{loop.index}}">
 								<button class="accordion-button {% if (sectionId is not null and loop.index != sectionId) or (sectionId is null and loop.index != 1) %}collapsed{% endif %}" data-bs-toggle="collapse" data-bs-target="#collapse{{loop.index}}" aria-controls="collapse{{loop.index}}">
 									<h2 class="accordion-header">{{section}}</h2>
 								</button>
 								<div id="collapse{{loop.index}}" class="accordion-collapse collapse {% if (loop.index == 1 and sectionId is null) or loop.index == sectionId %}show{% endif %}" data-bs-parent="#accordion-chapter">
 									<div class="accordion-body">
-										{% for contentBlock in section.blocks %}
+										{% for contentBlock in section.blocks|sort((a, b) => a.number - b.number) %}
 											{{ include('block/block_gate.html.twig', {block: contentBlock}) }}
 										{% endfor %}
 									</div>
