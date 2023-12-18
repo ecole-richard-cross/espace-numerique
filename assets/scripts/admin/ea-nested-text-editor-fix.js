@@ -106,16 +106,11 @@ const orderCollectionsByNb = () => {
       groups[groupName] = groups[groupName] ? [...groups[groupName], item] : [item];
    });
    for (let groupName in groups) {
-      groups[groupName].forEach((item) => {
-         const itemNb = item.querySelector('input[name$="[number]"]').value;
-         const siblings = groups[groupName].filter((el => el != item));
-         siblings.forEach(sibling => {
-            const siblingNb = sibling.querySelector('input[name$="[number]"]').value;
-            if (itemNb > siblingNb) {
-               sibling.after(item);
-            }
-         })
-      })
+      groups[groupName].sort((a, b) => a.querySelector('input[name$="[number]"]').value - b.querySelector('input[name$="[number]"]').value);
+      groups[groupName][0].parentNode.insertBefore(groups[groupName][0], groups[groupName][1]);
+      for (let i = 2; i < groups[groupName].length; i++) {
+         groups[groupName][i - 1].after(groups[groupName][i]);
+      }
    }
 };
 
