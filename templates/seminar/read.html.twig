@@ -14,7 +14,7 @@
 							<i class="fa fa-caret-down fa-2x"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-end p-0 border-0 col-8 col-sm-6 mt-n4">
-							{{ include('seminar/_nav.html.twig', {seminar:seminar}) }}
+							{{ include('seminar/_nav.html.twig', {seminar:seminar, id:'seminarNav'}) }}
 						</div>
 					</div>
 
@@ -74,8 +74,8 @@
 			{% endif %}
 		</div>
 
-		<div class="col-4 ps-4 pt-5 d-none d-md-block">
-			{{ include('seminar/_nav.html.twig', {seminar:seminar}) }}
+		<div class="col-3 ps-4 pt-5 d-none d-md-block">
+			{{ include('seminar/_nav.html.twig', {seminar:seminar, id:'mobileSeminarNav'}) }}
 		</div>
 	</div>
 {% endblock %}
