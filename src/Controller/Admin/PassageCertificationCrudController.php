@@ -79,7 +79,7 @@ class PassageCertificationCrudController extends AbstractCrudController
     public function configureAssets(Assets $assets): Assets
     {
         return $assets
-            ->addJsFile('scripts/remove-xml-batch-popup.js');
+            ->addWebpackEncoreEntry('remove-xml-batch-popup');
     }
 
     public function exportXml(BatchActionDto $batchActionDto): Response
