@@ -35,15 +35,15 @@ class XMLExport
                 $identificationTitulaire = [
                     "cpf:titulaire" => [
                         "cpf:nomNaissance" => $stagiaire->getUser()->getNomNaissance(),
-                        "cpf:nomUsage" => $stagiaire->getUser()->getNomUsage(),
+                        "cpf:nomUsage" => $stagiaire->getUser()->getNomUsage() ?? ["@xsi:nil" => "true", "#" => ""],
                         "cpf:prenom1" => $stagiaire->getUser()->getPrenom(),
                         "cpf:anneeNaissance" => $stagiaire->getUser()->getDateNaissance()->format('Y'),
-                        "cpf:moisNaissance" => $stagiaire->getUser()->getDateNaissance()->format('m'),
-                        "cpf:jourNaissance" => $stagiaire->getUser()->getDateNaissance()->format('d'),
+                        "cpf:moisNaissance" => $stagiaire->getUser()->getDateNaissance()->format('m') ?? ["@xsi:nil" => "true", "#" => ""],
+                        "cpf:jourNaissance" => $stagiaire->getUser()->getDateNaissance()->format('d') ?? ["@xsi:nil" => "true", "#" => ""],
                         "cpf:sexe" => $stagiaire->getSexe(),
                         "cpf:codeCommuneNaissance" => [
                             "cpf:codePostalNaissance" => [
-                                "cpf:codePostal" => $stagiaire->getCodePostalNaissance(),
+                                "cpf:codePostal" => $stagiaire->getCodePostalNaissance() ?? ["@xsi:nil" => "true", "#" => ""],
                             ],
                         ]
                     ],
@@ -55,10 +55,10 @@ class XMLExport
                 "cpf:obtentionCertification" => $passage->getObtentionCertification(),
                 "cpf:donneeCertifiee" => $passage->__toStringIsDonneeCertifiee(),
                 "cpf:dateDebutValidite" => $passage->getDateDebutValidite()->format('Y-m-d'),
-                "cpf:dateFinValidite" => ["@xsi:nil" => "true", "#" => ""],
+                "cpf:dateFinValidite" => $passage->getDateFinValidite()?->format('Y-m-d') ?? ["@xsi:nil" => "true", "#" => ""],
                 "cpf:presenceNiveauLangueEuro" => $passage->__toStringIsPresenceNiveauLangueEuro(),
                 "cpf:presenceNiveauNumeriqueEuro" => $passage->__toStringIsPresenceNiveauNumeriqueEuro(),
-                "cpf:scoring" => $passage->getScoring(),
+                "cpf:scoring" => $passage->getScoring() ?? ["@xsi:nil" => "true", "#" => ""],
                 "cpf:mentionValidee" => $passage->getMentionValidee() ?? ["@xsi:nil" => "true", "#" => ""],
                 "cpf:modaliteInscription" => [
                     "cpf:modaliteAcces" => "FORMATION_INITIALE_HORS_APPRENTISSAGE",
@@ -92,10 +92,10 @@ class XMLExport
             "cpf:idFlux" => ["#" => Uuid::v7()->toRfc4122()],
             "cpf:horodatage" => ["#" => $date->format('c')],
             "cpf:emetteur" => [
-                "cpf:idClient" => "",
+                "cpf:idClient" => getenv('CPF_ID_CLIENT'),
                 "cpf:certificateur" => [
-                    "cpf:idClient" => "",
-                    "cpf:idContrat" => "",
+                    "cpf:idClient" => getenv('CPF_ID_CLIENT'),
+                    "cpf:idContrat" => getenv('CPF_ID_CONTRAT'),
                     "cpf:certifications" => $cpfCertifications
                 ],
             ]
@@ -118,7 +118,7 @@ class XMLExport
                 '@xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
             ]
         );
-        $xsdSchema = 'validation-schema-2.0.0.xsd';
+        $xsdSchema = 'cpf-xml/validation-schema-2.0.0.xsd';
         $validation = $converter->validateXml($xmlData, $xsdSchema);
         if (!$validation['isValid']) {
             $error = "Le fichier n'a pas pu être validé.";
