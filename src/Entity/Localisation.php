@@ -3,10 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\LocalisationRepository;
+use App\Service\PostalCodeTools;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use PostalCodeTools;
 
 #[ORM\Entity(repositoryClass: LocalisationRepository::class)]
 #[ORM\HasLifecycleCallbacks]
