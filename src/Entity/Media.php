@@ -39,6 +39,7 @@ class Media
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'media')]
+    #[ORM\JoinColumn(onDelete: "SET NULL")]
     private ?User $uploadedBy = null;
 
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: Block::class)]
