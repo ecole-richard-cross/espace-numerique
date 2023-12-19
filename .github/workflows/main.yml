@@ -14,4 +14,4 @@ jobs:
         server: ftp.dwzc8467.odns.fr
         username: admin@dwzc8467.odns.fr
         password: ${{ secrets.ftp_password }}
-        server-dir: espace-numerique
+        server-dir: espace-numerique/
