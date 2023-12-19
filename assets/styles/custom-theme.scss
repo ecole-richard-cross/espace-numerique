@@ -293,6 +293,10 @@ legend,
 		&:hover {
 			padding-left: 0.5rem;
 		}
+		
+		&.active {
+			color: $primary;
+		}
 	}
 
 	.accordion-button {

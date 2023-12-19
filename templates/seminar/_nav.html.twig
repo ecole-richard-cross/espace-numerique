@@ -1,3 +1,8 @@
+{% block javascripts %}
+	{{ encore_entry_script_tags('app') }}
+	{{ encore_entry_script_tags('seminar-nav') }}
+{% endblock %}
+
 {% if chapterId is not defined %}
     {% set chapterId = -1 %}
 {% endif %}
@@ -33,7 +38,7 @@
                 {% for section in chapter.sections|sort((a, b) => a.number - b.number) %}
                     <li class="list-group-item border-0 py-1">
                         {% if chapterId == loop.parent.loop.index - 1 %}
-                            <a href="#section-{{loop.index}}"
+                            <a href="#chapter-{{chapter.number}}-section-{{loop.index}}"
                             data-bs-toggle="collapse" 
                             data-bs-target="#collapse{{loop.index}}" 
                             aria-controls="collapse{{loop.index}}">

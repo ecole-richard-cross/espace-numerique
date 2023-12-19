@@ -25,6 +25,7 @@ Encore
     .addEntry('symfony-collection', './assets/scripts/symfony-collection.js')
     .addEntry('profile-error-feedback', './assets/scripts/profile-error-feedback.js')
     .addEntry('new_avatar_preview', './assets/scripts/new_avatar_preview.js')
+    .addEntry('seminar-nav', './assets/scripts/seminar-nav.js')
 
     .addEntry('trix_toolbar_handler', './assets/scripts/trix_toolbar_handler.js')
     .addEntry('comment_reply', './assets/scripts/comment_reply.js')
