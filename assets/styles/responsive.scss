@@ -1,56 +1,59 @@
 .mobile {
-    display: none !important;
+	display: none !important;
 }
 @media screen and (max-width: 992px) {
-    .seminar-navbar {
-        position: relative;
-    }
+	.seminar-navbar {
+		position: relative;
+	}
 }
 
 @media screen and (max-width: 768px) {
-    .no-mobile {
-        display: none !important;
-    }
+	.no-mobile {
+		display: none !important;
+	}
 
-    .mobile {
-        &:not(.d-flex) {
-            display: block !important;
-        }
+	.mobile {
+		&:not(.d-flex) {
+			display: block !important;
+		}
 
-        &.d-flex {
-            display: flex !important;
-        }
-    }
+		&.d-flex {
+			display: flex !important;
+		}
+	}
+
+	.long-string {
+		word-break: break-all;
+	}
 }
 
 @media screen and (max-width: 768px) {
-    .profile-content {
+	.profile-content {
+		.presenceWebs .list-group-item > fieldset > div,
+		.lieuxActivite .list-group-item > fieldset > div {
+			flex-direction: column;
+		}
+	}
 
-        .presenceWebs .list-group-item>fieldset>div,
-        .lieuxActivite .list-group-item>fieldset>div {
-            flex-direction: column;
-        }
-    }
+	form[name="avatar"] {
+		width: 50vw;
+	}
 
-    form[name="avatar"] {
-        width: 50vw;
-    }
-
-    .profile-content {
-        .wrapper {
-            flex-wrap: wrap;
-        }
-    }
+	.profile-content {
+		.wrapper {
+			flex-wrap: wrap;
+		}
+	}
 }
 
 @media screen and (max-width: 550px) {
-    .profile-content {
-        .wrapper :nth-child(2) {
-            flex-wrap: wrap;
-        }
-    }
+	.profile-content {
+		.wrapper :nth-child(2) {
+			flex-wrap: wrap;
+		}
+	}
 
-    form[name="avatar"] {
-        width: auto;
-    }
+	form[name="avatar"] {
+		width: auto;
+	}
 }

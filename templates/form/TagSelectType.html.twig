@@ -1,25 +1,9 @@
 {% block tag_select_widget %}
-    <input multiple name="{{full_name}}[tags]" id="hashtags-select">
-    </input>
-    <script>
-        const selector = new TomSelect('#hashtags-select',{
-            plugins:['remove_button','input_autogrow'],
-            placeholder:'{{placeholder}}',
-            selectOnTab: true,
-            hidePlaceholder: true,
-            options: [
-                {%- for tag in data %}
-                {value:{{tag.id}}, text:"{{tag}}"},
-                {% endfor -%}
-            ],
-            render: {
-                dropdown: () => {
-                    return '<div class="shadow border-1 border-secondary-subtle mb-3"></div>'
-                },
-                item: (data, escape) => {
-                    return '<div class="badge legend tall">' + escape(data.text.trim()) + '</div>'
-                }
-            }
-        })
-    </script>
+    <select data-placeholder='{{placeholder}}' multiple name="{{full_name}}[tags]" id="hashtags-select">
+    {%- for tag in data %}
+        <option value={{tag.id}}>{{tag}}</option>
+    {% endfor -%}
+    </select>
+    
+    {{ encore_entry_script_tags('tag-select') }}
 {% endblock %}
