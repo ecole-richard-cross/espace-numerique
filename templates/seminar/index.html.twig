@@ -20,7 +20,7 @@
             <i class="fa-solid fa-tags text-dark opacity-50"></i>
             <select multiple id="hashtags-select">
             {%- for tag in tags %}
-                <option value={{tag.id}}>{{tag}}</option>
+                <option>{{tag}}</option>
             {% endfor -%}
             </select>
             {{ encore_entry_script_tags('seminar-filter') }}
