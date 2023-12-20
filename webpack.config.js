@@ -24,7 +24,10 @@ Encore
 
     .addEntry('symfony-collection', './assets/scripts/symfony-collection.js')
     .addEntry('profile-error-feedback', './assets/scripts/profile-error-feedback.js')
+    .addEntry('register_country_switch', './assets/scripts/register_country_switch.js')
     .addEntry('new_avatar_preview', './assets/scripts/new_avatar_preview.js')
+    .addEntry('tag-select', './assets/scripts/tag-select.js')
+    .addEntry('seminar-filter', './assets/scripts/seminar-filter.js')
     .addEntry('seminar-nav', './assets/scripts/seminar-nav.js')
 
     .addEntry('trix_toolbar_handler', './assets/scripts/trix_toolbar_handler.js')
