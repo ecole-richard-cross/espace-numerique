@@ -18,8 +18,12 @@ const selector = new TomSelect('#hashtags-select', {
             select.querySelectorAll("li").forEach(option => {
                 try {
                     const optionTags = option.dataset.seminarTags.split(',');
-                    if (filters.length > 0 &&
-                        optionTags.filter(value => filters.includes(value)).length < filters.length)
+
+                    const hasMatch = optionTags.filter(value => {
+                        return filters.includes(value)
+                    }).length > 0;
+
+                    if (filters.length > 0 && !hasMatch)
                         option.classList.add('d-none');
                     else
                         option.classList.remove('d-none')
