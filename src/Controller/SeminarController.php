@@ -21,7 +21,7 @@ class SeminarController extends AbstractController
         if (!$seminar->isIsPublished()) {
             $this->addFlash(
                 'warning',
-                'Ce séminaire n\'est plus accessible.'
+                'Cet article n\'est plus accessible.'
             );
             return $this->redirectToRoute('app_seminars_index');
         }
@@ -50,7 +50,7 @@ class SeminarController extends AbstractController
         if (!$seminar->isIsPublished()) {
             $this->addFlash(
                 'warning',
-                'Ce séminaire n\'est plus accessible.'
+                'Cet article n\'est plus accessible.'
             );
             return $this->redirectToRoute('app_seminars_index');
         }
@@ -78,7 +78,7 @@ class SeminarController extends AbstractController
         if (!$seminar->isIsPublished()) {
             $this->addFlash(
                 'warning',
-                'Ce séminaire n\'est plus accessible.'
+                'Cet article n\'est plus accessible.'
             );
             return $this->redirectToRoute('app_seminars_index');
         }

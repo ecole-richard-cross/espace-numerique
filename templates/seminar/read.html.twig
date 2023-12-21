@@ -1,4 +1,10 @@
 {% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('seminar-nav') }}
+{% endblock %}
+
 {% block body %}
 	{% if sectionId is not defined %}
 		{% set sectionId = null %}

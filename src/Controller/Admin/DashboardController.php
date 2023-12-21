@@ -63,28 +63,27 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linkToUrl('Retour à l\'accueil', 'fa fa-home', $this->generateUrl('app_index')),
-            MenuItem::linkToDashboard('Statistiques', 'fa-solid fa-chart-line'),
-            // Menuitem::subMenu('Gestion', 'fa fa-list')
-            //     ->setSubItems([
-            MenuItem::section("Certification"),
-            MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
-            MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
-            MenuItem::linkToCrud("Passage de certification", 'fas fa-user-graduate', PassageCertification::class),
+            MenuItem::linkToUrl('Retour à la plateforme', 'fa fa-home', $this->generateUrl('app_index')),
+
             MenuItem::section("Ecole"),
+            MenuItem::linkToDashboard('Statistiques', 'fa-solid fa-chart-line'),
             MenuItem::linkToCrud('Centres de formation', 'fas fa-school', CentreFormation::class),
             MenuItem::linkToCrud('Promotions', 'fa fa-people-group', Promotion::class),
+
+            MenuItem::section("Certification"),
+            MenuItem::linkToCrud('Certifications', 'fas fa-scroll', Certification::class),
+            MenuItem::linkToCrud("Passage de certification", 'fas fa-user-graduate', PassageCertification::class),
+
+            MenuItem::section("Utilisateurs"),
+            MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
+            MenuItem::linkToCrud('Public inscrit', 'fa-regular fa-user', User::class),
+
             MenuItem::section("E-learning"),
-            MenuItem::linkToCrud('Utilisateurs', 'fa-regular fa-user', User::class),
-            // MenuItem::linkToCrud('Consultation de Séminaire', 'fa fa-check-square-o', SeminarConsultation::class),
-            MenuItem::linkToCrud('Séminaire', 'fas fa-book', Seminar::class),
-            // MenuItem::linkToCrud('Chapitre', 'fas fa-file-text', Chapter::class),
-            // MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
-            // MenuItem::linkToCrud('Bloc', 'fas fa-cube', Block::class),
-            // MenuItem::linkToCrud('Média', 'fa  fa-file-picture-o', Media::class),
+            MenuItem::linkToCrud('Articles', 'fas fa-book', Seminar::class),
+            MenuItem::linkToCrud('Hashtags', 'fas fa-hashtag', Tag::class),
             MenuItem::linkToUrl(
                 'Média',
-                'fa  fa-file-picture-o',
+                'fa fa-file-picture-o',
                 $this
                     ->container
                     ->get(AdminUrlGenerator::class)
@@ -92,10 +91,15 @@ class DashboardController extends AbstractDashboardController
                     ->setController(MediaCrudController::class)
                     ->generateUrl()
             ),
-            // MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
-            MenuItem::linkToCrud('Hashtags', 'fas fa-hashtag', Tag::class),
             MenuItem::linkToCrud("Discussions", 'fa-regular fa-message', Discussion::class),
             MenuItem::linkToCrud("Commentaires", "fa-regular fa-comments", Comment::class)
+
+            // MenuItem::linkToCrud('Consultation d'Article', 'fa fa-check-square-o', SeminarConsultation::class),
+            // MenuItem::linkToCrud('Catégories', 'fas fa-tag', Category::class),
+            // MenuItem::linkToCrud('Chapitre', 'fas fa-file-text', Chapter::class),
+            // MenuItem::linkToCrud('Section', 'fas fa-outdent', Section::class),
+            // MenuItem::linkToCrud('Bloc', 'fas fa-cube', Block::class),
+            // MenuItem::linkToCrud('Média', 'fa  fa-file-picture-o', Media::class),
             // ])
         ];
     }
