@@ -23,10 +23,10 @@ class CentreFormationCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Nom du centre'),
-            AssociationField::new('localisation', 'Localisation')
-                ->renderAsEmbeddedForm(LocalisationCrudController::class),
-            DateField::new('debutActivite', "Début d'activité"),
-            DateField::new('finActivite', "Fin d'activité")
+            // AssociationField::new('localisation', 'Localisation')
+            //     ->renderAsEmbeddedForm(LocalisationCrudController::class),
+            // DateField::new('debutActivite', "Début d'activité"),
+            // DateField::new('finActivite', "Fin d'activité")
         ];
     }
 
