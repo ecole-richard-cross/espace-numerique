@@ -108,9 +108,9 @@ class UserCrudController extends AbstractCrudController
             ->renderExpanded()
             ->hideOnIndex();
 
-        yield FormField::addTab('Séminaires Consultés');
+        yield FormField::addTab('Articles Consultés');
         yield FormField::addColumn(6);
-        yield FormField::addFieldset('Séminaires');
+        yield FormField::addFieldset('Articles');
         yield CollectionField::new('seminarConsultations', false)
             ->addWebpackEncoreEntries('ea-consultation-no-duplicates')
             ->setTemplatePath('admin/consultationDisplay.html.twig')
