@@ -76,7 +76,7 @@ class DashboardController extends AbstractDashboardController
 
             MenuItem::section("Utilisateurs"),
             MenuItem::linkToCrud('Stagiaires', 'fas fa-user', Stagiaire::class),
-            MenuItem::linkToCrud('Public inscrit', 'fa-regular fa-user', User::class),
+            MenuItem::linkToCrud('Comptes utilisateurs', 'fa-regular fa-user', User::class),
 
             MenuItem::section("E-learning"),
             MenuItem::linkToCrud('Articles', 'fas fa-book', Seminar::class),

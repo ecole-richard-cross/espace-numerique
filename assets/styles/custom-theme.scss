@@ -103,8 +103,7 @@ a {
 	}
 }
 
-#reseaux,
-#accordion-chapter {
+main {
 	a:not(.btn, [role="button"]) {
 		color: $blue-600;
 
@@ -207,7 +206,7 @@ legend,
 .seminar-content {
 	max-width: 800px;
 
-	input:checked ~ div {
+	input:checked~div {
 		overflow: hidden;
 		position: absolute;
 		z-index: 2;
@@ -293,7 +292,7 @@ legend,
 		&:hover {
 			padding-left: 0.5rem;
 		}
-		
+
 		&.active {
 			color: $primary;
 		}
@@ -302,9 +301,12 @@ legend,
 	.accordion-button {
 		background-color: darken($light, 5%);
 		border-bottom: 1px solid var(--bs-border-color);
-		&.collapsed, &.collapsed:last-of-type {
+
+		&.collapsed,
+		&.collapsed:last-of-type {
 			border-radius: $radius;
 		}
+
 		&:not(.collapsed) {
 			border-radius: $radius $radius 0 0;
 
@@ -332,22 +334,28 @@ legend,
 		&.fa {
 			color: $beige-dark;
 		}
+
 		&.fa-facebook {
 			color: #1877f2;
 		}
+
 		&.fa-linkedin {
 			color: #0a66c2;
 		}
+
 		&.fa-twitter {
 			color: #1da1f2;
 		}
+
 		&.fa-youtube {
 			color: #ff0000;
 		}
+
 		&.fa-tiktok,
 		&.fa-instagram {
 			color: #000;
 		}
+
 		&.fa-link {
 			color: inherit;
 		}
@@ -375,18 +383,18 @@ legend,
 		margin-bottom: 1rem;
 	}
 
-	.presenceWebs .list-group-item > fieldset > div,
-	.lieuxActivite .list-group-item > fieldset > div {
+	.presenceWebs .list-group-item>fieldset>div,
+	.lieuxActivite .list-group-item>fieldset>div {
 		display: flex;
 		gap: 0.5rem;
 	}
 
-	.presenceWebs .list-group-item > fieldset {
+	.presenceWebs .list-group-item>fieldset {
 		display: flex;
 		flex: auto;
 	}
 
-	.presenceWebs .list-group-item > fieldset > div {
+	.presenceWebs .list-group-item>fieldset>div {
 		display: flex;
 		width: 100%;
 		flex: auto;
@@ -430,13 +438,11 @@ legend,
 	}
 
 	&-a {
-		background-image: radial-gradient(
-			circle,
-			rgba(34, 46, 80, 1) 32%,
-			rgba(255, 249, 237, 1) 67%,
-			rgba(206, 181, 167, 1) 75%,
-			rgba(34, 46, 80, 1) 89%
-		);
+		background-image: radial-gradient(circle,
+				rgba(34, 46, 80, 1) 32%,
+				rgba(255, 249, 237, 1) 67%,
+				rgba(206, 181, 167, 1) 75%,
+				rgba(34, 46, 80, 1) 89%);
 	}
 
 	&-f {
@@ -444,21 +450,17 @@ legend,
 	}
 
 	&-s {
-		background-image: linear-gradient(
-			90deg,
-			rgba(184, 105, 199, 1) 15%,
-			rgba(145, 0, 178, 1) 66%,
-			rgba(175, 82, 194, 1) 100%
-		);
+		background-image: linear-gradient(90deg,
+				rgba(184, 105, 199, 1) 15%,
+				rgba(145, 0, 178, 1) 66%,
+				rgba(175, 82, 194, 1) 100%);
 	}
 
 	&-i {
-		background-image: radial-gradient(
-			circle,
-			rgba(145, 0, 178, 1) 32%,
-			rgba(255, 249, 237, 1) 58%,
-			rgba(145, 0, 178, 1) 80%
-		);
+		background-image: radial-gradient(circle,
+				rgba(145, 0, 178, 1) 32%,
+				rgba(255, 249, 237, 1) 58%,
+				rgba(145, 0, 178, 1) 80%);
 	}
 }
 

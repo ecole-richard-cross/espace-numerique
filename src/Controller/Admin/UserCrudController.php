@@ -51,6 +51,7 @@ class UserCrudController extends AbstractCrudController
             ->hideOnIndex();
         yield DateField::new('dateNaissance')
             ->hideOnIndex();
+        // Ajouter lieu de naissance
         yield TextField::new('nomStructure');
         yield TelephoneField::new('phoneNumber')
             ->hideOnIndex();
@@ -76,7 +77,8 @@ class UserCrudController extends AbstractCrudController
 
         yield FormField::addFieldset('');
         yield EmailField::new('email');
-        yield TextField::new('password'); // Remove before prod
+        yield TextField::new('password')
+            ->onlyWhenCreating();
         yield BooleanField::new('isVerified', 'Compte vérifié')
             ->hideOnIndex();
         yield ChoiceField::new('roles')
@@ -139,7 +141,7 @@ class UserCrudController extends AbstractCrudController
     {
         return $filters
             ->add(ChoiceArrayFilter::new('roles')
-                ->setChoices(['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'])
+                ->setChoices(User::ROLES)
                 ->renderExpanded()
                 ->canSelectMultiple())
             ->add('visio');
