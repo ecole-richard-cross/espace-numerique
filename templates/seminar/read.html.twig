@@ -53,7 +53,7 @@
 					</div>
 				</div>
 			{% else %}
-				<div class="p-0 my-0 mx-auto seminar-content d-flex flex-column gap-4 align-items-center">
+				<div class="px-3 my-0 mx-auto seminar-content d-flex flex-column align-items-center">
 					<h1 class="mb-1">{{seminar}}</h1>
 					<div class="d-flex justify-content-center gap-1 mb-5">
 						{% for tag in seminar.tags %}
@@ -61,17 +61,26 @@
 						{% endfor %}
 					</div>
 
-					<img class="rounded-3 mw-100" style="max-height:450px;" src="/uploads/{{seminar.image.url}}" alt="{{seminar.image}}">
+					<img class="rounded-3 mw-100" style="max-height:768px;" src="/uploads/{{seminar.image.url}}" alt="{{seminar.image}}">
 
-					<div>
-						{{seminar.description|replace({"h1":"h4"})|raw}}
+					<div class="my-4">
+						{% if orderedChapters|filter(chapter => chapter.description != null)|length ==  orderedChapters|length %}
+							{% for chapter in  orderedChapters%}
+								<div class="my-3">
+									<h2>{{chapter.number}}. {{chapter.title|replace({"h1":"h4"})|raw}}</h2>
+									{{chapter.description|replace({"h1":"h4"})|raw}}
+								</div>
+							{% endfor %}
+						{% else %}
+							{{seminar.description|replace({"h1":"h4"})|raw}}
+						{% endif %}
 					</div>
-					<div class="d-flex justify-content-center align-items-center">
+					<div class="d-flex justify-content-center align-items-center my-2">
 						<a href="{{path('app_seminar_read',{'id':seminar.id, 'chapterId': 0})}}" class="btn btn-primary">Démarrer le cours</a>
 					</div>
 					{% if seminar.getConsultByUser(app.user).finishedChapters is not empty %}
 
-						<div class="d-flex justify-content-center align-items-center">
+						<div class="d-flex justify-content-center align-items-center my-2">
 							<a href="{{path('app_seminar_reset',{'id':seminar.id})}}" class="btn btn-outline-danger" style="font-size:0.8rem">Réinitialiser ma progression</a>
 						</div>
 

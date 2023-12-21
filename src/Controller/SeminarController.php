@@ -26,11 +26,11 @@ class SeminarController extends AbstractController
             return $this->redirectToRoute('app_seminars_index');
         }
 
-        $orderedChapters = $entityManager->getRepository(Chapter::class)->findBySeminarOrdered($seminar);
         $consult = $entityManager
             ->getRepository(SeminarConsultation::class)
             ->findOneBy(['seminar' => $seminar, 'user' => $this->getUser()]);
         $consult->setLastConsultedAtNow();
+        $orderedChapters = $entityManager->getRepository(Chapter::class)->findBySeminarOrdered($seminar);
 
         $entityManager->persist($consult);
         $entityManager->flush();
@@ -55,11 +55,11 @@ class SeminarController extends AbstractController
             return $this->redirectToRoute('app_seminars_index');
         }
         
-        $orderedChapters = $entityManager->getRepository(Chapter::class)->findBySeminarOrdered($seminar);
         $consult = $entityManager
             ->getRepository(SeminarConsultation::class)
             ->findOneBy(['seminar' => $seminar, 'user' => $this->getUser()]);
         $consult->setLastConsultedAtNow();
+        $orderedChapters = $entityManager->getRepository(Chapter::class)->findBySeminarOrdered($seminar);
 
         $entityManager->persist($consult);
         $entityManager->flush();
@@ -92,12 +92,14 @@ class SeminarController extends AbstractController
                 ->setUser($this->getUser());
         }
         $consult->setLastConsultedAtNow();
+        $orderedChapters = $entityManager->getRepository(Chapter::class)->findBySeminarOrdered($seminar);
 
         $entityManager->persist($consult);
         $entityManager->flush();
 
         return $this->render('seminar/read.html.twig', [
             'seminar' => $seminar,
+            'orderedChapters' => $orderedChapters,
             'finishedChapters' => $consult->getFinishedChapters()
         ]);
     }
