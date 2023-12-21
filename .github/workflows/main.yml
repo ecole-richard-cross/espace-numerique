@@ -1,6 +1,35 @@
 on: push
-name: 🚀 Deploy website on push
+name: 🚀 Build and deploy website on push
 jobs:
+  npm:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Cache node_modules
+      uses: actions/cache@v1
+      id: npm-cache-node-modules
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-npm-cache-node-modules-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-cache-node-modules-
+          
+    - name: Npm install
+      if: steps.npm-cache-node-modules.outputs.cache-hit != 'true'
+      run: npm install
+      
+    - name: Npm build
+      run: npm run encore production
+      
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: build
+        path: public/build
+  
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
