@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block javascripts %}
-	{{ encore_entry_script_tags('app') }}
+	{{ parent() }}
 	{{ encore_entry_script_tags('symfony-collection') }}
 	{{ encore_entry_script_tags('profile-error-feedback') }}
 {% endblock %}
@@ -84,7 +84,7 @@
 
 	{% do form.lieuxActivite.setRendered %}
 	{% do form.presenceWebs.setRendered %}
-	
+
 	{{ form_end(form) }}
 
 {% endblock %}

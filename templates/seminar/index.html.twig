@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-    Liste des séminaires disponibles | {{parent()}}
+    Liste des articles disponibles | {{parent()}}
 {% endblock %}
 
 {% block stylesheets %}
@@ -15,7 +15,7 @@
 
 {% block body %}
 <div class="container-md d-flex flex-column gap-4 justify-items-start align-items-stretch">
-    <h1>Tous les séminaires</h1>
+    <h1>Tous les articles</h1>
         <div class="d-flex align-items-center gap-2">
             <i class="fa-solid fa-tags text-dark opacity-50"></i>
             <select multiple id="hashtags-select">
@@ -46,7 +46,7 @@
                         {{ include('seminar/preview.html.twig', {seminar:seminar}) }}
                         
                     {% else %}
-                        <li class="list-group-item small fst-italic">Aucun nouveau séminaire disponible pour l'instant.</li>
+                        <li class="list-group-item small fst-italic">Aucun nouvel article disponible pour l'instant.</li>
                     {% endfor %}
                 </ul>
             </div>

@@ -189,7 +189,7 @@
 											<div class="d-flex gap-3 align-items-center">
 												<i class="fa{{'facebook' in reseau.url ? 'b fa-facebook' : ('twitter' in reseau.url ? 'b fa-twitter' : ('linkedin' in reseau.url ? 'b fa-linkedin' : ('instagram' in reseau.url ? 'b fa-instagram' : ('youtube' in reseau.url ? 'b fa-youtube' : ('tiktok' in reseau.url ? 'b fa-tiktok' : ' fa-link' ) ) ))) }}"></i>
 												<p>
-													<a href="{{reseau.url}}">{{reseau.url}}</a>
+													<a target="_blank" href="{{reseau.url}}">{{reseau.url}}</a>
 												</p>
 											</div>
 										{% endif %}

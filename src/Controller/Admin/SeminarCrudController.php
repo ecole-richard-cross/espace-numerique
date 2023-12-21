@@ -105,8 +105,8 @@ class SeminarCrudController extends AbstractCrudController
     {
         return $crud
             ->showEntityActionsInlined()
-            ->setEntityLabelInSingular("Séminaire")
-            ->setEntityLabelInPlural("Séminaires")
+            ->setEntityLabelInSingular("Article")
+            ->setEntityLabelInPlural("Articles")
             ->setSearchFields(['title', 'description', "chapters.title", 'categories.name', 'tags.name']);
     }
 
