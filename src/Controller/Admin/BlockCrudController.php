@@ -31,7 +31,6 @@ class BlockCrudController extends AbstractCrudController
             "Video" => 'video',
             "Fichier" => 'file',
             "Info" => 'info',
-            "Question" => 'question',
             "Exercice" => 'exercice',
             "Lexique" => 'glossary'
         ];
