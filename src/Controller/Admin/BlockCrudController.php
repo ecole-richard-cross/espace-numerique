@@ -30,10 +30,10 @@ class BlockCrudController extends AbstractCrudController
             "Audio" => 'audio',
             "Video" => 'video',
             "Fichier" => 'file',
+            "Info" => 'info',
             "Question" => 'question',
-            "Attention" => 'danger',
-            "Information" => 'info',
-            "Glossaire" => 'glossary'
+            "Exercice" => 'exercice',
+            "Lexique" => 'glossary'
         ];
         yield ChoiceField::new('type')
             ->setChoices($types);
