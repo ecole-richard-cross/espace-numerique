@@ -6,6 +6,7 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use App\Controller\Admin\Filter\ChoiceArrayFilter;
 use App\Entity\Media;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -145,5 +146,19 @@ class UserCrudController extends AbstractCrudController
                 ->renderExpanded()
                 ->canSelectMultiple())
             ->add('visio');
+    }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $entityInstance->getAvatar()->getUrl() == null && $entityInstance->setAvatar(null);
+        $entityManager->persist($entityInstance);
+        $entityManager->flush();
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $entityInstance->getAvatar()->getUrl() == null && $entityInstance->setAvatar(null);
+        $entityManager->persist($entityInstance);
+        $entityManager->flush();
     }
 }
